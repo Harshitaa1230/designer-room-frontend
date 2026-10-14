@@ -156,7 +156,6 @@ export const BentoSection = () => {
       className="relative z-10 mx-auto max-w-5xl px-6 py-12 md:py-20"
     >
       <div className="mb-6">
-        <p className="mb-1 text-base font-normal text-zinc-500 md:text-lg">What’s inside</p>
         <h2 id="features-heading" className="text-2xl font-medium tracking-tight md:text-3xl">
           <span className="font-normal text-zinc-400">All the pieces,</span>{' '}
           <span className="text-white">finally in one place</span>

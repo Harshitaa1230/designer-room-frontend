@@ -12,9 +12,8 @@ describe('HomePage', () => {
     expect(screen.getByText(/all in one room\./i)).toBeInTheDocument()
   })
 
-  it('renders all 6 design features in What is inside section', () => {
+  it('renders all 6 design features', () => {
     render(<HomePage />)
-    expect(screen.getByText('What’s inside')).toBeInTheDocument()
     expect(screen.getByText(/All the pieces,/i)).toBeInTheDocument()
 
     expect(screen.getByRole('heading', { name: 'Roadmaps' })).toBeInTheDocument()
