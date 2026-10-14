@@ -3,7 +3,7 @@ import { useOutletContext } from 'react-router-dom'
 import { Navbar } from '@/components/Navbar'
 import { GradientBackground } from '@/components/GradientBackground'
 import { Hero } from '@/components/Hero'
-import { Features } from '@/components/Features'
+import { BentoSection } from '@/components/features/BentoSection'
 import { CtaBanner } from '@/components/CtaBanner'
 import { AuthModal } from '@/components/AuthModal'
 import type { AppOutletContext } from '@/App'
@@ -36,8 +36,8 @@ export function HomePage() {
         <Hero />
       </div>
 
-      {/* Features Grid ("What's inside") */}
-      <Features />
+      {/* Features Bento Grid ("What's inside") */}
+      <BentoSection />
 
       {/* Call to Action Banner */}
       <CtaBanner onOpenAuth={handleOpenAuth} />
