@@ -93,6 +93,26 @@ body {
   animation: ambient-glow 8s ease-in-out infinite;
 }
 
+@keyframes alive-text-glow {
+  0%,
+  100% {
+    text-shadow: 0 0 12px rgba(251, 191, 36, 0.1);
+  }
+  50% {
+    text-shadow: 0 0 22px rgba(251, 191, 36, 0.38);
+  }
+}
+
+.animate-alive-text {
+  animation: alive-text-glow 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-alive-text {
+    animation: none;
+  }
+}
+
 /* Glassmorphism helpers */
 .glass-panel {
   background: rgba(18, 18, 18, 0.7);

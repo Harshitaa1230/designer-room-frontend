@@ -1,6 +1,6 @@
 export const Hero = () => {
   return (
-    <section className="relative overflow-hidden px-6 pt-24 pb-32 md:pt-32 md:pb-40">
+    <section className="relative overflow-hidden px-6 pt-40 pb-32 md:pt-48 md:pb-40">
       {/* Background Glowing Ambient Light Arc */}
       <div
         className="pointer-events-none absolute -top-24 right-0 h-[550px] w-[650px] overflow-hidden select-none md:-right-12 md:h-[750px] md:w-[950px] lg:w-[1100px]"
