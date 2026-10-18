@@ -45,7 +45,7 @@ export const Navbar = () => {
   return (
     <header
       className={cn(
-        'fixed inset-x-0 top-0 z-30 transition-[padding] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]',
+        'fixed inset-x-0 top-0 z-30 bg-black/[0.18] backdrop-blur-[12px] light:bg-white/50 transition-[padding] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]',
         scrolled ? 'pt-3' : 'pt-0',
       )}
     >
@@ -71,7 +71,7 @@ export const Navbar = () => {
           <NavLink to="/" className="flex items-center transition-opacity hover:opacity-90">
             <img src={logo} alt="Designers Room" className="h-12 w-auto md:h-8.5 dark:invert-0 light:invert" />
           </NavLink>
-          <span className="inline-flex items-center rounded-full border border-white/20 bg-white/[0.04] px-2 py-0.5 text-[10px] font-medium tracking-widest text-zinc-300 select-none light:border-zinc-300 light:bg-zinc-100 light:text-zinc-500">
+          <span className="inline-flex items-center rounded-full border border-white/20 bg-white/[0.04] px-2 py-0.5 text-[10px] font-medium tracking-widest text-[#fffaee] select-none light:border-zinc-300 light:bg-zinc-100 light:text-zinc-500">
             BETA
           </span>
         </div>
@@ -84,10 +84,10 @@ export const Navbar = () => {
               to={link.to}
               className={({ isActive }) =>
                 cn(
-                  'text-base transition-colors duration-150',
+                  'text-base font-medium opacity-95 transition-colors duration-150',
                   isActive
-                    ? 'font-medium text-white light:text-zinc-900'
-                    : 'font-normal text-white hover:text-white light:text-zinc-400 light:hover:text-zinc-700',
+                    ? 'text-[#fffaee] light:text-zinc-900'
+                    : 'text-[#fffaee] hover:text-[#fffaee] light:text-zinc-400 light:hover:text-zinc-700',
                 )
               }
             >
@@ -104,8 +104,8 @@ export const Navbar = () => {
             onClick={toggle}
             aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
             className={cn(
-              'flex size-8 items-center justify-center rounded-full border transition-all duration-200',
-              'border-white/15 bg-white/[0.06] text-white hover:bg-white/[0.12] hover:text-white',
+              'flex size-10 items-center justify-center rounded-full border transition-all duration-200',
+              'border-white/15 bg-white/[0.06] text-[#fffaee] hover:bg-white/[0.12] hover:text-[#fffaee]',
               'light:border-zinc-300 light:bg-zinc-100 light:text-zinc-500 light:hover:bg-zinc-200 light:hover:text-zinc-800',
             )}
           >
@@ -115,10 +115,10 @@ export const Navbar = () => {
           {/* CTA */}
           <a
             href="#start-practising"
-            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-b from-[#FFF8EE] via-[#E8DDD0] to-[#B9ADA0] px-5 py-2.5 text-sm font-medium text-black transition-all duration-200 hover:opacity-90"
+            className="btn-3d btn-3d--nav inline-flex items-center gap-2 px-5 py-2.5 text-sm"
           >
             Start Practising
-            <img src={arrow} alt="" aria-hidden="true" />
+            <img src={arrow} alt="" aria-hidden="true" className="invert" />
           </a>
         </div>
       </nav>

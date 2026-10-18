@@ -1,7 +1,6 @@
 import { useOutletContext } from 'react-router-dom'
 import { GradientBackground } from '@/components/GradientBackground'
 import { Hero } from '@/components/Hero'
-import { SectionSeam } from '@/components/SectionSeam'
 import { FeaturesSection } from '@/components/FeaturesSection'
 import type { AppOutletContext } from '@/App'
 
@@ -17,9 +16,6 @@ export function HomePage() {
         <GradientBackground />
         <Hero />
       </div>
-
-      {/* Glassmorphism seam — straddles the hero / features boundary */}
-      <SectionSeam />
 
       {/* What's inside — feature list */}
       <FeaturesSection />

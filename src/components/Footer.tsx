@@ -13,12 +13,7 @@ export const Footer = () => (
       aria-hidden="true"
     />
 
-    <div className="relative z-10 mx-auto w-full max-w-[1440px] px-8 sm:px-12 md:px-16">
-      {/* "Building in public." headline */}
-      <p className="pt-20 pb-16 text-[clamp(56px,9vw,120px)] font-normal leading-none tracking-[-3px] text-white light:text-zinc-900">
-        Building in public.
-      </p>
-
+    <div className="relative z-10 mx-auto w-full max-w-[1440px] px-8 sm:px-12 md:px-16 pt-20">
       {/* Social row + CTA */}
       <div className="flex flex-col items-start justify-between gap-6 pb-12 sm:flex-row sm:items-center">
         <div className="flex flex-wrap gap-8">
@@ -42,6 +37,14 @@ export const Footer = () => (
           Join the waitlist
         </button>
       </div>
+
+      {/* Brand watermark */}
+      <p
+        aria-hidden="true"
+        className="select-none whitespace-nowrap pt-2 text-center text-[clamp(64px,14vw,220px)] font-normal leading-none tracking-[-0.04em] text-white/[0.045] -translate-x-[5%] light:text-zinc-900/[0.06]"
+      >
+        Designer's Room
+      </p>
 
       {/* Bottom bar */}
       <div className="flex items-center justify-between border-t border-[#1e1c1a] py-6 light:border-zinc-200">
