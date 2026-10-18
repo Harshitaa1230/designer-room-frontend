@@ -2,98 +2,108 @@ interface RoadmapNode {
   x: number
   y: number
   label: string
-  labelY: number
-  state: 'done' | 'current' | 'next' | 'todo'
+  state: 'done' | 'current' | 'upcoming'
+  anchor: 'start' | 'middle' | 'end'
 }
 
 const NODES: RoadmapNode[] = [
-  { x: 50, y: 115, label: 'Design basics', labelY: 148, state: 'done' },
-  { x: 145, y: 55, label: 'Typography', labelY: 30, state: 'done' },
-  { x: 240, y: 125, label: 'Color', labelY: 158, state: 'current' },
-  { x: 335, y: 55, label: 'Layout', labelY: 30, state: 'next' },
-  { x: 430, y: 115, label: 'UI patterns', labelY: 148, state: 'todo' },
+  { x: 60, y: 270, label: 'Design basics', state: 'done', anchor: 'start' },
+  { x: 150, y: 215, label: 'Typography', state: 'done', anchor: 'middle' },
+  { x: 240, y: 165, label: 'Color', state: 'current', anchor: 'middle' },
+  { x: 330, y: 110, label: 'Layout', state: 'upcoming', anchor: 'middle' },
+  { x: 410, y: 60, label: 'UI patterns', state: 'upcoming', anchor: 'end' },
 ]
 
-const FULL_PATH =
-  'M 50 115 C 80 115, 115 55, 145 55 C 175 55, 210 125, 240 125 C 270 125, 305 55, 335 55 C 365 55, 400 115, 430 115'
-const DONE_PATH =
-  'M 50 115 C 80 115, 115 55, 145 55 C 175 55, 210 125, 240 125'
-const NEXT_PATH = 'M 240 125 C 270 125, 305 55, 335 55'
+const COMPLETED_PATH = 'M 60 270 C 92 270 118 215 150 215 C 182 215 208 165 240 165'
+const UPCOMING_PATH = 'M 240 165 C 272 165 298 110 330 110 C 358 110 382 60 410 60'
 
 export const RoadmapPreview = () => (
   <svg
-    viewBox="0 0 480 180"
+    viewBox="0 0 460 340"
+    width="100%"
+    height="100%"
     preserveAspectRatio="xMidYMid meet"
-    className="h-full w-full"
+    overflow="visible"
+    className="block h-full min-h-[380px] w-full min-w-0"
     role="img"
-    aria-label="Roadmap path with Design basics and Typography complete, Color in progress, Layout up next"
+    aria-labelledby="roadmap-title roadmap-description"
   >
-    <defs>
-      <linearGradient id="roadmap-done" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0%" stopColor="#ea580c" />
-        <stop offset="100%" stopColor="#fb923c" />
-      </linearGradient>
-    </defs>
+    <title id="roadmap-title">Design learning roadmap</title>
+    <desc id="roadmap-description">
+      Five steps from Design basics and Typography completed, Color in progress, then Layout and UI
+      patterns upcoming.
+    </desc>
 
-    {/* base track */}
-    <path d={FULL_PATH} fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="2.5" />
-
-    {/* completed segment */}
     <path
-      d={DONE_PATH}
+      d={UPCOMING_PATH}
       fill="none"
-      stroke="url(#roadmap-done)"
-      strokeWidth="2.5"
+      stroke="#8a8a8a"
+      strokeOpacity="0.65"
+      strokeWidth="3"
+      strokeDasharray="7 8"
       strokeLinecap="round"
     />
-
-    {/* segment drawn on hover */}
     <path
-      d={NEXT_PATH}
+      d={COMPLETED_PATH}
       fill="none"
       stroke="#f97316"
-      strokeWidth="2.5"
+      strokeWidth="3.5"
       strokeLinecap="round"
-      pathLength={1}
-      className="roadmap-progress"
     />
 
     {NODES.map((node) => {
       const isDone = node.state === 'done'
       const isCurrent = node.state === 'current'
-      const isNext = node.state === 'next'
+      const isUpcoming = node.state === 'upcoming'
 
       return (
         <g key={node.label}>
           {isCurrent && (
-            <circle cx={node.x} cy={node.y} r="8" fill="#f97316" className="roadmap-pulse" />
+            <>
+              <circle cx={node.x} cy={node.y} r="15" fill="#f97316" opacity="0.15" />
+              <circle cx={node.x} cy={node.y} r="10" fill="none" stroke="#f97316" strokeWidth="2" />
+            </>
           )}
-
           <circle
             cx={node.x}
             cy={node.y}
-            r={isCurrent ? 6.5 : 5.5}
-            className={isNext ? 'roadmap-next-fill' : undefined}
-            fill={isDone || isCurrent ? '#f97316' : 'transparent'}
-            stroke={isDone || isCurrent ? '#f97316' : 'rgba(251,146,60,0.55)'}
-            strokeWidth="1.5"
+            r={isCurrent ? 5 : 6}
+            fill={isDone ? '#f97316' : isCurrent ? '#171717' : 'none'}
+            stroke={isUpcoming ? '#8a8a8a' : '#f97316'}
+            strokeOpacity={isUpcoming ? 0.75 : 1}
+            strokeWidth={isUpcoming ? 2 : 1.5}
           />
-
-          {(isDone || isCurrent) && <circle cx={node.x} cy={node.y} r="2" fill="#171717" />}
-
           <text
             x={node.x}
-            y={node.labelY}
-            textAnchor="middle"
-            fontSize="11.5"
+            y={node.y + 22}
+            dx={node.anchor === 'start' ? 14 : node.anchor === 'end' ? -14 : 0}
+            textAnchor={node.anchor === 'middle' ? 'middle' : node.anchor}
+            fontSize="25"
             fontWeight={isCurrent ? 600 : 500}
-            fill={isDone || isCurrent ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.55)'}
+            fill={isUpcoming ? '#8a8a8a' : '#ffffff'}
             stroke="#171717"
-            strokeWidth="3.5"
+            strokeWidth="4"
+            strokeLinejoin="round"
             paintOrder="stroke"
           >
             {node.label}
           </text>
+          {isCurrent && (
+            <g aria-hidden="true">
+              <path d={`M ${node.x - 5} ${node.y - 20} L ${node.x} ${node.y - 10} L ${node.x + 5} ${node.y - 20}`} fill="#f97316" />
+              <rect x={node.x - 73} y={node.y - 50} width="146" height="28" rx="14" fill="#f97316" />
+              <text
+                x={node.x}
+                y={node.y - 32}
+                textAnchor="middle"
+                fontSize="23"
+                fontWeight="600"
+                fill="#171717"
+              >
+                You are here
+              </text>
+            </g>
+          )}
         </g>
       )
     })}
