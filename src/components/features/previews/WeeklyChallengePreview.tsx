@@ -302,7 +302,6 @@ export const WeeklyChallengePreview = () => {
             {DAYS.map((day, index) => {
               const isDone     = day.state === 'done'
               const isToday    = day.state === 'today'
-              const isUpcoming = day.state === 'upcoming'
 
               return (
                 <span
