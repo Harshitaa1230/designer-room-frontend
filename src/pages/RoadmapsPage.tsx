@@ -60,9 +60,10 @@ function RoadmapCard({ roadmap }: { roadmap: Roadmap }) {
       to={`/roadmaps/${roadmap.id}`}
       aria-label={`${roadmap.title} — ${roadmap.meta}`}
       className={[
-        'group relative flex h-[360px] flex-1 min-w-0 flex-col gap-5 rounded-[28px] border p-10',
+        'roadmap-card group relative flex min-h-[260px] flex-1 min-w-0 flex-col gap-3 rounded-[20px] border p-6',
         'bg-[#11100f] transition-all duration-300',
-        'hover:-translate-y-1 hover:shadow-[0_0_40px_rgba(255,89,0,0.08)]',
+        'hover:-translate-y-0.5 hover:border-[rgba(255,106,26,0.6)] hover:shadow-[0_0_40px_rgba(255,106,26,0.18)]',
+        'focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#ff6a1a]',
         roadmap.active
           ? 'border-[rgba(255,106,0,0.5)] shadow-[0_0_25px_rgba(255,89,0,0.14)]'
           : 'border-[#302923]',
@@ -72,7 +73,7 @@ function RoadmapCard({ roadmap }: { roadmap: Roadmap }) {
       <div className="flex items-center justify-between">
         <span
           className={[
-            'text-[14px] font-semibold tracking-[1.12px] font-mono',
+            'text-[12px] font-semibold tracking-[1.12px] font-mono',
             roadmap.active ? 'text-[#ff6a00]' : 'text-[#827a73]',
           ].join(' ')}
         >
@@ -80,10 +81,10 @@ function RoadmapCard({ roadmap }: { roadmap: Roadmap }) {
         </span>
         <span
           className={[
-            'rounded-full px-3 py-1.5 text-[12px] font-medium',
+            'rounded-full px-2.5 py-1 text-[10px] font-medium',
             roadmap.active
-              ? 'bg-[#4a1b0c] text-[#ffd0a3]'
-              : 'border border-[#302923] text-[#b6ada4]',
+              ? 'border border-[rgba(255,106,26,0.4)] bg-[rgba(255,106,26,0.18)] text-[#ff8a4a]'
+              : 'border border-white/20 text-white/70',
           ].join(' ')}
         >
           {roadmap.pill.label}
@@ -91,26 +92,24 @@ function RoadmapCard({ roadmap }: { roadmap: Roadmap }) {
       </div>
 
       {/* Title */}
-      <h2 className="text-[44px] font-medium leading-[48px] tracking-[-0.66px] text-white">
+      <h2 className="text-[28px] font-medium leading-[34px] tracking-[-0.4px] text-white">
         {roadmap.title}
       </h2>
 
       {/* Description */}
-      <p className="text-[17px] font-normal leading-[26px] text-[#b6ada4] max-w-[520px]">
+      <p className="max-w-[420px] text-[15px] font-normal leading-[22px] text-[#b6ada4]">
         {roadmap.description}
       </p>
 
-      {/* Spacer */}
-      <div className="flex-1" />
-
       {/* Bottom row: meta + arrow */}
-      <div className="flex items-center justify-between">
-        <span className="text-[14px] text-[#827a73]">{roadmap.meta}</span>
+      <div className="mt-auto flex items-center justify-between">
+        <span className="text-[12px] text-white/60">{roadmap.meta}</span>
         <span
           className={[
-            'text-[28px] font-light transition-transform duration-300',
-            'group-hover:translate-x-1',
-            'text-[#ff6a00]',
+            'roadmap-card-arrow text-[20px] font-light transition-all duration-[250ms]',
+            'text-white/40',
+            'group-hover:translate-x-1 group-hover:text-[#ff6a1a]',
+            'group-focus-visible:translate-x-1 group-focus-visible:text-[#ff6a1a]',
           ].join(' ')}
           aria-hidden="true"
         >
@@ -125,7 +124,7 @@ function RoadmapCard({ roadmap }: { roadmap: Roadmap }) {
 
 export function RoadmapsPage() {
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-[#080808] text-white pt-24">
+    <div className="relative min-h-screen w-full overflow-hidden bg-[#080808] text-white pt-20">
 
       {/* Background glow */}
       <div
@@ -146,19 +145,19 @@ export function RoadmapsPage() {
       </div>
 
       {/* ── Header ── */}
-      <header className="relative z-10 flex flex-col gap-5 px-16 pb-12 pt-14">
-        <p className="text-[12px] text-[#827a73]">(Roadmaps)</p>
-        <h1 className="text-[120px] font-medium leading-[120px] tracking-[-4.8px] text-white whitespace-nowrap">
+      <header className="relative z-10 flex flex-col gap-3 px-8 pb-8 pt-8 sm:px-12 md:px-16">
+        <p className="text-[13px] text-white/65">(Roadmaps)</p>
+        <h1 className="text-[32px] leading-none font-medium tracking-[-0.03em] text-white sm:text-[36px] md:text-[40px] lg:text-[44px]">
           Pick your path.
         </h1>
-        <p className="w-[640px] text-[20px] font-normal leading-[30px] text-[#b6ada4]">
+        <p className="max-w-[52ch] text-[16px] font-normal leading-[24px] text-white/[0.72] text-balance">
           Step-by-step plans you can actually finish. Tick things off, watch the bar move, switch
           paths anytime.
         </p>
       </header>
 
       {/* ── Grid ── */}
-      <main className="relative z-10 flex flex-col gap-4 px-16 pb-24">
+      <main className="relative z-10 flex flex-col gap-4 px-8 pb-16 sm:px-12 md:px-16">
         {/* Row 1 */}
         <div className="flex gap-4">
           {ROADMAPS.slice(0, 2).map((r) => (
@@ -174,11 +173,11 @@ export function RoadmapsPage() {
       </main>
 
       {/* ── Footer ── */}
-      <footer className="relative z-10 flex items-center justify-between border-t border-[#302923] px-16 py-10">
+      <footer className="relative z-10 flex items-center justify-between border-t border-[#302923] px-8 py-8 sm:px-12 md:px-16">
         <p className="text-[12px] text-[#827a73]">© 2026 Designer's Room · Beta 1</p>
         <button
           type="button"
-          className="rounded-full border border-[#302923] px-[18px] py-[9px] text-[13px] font-medium text-white transition-colors hover:border-[#504740] hover:bg-white/[0.04]"
+          className="rounded-full border border-[#302923] px-4 py-2 text-[12px] font-medium text-white transition-colors hover:border-[#504740] hover:bg-white/[0.04]"
         >
           Send feedback
         </button>
