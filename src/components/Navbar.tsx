@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import logo from '@/assets/logo.svg'
 import arrow from '@/assets/icon/arrow.svg'
 import { cn } from '@/lib/utils'
 import { useTheme } from '@/lib/theme'
+import { useAuthStore } from '@/store/auth'
 
 const SunIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -34,6 +35,7 @@ const NAV_LINKS = [
 export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false)
   const { theme, toggle } = useTheme()
+  const status = useAuthStore((s) => s.status)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8)
@@ -113,13 +115,13 @@ export const Navbar = () => {
           </button>
 
           {/* CTA */}
-          <a
-            href="#start-practising"
+          <Link
+            to={status === 'authed' ? '/dashboard' : '/login'}
             className="btn-3d btn-3d--nav inline-flex items-center gap-2 px-5 py-2.5 text-sm"
           >
-            Start Practising
+            {status === 'authed' ? 'Dashboard' : 'Get Started'}
             <img src={arrow} alt="" aria-hidden="true" className="invert" />
-          </a>
+          </Link>
         </div>
       </nav>
     </header>

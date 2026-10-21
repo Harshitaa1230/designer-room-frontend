@@ -1,12 +1,8 @@
-import { useOutletContext } from 'react-router-dom'
 import { GradientBackground } from '@/components/GradientBackground'
 import { Hero } from '@/components/Hero'
 import { FeaturesSection } from '@/components/FeaturesSection'
-import type { AppOutletContext } from '@/App'
 
 export function HomePage() {
-  useOutletContext<AppOutletContext | null>()
-
   return (
     <div className="relative w-full">
       <h1 className="sr-only">Designers Room</h1>
