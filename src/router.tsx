@@ -4,6 +4,7 @@ import { AppLayout } from '@/App'
 import { HomePage } from '@/pages/HomePage'
 import { RoadmapsPage } from '@/pages/RoadmapsPage'
 import { RoadmapDetailPage } from '@/pages/RoadmapDetailPage'
+import { GuidebookPage } from '@/pages/GuidebookPage'
 import { DashboardPage } from '@/pages/DashboardPage'
 import { AdminPage } from '@/pages/AdminPage'
 import { LoginPage } from '@/pages/LoginPage'
@@ -25,6 +26,14 @@ export const router = createBrowserRouter([
         element: (
           <RequireAuth>
             <RoadmapDetailPage />
+          </RequireAuth>
+        ),
+      },
+      {
+        path: 'guidebook/:roadmapId/:topicId',
+        element: (
+          <RequireAuth>
+            <GuidebookPage />
           </RequireAuth>
         ),
       },

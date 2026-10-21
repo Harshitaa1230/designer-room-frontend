@@ -6,7 +6,8 @@ import { messageOf } from '@/lib/api'
 import { joinWaitlist } from '@/lib/endpoints'
 import { Spinner } from '@/components/LoadingState'
 
-const WHATSAPP_LINK = import.meta.env.VITE_WHATSAPP_LINK as string | undefined
+const WHATSAPP_LINK = (import.meta.env.VITE_WHATSAPP_LINK ??
+  import.meta.env.VITE_WHASTAPP_LINK) as string | undefined
 
 const WhatsAppIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className={className}>

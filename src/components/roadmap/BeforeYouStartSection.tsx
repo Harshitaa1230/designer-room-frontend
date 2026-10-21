@@ -1,4 +1,4 @@
-import type { BeforeYouStartCard } from '@/data/roadmapData'
+import type { BeforeYouStartCard } from '@/lib/endpoints'
 
 interface BeforeYouStartSectionProps {
   cards: BeforeYouStartCard[]

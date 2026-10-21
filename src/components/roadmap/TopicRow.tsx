@@ -1,13 +1,16 @@
-import type { TopicData } from '@/data/roadmapData'
+import { Link } from 'react-router-dom'
+import type { TopicView } from '@/data/roadmapUtils'
 import { getDifficultyLabel, getTopicActionLabel, formatTime } from '@/data/roadmapUtils'
 
 interface TopicRowProps {
-  topic: TopicData
+  topic: TopicView
+  roadmapId: string
 }
 
-export function TopicRow({ topic }: TopicRowProps) {
-  const actionLabel = getTopicActionLabel(topic)
+export function TopicRow({ topic, roadmapId }: TopicRowProps) {
+  const actionLabel = getTopicActionLabel(topic.status)
   const isMuted = topic.status === 'done' || topic.status === 'locked'
+  const topicHref = `/guidebook/${roadmapId}/${topic.id}`
 
   // ── Check circle ────────────────────────────────────────────────────────
   const circleBase = 'w-[26px] h-[26px] rounded-full shrink-0 flex items-center justify-center'
@@ -49,13 +52,15 @@ export function TopicRow({ topic }: TopicRowProps) {
       </div>
 
       {/* Title */}
-      <span
-        className={`text-[18px] font-medium leading-normal min-w-0 flex-1 ${
-          isMuted ? 'text-[#827a73]' : 'text-[#fff8ee]'
-        }`}
+      <Link
+        to={topicHref}
+        className={[
+          'text-[18px] font-medium leading-normal min-w-0 flex-1 hover:text-[#ff8a4a] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff6a00]',
+          isMuted ? 'text-[#827a73]' : 'text-[#fff8ee]',
+        ].join(' ')}
       >
         {topic.title}
-      </span>
+      </Link>
 
       {/* Needs pill (locked topics only) */}
       {topic.needsStage !== undefined && (
@@ -77,12 +82,17 @@ export function TopicRow({ topic }: TopicRowProps) {
       {/* Action slot */}
       <div className="w-[90px] shrink-0 flex justify-end">
         {actionLabel === 'review' && (
-          <span className="text-[13px] text-[#827a73]">Review</span>
+          <Link to={topicHref} className="text-[13px] text-[#827a73] hover:text-white">
+            Review
+          </Link>
         )}
         {actionLabel === 'start' && (
-          <span className="border border-[#ff6a00] rounded-full px-[12px] py-[4px] text-[12px] text-[#ff6a00]">
+          <Link
+            to={topicHref}
+            className="border border-[#ff6a00] rounded-full px-[12px] py-[4px] text-[12px] text-[#ff6a00] hover:bg-[rgba(255,106,0,0.12)]"
+          >
             Start →
-          </span>
+          </Link>
         )}
       </div>
     </div>

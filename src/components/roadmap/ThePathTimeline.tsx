@@ -1,7 +1,7 @@
-import type { StageData } from '@/data/roadmapData'
+import type { StageView } from '@/data/roadmapUtils'
 
 interface ThePathTimelineProps {
-  stages: StageData[]
+  stages: StageView[]
   pace: string
   onExpandAll: () => void
   onCollapseAll: () => void
@@ -16,7 +16,7 @@ export default function ThePathTimeline({
   return (
     <div className="px-8 sm:px-12 md:px-16 py-[0px] flex flex-col gap-0">
       {/* Header row */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-end gap-4 sm:gap-0 pb-[28px]">
+      <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 sm:gap-0 pb-[28px]">
         {/* Left block */}
         <div className="flex flex-col gap-[4px]">
           <span className="text-[12px] text-[#827a73]">(The path)</span>
@@ -60,12 +60,16 @@ export default function ThePathTimeline({
             />
             {/* Stage + week label */}
             <span className="text-[12px] text-[#827a73]">
-              {stage.number}&nbsp;&nbsp;·&nbsp;&nbsp;{stage.weekLabel}
+              {stage.weekLabel
+                ? `${stage.number}\u00a0\u00a0·\u00a0\u00a0${stage.weekLabel}`
+                : stage.number}
             </span>
             {/* Stage name */}
             <span className="text-[16px] font-medium text-[#fff8ee]">{stage.name}</span>
             {/* Topics count */}
-            <span className="text-[13px] text-[#b6ada4]">{stage.topics.length} topics</span>
+            <span className="text-[13px] text-[#b6ada4]">
+              {stage.topics.length} topic{stage.topics.length === 1 ? '' : 's'}
+            </span>
           </div>
         ))}
       </div>

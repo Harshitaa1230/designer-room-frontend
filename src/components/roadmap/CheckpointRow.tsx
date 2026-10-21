@@ -1,7 +1,7 @@
-import type { CheckpointData } from '@/data/roadmapData'
+import type { CheckpointView } from '@/data/roadmapUtils'
 
 interface CheckpointRowProps {
-  checkpoint: CheckpointData
+  checkpoint: CheckpointView
 }
 
 export function CheckpointRow({ checkpoint }: CheckpointRowProps) {

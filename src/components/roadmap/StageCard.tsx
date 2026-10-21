@@ -1,23 +1,22 @@
-import type { StageData } from '@/data/roadmapData'
+import type { StageView } from '@/data/roadmapUtils'
 import { TopicRow } from './TopicRow'
 import { CheckpointRow } from './CheckpointRow'
 
 interface StageCardProps {
-  stage: StageData
+  stage: StageView
+  roadmapId: string
   isOpen: boolean
   onToggle: () => void
 }
 
-export function StageCard({ stage, isOpen, onToggle }: StageCardProps) {
+export function StageCard({ stage, roadmapId, isOpen, onToggle }: StageCardProps) {
   const progressPercent =
-    stage.totalTopics > 0
-      ? Math.round((stage.completedTopics / stage.totalTopics) * 100)
-      : 0
+    stage.totalTopics > 0 ? Math.round((stage.completedTopics / stage.totalTopics) * 100) : 0
 
   return (
     <div className="bg-[#11100f] border border-[#302923] rounded-[24px] overflow-hidden">
       {/* Header row — always visible */}
-      <div className="flex gap-[24px] items-center p-[32px]">
+      <div className="flex flex-wrap md:flex-nowrap gap-[16px] md:gap-[24px] items-center p-[32px]">
         {/* Stage number */}
         <span className="text-[14px] font-semibold text-[#827a73] tracking-[1.12px] shrink-0">
           {stage.number}
@@ -45,7 +44,7 @@ export function StageCard({ stage, isOpen, onToggle }: StageCardProps) {
         </div>
 
         {/* Prerequisite OR done pill */}
-        {stage.prerequisiteStage !== undefined && stage.status !== 'done' ? (
+        {stage.prerequisiteStage !== null && stage.status !== 'done' ? (
           <span className="border border-[#302923] rounded-full px-[13px] py-[7px] text-[12px] text-[#827a73] shrink-0 whitespace-nowrap">
             Needs: Stage 0{stage.prerequisiteStage}
           </span>
@@ -73,7 +72,7 @@ export function StageCard({ stage, isOpen, onToggle }: StageCardProps) {
           type="button"
           onClick={onToggle}
           aria-label={`${isOpen ? 'Collapse' : 'Expand'} ${stage.name} stage`}
-          className="text-[24px] font-light text-[#827a73] shrink-0 hover:text-white focus-visible:outline-2 focus-visible:outline-[#ff6a00] focus-visible:outline-offset-2 transition-colors"
+          className="text-[24px] font-light text-[#827a73] shrink-0 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff6a00] transition-colors"
         >
           {isOpen ? '−' : '+'}
         </button>
@@ -82,11 +81,11 @@ export function StageCard({ stage, isOpen, onToggle }: StageCardProps) {
       {/* Collapsible body */}
       {isOpen && (
         <div>
-          {stage.topics.map(topic => (
-            <TopicRow key={topic.id} topic={topic} />
+          {stage.topics.map((topic) => (
+            <TopicRow key={topic.id} topic={topic} roadmapId={roadmapId} />
           ))}
-          {stage.checkpoints.map(cp => (
-            <CheckpointRow key={cp.id} checkpoint={cp} />
+          {stage.checkpoints.map((checkpoint) => (
+            <CheckpointRow key={checkpoint.id} checkpoint={checkpoint} />
           ))}
         </div>
       )}

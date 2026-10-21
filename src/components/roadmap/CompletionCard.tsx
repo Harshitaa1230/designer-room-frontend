@@ -4,9 +4,11 @@ interface CompletionCardProps {
 }
 
 export default function CompletionCard({
-  completedTopics: _completedTopics,
-  totalTopics: _totalTopics,
+  completedTopics,
+  totalTopics,
 }: CompletionCardProps) {
+  const pct = totalTopics === 0 ? 0 : Math.round((completedTopics / totalTopics) * 100)
+
   return (
     <div className="px-8 sm:px-12 md:px-16 pt-[48px] pb-[64px]">
       <div className="relative overflow-hidden bg-[#11100f] border border-[#302923] rounded-[24px] p-[64px] flex flex-col gap-[24px]">
@@ -22,6 +24,11 @@ export default function CompletionCard({
         <p className="text-[18px] text-[#b6ada4] leading-relaxed max-w-[560px]">
           Finish the six stages, publish a case study, then apply for jobs or
           freelance. That's the whole plan.
+        </p>
+
+        {/* Completion status */}
+        <p className="text-[14px] text-[#827a73]">
+          {completedTopics} of {totalTopics} topics done ({pct}%)
         </p>
 
         {/* Buttons row */}

@@ -1,21 +1,31 @@
+import { Link } from 'react-router-dom'
+
 interface ProgressCardProps {
   completedTopics: number
   totalTopics: number
   continueTopicTitle: string
+  roadmapId: string
+  continueTopicId?: string
 }
 
 /**
  * Displays the user's overall roadmap completion percentage,
  * a progress bar, and a CTA to continue or start.
- *
- * Requirements: 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 2.10, 3.3, 3.4, 12.2
  */
 export default function ProgressCard({
   completedTopics,
   totalTopics,
   continueTopicTitle,
+  roadmapId,
+  continueTopicId,
 }: ProgressCardProps) {
   const pct = totalTopics === 0 ? 0 : Math.round((completedTopics / totalTopics) * 100)
+  const ctaLabel = continueTopicTitle
+    ? `Continue: ${continueTopicTitle} →`
+    : 'Start where you left off'
+  const ctaHref = continueTopicId
+    ? `/guidebook/${roadmapId}/${continueTopicId}`
+    : `/roadmaps/${roadmapId}`
 
   return (
     <div
@@ -62,13 +72,13 @@ export default function ProgressCard({
       </div>
 
       {/* CTA button */}
-      <button
-        type="button"
+      <Link
+        to={ctaHref}
         className="w-full rounded-full px-[24px] py-[16px] text-[15px] font-semibold text-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff6a00]"
         style={{ background: '#ff6a00', color: '#080808' }}
       >
-        {continueTopicTitle ? `Continue: ${continueTopicTitle} →` : 'Start where you left off'}
-      </button>
+        {ctaLabel}
+      </Link>
 
       {/* Footer note */}
       <p className="text-[12px]" style={{ color: '#827a73' }}>

@@ -1,19 +1,27 @@
-import type { RoadmapData, ProgressState } from '@/data/roadmapData'
+import type { RoadmapMetadata } from '@/lib/endpoints'
+import type { ProgressState } from '@/data/roadmapUtils'
 import ProgressCard from './ProgressCard'
 
 interface PageHeaderProps {
-  roadmap: RoadmapData
+  title: string
+  metadata: RoadmapMetadata | null
   progress: ProgressState
+  roadmapId: string
+  continueTopicId?: string
 }
 
 /**
  * Page header section for the roadmap detail page.
  * Displays the roadmap identity (label, title, subtitle, meta pills),
  * a ProgressCard, and discipline tabs.
- *
- * Requirements: 2.1, 2.2, 2.3, 2.11
  */
-export default function PageHeader({ roadmap, progress }: PageHeaderProps) {
+export default function PageHeader({
+  title,
+  metadata,
+  progress,
+  roadmapId,
+  continueTopicId,
+}: PageHeaderProps) {
   return (
     <section className="px-8 sm:px-12 md:px-16 pt-[40px] pb-[32px] flex flex-col gap-[40px]">
       {/* Title row: left block + ProgressCard */}
@@ -22,7 +30,7 @@ export default function PageHeader({ roadmap, progress }: PageHeaderProps) {
         <div className="flex flex-col gap-[20px] flex-1 min-w-0">
           {/* Roadmap label e.g. "(Roadmap 01)" */}
           <span className="text-[12px]" style={{ color: '#827a73' }}>
-            {roadmap.label}
+            {metadata?.label ?? ''}
           </span>
 
           {/* Large title */}
@@ -33,7 +41,7 @@ export default function PageHeader({ roadmap, progress }: PageHeaderProps) {
               letterSpacing: '-2.88px',
             }}
           >
-            {roadmap.title}
+            {title}
           </h1>
 
           {/* Subtitle */}
@@ -41,12 +49,12 @@ export default function PageHeader({ roadmap, progress }: PageHeaderProps) {
             className="text-[18px] font-normal leading-[28px] max-w-[560px]"
             style={{ color: '#b6ada4' }}
           >
-            {roadmap.subtitle}
+            {metadata?.subtitle ?? ''}
           </p>
 
           {/* Meta pills */}
           <div className="flex flex-wrap gap-[10px]">
-            {roadmap.metaPills.map((pill) => (
+            {(metadata?.metaPills ?? []).map((pill) => (
               <span
                 key={pill}
                 className="rounded-full px-[14px] py-[7px] text-[13px]"
@@ -67,13 +75,15 @@ export default function PageHeader({ roadmap, progress }: PageHeaderProps) {
             completedTopics={progress.completedTopics}
             totalTopics={progress.totalTopics}
             continueTopicTitle={progress.continueTopicTitle}
+            roadmapId={roadmapId}
+            continueTopicId={continueTopicId}
           />
         </div>
       </div>
 
       {/* Discipline tabs row */}
       <div className="flex flex-wrap gap-[12px]">
-        {roadmap.disciplines.map((discipline) =>
+        {(metadata?.disciplines ?? []).map((discipline) =>
           discipline.active ? (
             <button
               key={discipline.label}
@@ -92,7 +102,7 @@ export default function PageHeader({ roadmap, progress }: PageHeaderProps) {
             >
               {discipline.label}
             </button>
-          )
+          ),
         )}
       </div>
     </section>
