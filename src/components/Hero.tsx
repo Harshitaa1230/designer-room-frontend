@@ -33,12 +33,12 @@ export const Hero = () => {
 
         {/* CTAs — mb-2 reserves room for the 3D edge shadow */}
         <div className="mt-8 mb-2 flex flex-col items-center gap-3 sm:flex-row">
-          <a
-            href="#start-practising"
+          <Link
+            to="/login"
             className="btn-3d inline-flex items-center justify-center gap-2 px-6 py-3.5 text-sm"
           >
             Start Practising →
-          </a>
+          </Link>
           <Link
             to="/roadmaps"
             className="btn-3d-ghost inline-flex items-center justify-center px-6 py-3.5 text-sm"
