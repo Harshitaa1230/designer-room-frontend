@@ -96,7 +96,6 @@ export function RoadmapsPage() {
 
       {/* ── Header ── */}
       <header className="relative z-10 flex flex-col gap-3 px-8 pb-8 pt-8 sm:px-12 md:px-16">
-        <p className="text-[13px] text-white/65">(Roadmaps)</p>
         <h1 className="text-[32px] leading-none font-medium tracking-[-0.03em] text-white sm:text-[36px] md:text-[40px] lg:text-[44px]">
           Pick your path.
         </h1>

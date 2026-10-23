@@ -44,13 +44,6 @@ export const FeaturesSection = () => (
     aria-labelledby="features-list-heading"
     className="mx-auto w-full max-w-[1440px] px-8 sm:px-12 md:px-16 pt-16 pb-24"
   >
-    {/* Eyebrow */}
-    <p
-      id="features-list-heading"
-      className="mb-6 text-[13px] text-white/65 light:text-zinc-500"
-    >
-      (What's inside)
-    </p>
 
     {/* Feature rows */}
     <ul className="feature-list border-t border-white/[0.08] light:border-zinc-200">
