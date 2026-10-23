@@ -19,7 +19,7 @@ function RoadmapCard({ roadmap }: { roadmap: RoadmapSummary }) {
       to={`/roadmaps/${roadmap.id}`}
       aria-label={`${roadmap.title} — ${meta}`}
       className={[
-        'roadmap-card group relative flex min-h-[260px] flex-1 min-w-0 flex-col gap-3 rounded-[20px] border p-6',
+        'roadmap-card group relative flex w-full min-h-[220px] min-w-0 flex-col gap-3 rounded-[20px] border p-5 sm:min-h-[260px] sm:p-6',
         'bg-[#11100f] transition-all duration-300',
         'hover:-translate-y-0.5 hover:border-[rgba(255,106,26,0.6)] hover:shadow-[0_0_40px_rgba(255,106,26,0.18)]',
         'focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#ff6a1a]',
@@ -37,12 +37,12 @@ function RoadmapCard({ roadmap }: { roadmap: RoadmapSummary }) {
       </div>
 
       {/* Title */}
-      <h2 className="text-[28px] font-medium leading-[34px] tracking-[-0.4px] text-white">
+      <h2 className="text-[22px] font-medium leading-[1.25] tracking-[-0.4px] text-white break-words sm:text-[28px] sm:leading-[34px]">
         {roadmap.title}
       </h2>
 
       {/* Description */}
-      <p className="max-w-[420px] text-[15px] font-normal leading-[22px] text-[#b6ada4]">
+      <p className="max-w-[420px] text-[14px] font-normal leading-[21px] text-[#b6ada4] break-words sm:text-[15px] sm:leading-[22px]">
         {roadmap.description ?? roadmap.metadata?.subtitle ?? ''}
       </p>
 
@@ -74,46 +74,48 @@ export function RoadmapsPage() {
   })
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-[#080808] text-white pt-20">
+    <div className="relative min-h-screen w-full bg-[#080808] text-white pt-20">
 
-      {/* Background glow */}
+      {/* Background glow — clipped only within this decorative layer */}
       <div
-        className="pointer-events-none absolute left-[300px] top-[-240px] h-[420px] w-[820px] select-none"
+        className="pointer-events-none absolute inset-0 overflow-hidden"
         aria-hidden="true"
       >
-        <img
-          src={glowPrimary}
-          alt=""
-          className="absolute block"
-          style={{
-            inset: '-38.1% -19.51%',
-            width: 'calc(100% + 39.02%)',
-            height: 'calc(100% + 76.2%)',
-            maxWidth: 'none',
-          }}
-        />
+        <div className="absolute left-[300px] top-[-240px] h-[420px] w-[820px] select-none">
+          <img
+            src={glowPrimary}
+            alt=""
+            className="absolute block"
+            style={{
+              inset: '-38.1% -19.51%',
+              width: 'calc(100% + 39.02%)',
+              height: 'calc(100% + 76.2%)',
+              maxWidth: 'none',
+            }}
+          />
+        </div>
       </div>
 
       {/* ── Header ── */}
-      <header className="relative z-10 flex flex-col gap-3 px-8 pb-8 pt-8 sm:px-12 md:px-16">
-        <h1 className="text-[32px] leading-none font-medium tracking-[-0.03em] text-white sm:text-[36px] md:text-[40px] lg:text-[44px]">
+      <header className="relative z-10 flex flex-col gap-3 px-5 pb-6 pt-6 sm:px-12 sm:pb-8 sm:pt-8 md:px-16">
+        <h1 id="roadmaps-heading" className="text-[28px] leading-none font-medium tracking-[-0.03em] text-white sm:text-[36px] md:text-[40px] lg:text-[44px]">
           Pick your path.
         </h1>
-        <p className="max-w-[52ch] text-[16px] font-normal leading-[24px] text-white/[0.72] text-balance">
+        <p className="max-w-[52ch] text-[15px] font-normal leading-[23px] text-white/[0.72] text-balance sm:text-[16px] sm:leading-[24px]">
           Step-by-step plans you can actually finish. Tick things off, watch the bar move, switch
           paths anytime.
         </p>
       </header>
 
       {/* ── Grid ── */}
-      <main className="relative z-10 flex flex-col gap-4 px-8 pb-16 sm:px-12 md:px-16">
+      <section aria-labelledby="roadmaps-heading" className="relative z-10 grid grid-cols-1 gap-4 px-5 pb-12 sm:grid-cols-2 sm:px-12 sm:pb-16 md:px-16 lg:grid-cols-4">
         {roadmaps.isPending && (
-          <div className="flex items-center gap-2 rounded-[20px] border border-[#302923] bg-[#11100f] p-6 text-sm text-[#827a73]">
+          <div className="flex items-center gap-2 rounded-[20px] border border-[#302923] bg-[#11100f] p-6 text-sm text-[#827a73] sm:col-span-2 lg:col-span-4">
             <Spinner /> Loading roadmaps…
           </div>
         )}
         {roadmaps.isError && (
-          <div className="flex flex-wrap items-center gap-3 rounded-[20px] border border-[#302923] bg-[#11100f] p-6">
+          <div className="flex flex-wrap items-center gap-3 rounded-[20px] border border-[#302923] bg-[#11100f] p-6 sm:col-span-2 lg:col-span-4">
             <p className="text-sm text-[#ff6a1a]">
               {messageOf(roadmaps.error, 'Could not load roadmaps.')}
             </p>
@@ -127,25 +129,22 @@ export function RoadmapsPage() {
           </div>
         )}
         {roadmaps.data && roadmaps.data.items.length === 0 && (
-          <p className="rounded-[20px] border border-[#302923] bg-[#11100f] p-6 text-sm text-[#827a73]">
+          <p className="rounded-[20px] border border-[#302923] bg-[#11100f] p-6 text-sm text-[#827a73] sm:col-span-2 lg:col-span-4">
             No roadmaps have been published yet.
           </p>
         )}
-        {roadmaps.data && roadmaps.data.items.length > 0 && (
-          <div className="flex flex-wrap gap-4">
-            {roadmaps.data.items.map((roadmap) => (
-              <RoadmapCard key={roadmap.id} roadmap={roadmap} />
-            ))}
-          </div>
-        )}
-      </main>
+        {roadmaps.data && roadmaps.data.items.length > 0 &&
+          roadmaps.data.items.map((roadmap) => (
+            <RoadmapCard key={roadmap.id} roadmap={roadmap} />
+          ))}
+      </section>
 
       {/* ── Footer ── */}
-      <footer className="relative z-10 flex items-center justify-between border-t border-[#302923] px-8 py-8 sm:px-12 md:px-16">
+      <footer className="relative z-10 flex flex-col items-start gap-3 border-t border-[#302923] px-5 py-6 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-12 sm:py-8 md:px-16">
         <p className="text-[12px] text-[#827a73]">© 2026 Designer's Room · Beta 1</p>
         <button
           type="button"
-          className="rounded-full border border-[#302923] px-4 py-2 text-[12px] font-medium text-white transition-colors hover:border-[#504740] hover:bg-white/[0.04]"
+          className="rounded-full border border-[#302923] px-4 py-2.5 text-[12px] font-medium text-white transition-colors hover:border-[#504740] hover:bg-white/[0.04] sm:py-2"
         >
           Send feedback
         </button>

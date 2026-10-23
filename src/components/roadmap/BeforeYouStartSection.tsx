@@ -6,16 +6,16 @@ interface BeforeYouStartSectionProps {
 
 export default function BeforeYouStartSection({ cards }: BeforeYouStartSectionProps) {
   return (
-    <section className="px-8 sm:px-12 md:px-16 py-[48px] flex flex-col gap-[24px]">
+    <section className="px-5 sm:px-12 md:px-16 py-[32px] sm:py-[48px] flex flex-col gap-[18px] sm:gap-[24px]">
       {/* Section label */}
       <span className="text-[12px] text-[#827a73]">(Before you start)</span>
 
       {/* Cards row */}
-      <div className="flex flex-col md:flex-row gap-[16px] items-stretch">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[12px] sm:gap-[16px] items-stretch">
         {cards.map((card, index) => (
           <div
             key={index}
-            className="flex-1 min-w-0 bg-[#11100f] border border-[#302923] rounded-[20px] p-[28px] flex flex-col gap-[14px]"
+            className="min-w-0 bg-[#11100f] border border-[#302923] rounded-[16px] sm:rounded-[20px] p-[20px] sm:p-[28px] flex flex-col gap-[12px] sm:gap-[14px]"
           >
             {/* Colored heading */}
             <p className="text-[12px] font-semibold text-[#ff6a00] tracking-[1.44px]">
@@ -23,7 +23,7 @@ export default function BeforeYouStartSection({ cards }: BeforeYouStartSectionPr
             </p>
 
             {/* Title */}
-            <p className="text-[22px] font-medium text-[#fff8ee] leading-[28px] tracking-[-0.11px]">
+            <p className="text-[18px] sm:text-[22px] font-medium text-[#fff8ee] leading-[26px] sm:leading-[28px] tracking-[-0.11px]">
               {card.title}
             </p>
 
@@ -32,7 +32,7 @@ export default function BeforeYouStartSection({ cards }: BeforeYouStartSectionPr
               {card.bullets.map((bullet, bulletIndex) => (
                 <div key={bulletIndex} className="flex gap-[10px] items-start">
                   <span className="text-[#ff6a00] text-[15px] shrink-0">•</span>
-                  <span className="text-[#b6ada4] text-[15px] leading-normal">{bullet}</span>
+                  <span className="text-[#b6ada4] text-[14px] sm:text-[15px] leading-normal break-words">{bullet}</span>
                 </div>
               ))}
             </div>

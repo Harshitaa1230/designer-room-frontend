@@ -29,7 +29,7 @@ export default function ProgressCard({
 
   return (
     <div
-      className="w-full max-w-[400px] flex flex-col gap-[18px] rounded-[24px] p-[28px]"
+      className="w-full max-w-full lg:max-w-[400px] flex flex-col gap-[16px] sm:gap-[18px] rounded-[20px] sm:rounded-[24px] p-[20px] sm:p-[28px]"
       style={{ background: '#11100f', border: '1px solid #302923' }}
     >
       {/* "YOUR PROGRESS" label */}
@@ -43,7 +43,7 @@ export default function ProgressCard({
       {/* Big number row */}
       <div className="flex flex-row items-end gap-[12px]">
         <span
-          className="text-[72px] font-medium leading-[72px] tracking-[-2.16px]"
+          className="text-[56px] sm:text-[72px] font-medium leading-[56px] sm:leading-[72px] tracking-[-2.16px]"
           style={{ color: '#fff8ee' }}
         >
           {pct}%
@@ -74,7 +74,7 @@ export default function ProgressCard({
       {/* CTA button */}
       <Link
         to={ctaHref}
-        className="w-full rounded-full px-[24px] py-[16px] text-[15px] font-semibold text-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff6a00]"
+        className="w-full rounded-full px-[20px] py-[12px] text-[14px] sm:px-[24px] sm:py-[16px] sm:text-[15px] font-semibold text-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff6a00]"
         style={{ background: '#ff6a00', color: '#080808' }}
       >
         {ctaLabel}

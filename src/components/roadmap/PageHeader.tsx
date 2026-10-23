@@ -23,11 +23,11 @@ export default function PageHeader({
   continueTopicId,
 }: PageHeaderProps) {
   return (
-    <section className="px-8 sm:px-12 md:px-16 pt-[40px] pb-[32px] flex flex-col gap-[40px]">
+    <section className="px-5 sm:px-12 md:px-16 pt-[28px] sm:pt-[40px] pb-[24px] sm:pb-[32px] flex flex-col gap-[28px] sm:gap-[40px]">
       {/* Title row: left block + ProgressCard */}
-      <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-8 md:gap-6">
+      <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-6 lg:gap-8">
         {/* Left block */}
-        <div className="flex flex-col gap-[20px] flex-1 min-w-0">
+        <div className="flex flex-col gap-[16px] sm:gap-[20px] flex-1 min-w-0">
           {/* Roadmap label e.g. "(Roadmap 01)" */}
           <span className="text-[12px]" style={{ color: '#827a73' }}>
             {metadata?.label ?? ''}
@@ -35,7 +35,7 @@ export default function PageHeader({
 
           {/* Large title */}
           <h1
-            className="text-[64px] md:text-[96px] font-medium leading-[1] whitespace-pre-line"
+            className="text-[42px] sm:text-[64px] md:text-[80px] lg:text-[96px] font-medium leading-[1.02] break-words"
             style={{
               color: '#fff8ee',
               letterSpacing: '-2.88px',
@@ -46,18 +46,18 @@ export default function PageHeader({
 
           {/* Subtitle */}
           <p
-            className="text-[18px] font-normal leading-[28px] max-w-[560px]"
+            className="text-[16px] sm:text-[18px] font-normal leading-[26px] sm:leading-[28px] max-w-[560px] break-words"
             style={{ color: '#b6ada4' }}
           >
             {metadata?.subtitle ?? ''}
           </p>
 
           {/* Meta pills */}
-          <div className="flex flex-wrap gap-[10px]">
+          <div className="flex flex-wrap gap-[8px] sm:gap-[10px]">
             {(metadata?.metaPills ?? []).map((pill) => (
               <span
                 key={pill}
-                className="rounded-full px-[14px] py-[7px] text-[13px]"
+                className="rounded-full px-[12px] py-[6px] text-[12px] sm:px-[14px] sm:py-[7px] sm:text-[13px]"
                 style={{
                   border: '1px solid #302923',
                   color: '#b6ada4',
@@ -70,7 +70,7 @@ export default function PageHeader({
         </div>
 
         {/* Right block: ProgressCard */}
-        <div className="shrink-0 w-full md:w-auto">
+        <div className="shrink-0 w-full lg:w-auto">
           <ProgressCard
             completedTopics={progress.completedTopics}
             totalTopics={progress.totalTopics}
@@ -82,13 +82,13 @@ export default function PageHeader({
       </div>
 
       {/* Discipline tabs row */}
-      <div className="flex flex-wrap gap-[12px]">
+      <div className="flex flex-wrap gap-[8px] sm:gap-[12px]">
         {(metadata?.disciplines ?? []).map((discipline) =>
           discipline.active ? (
             <button
               key={discipline.label}
               type="button"
-              className="rounded-full px-[20px] py-[11px] text-[14px] font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff6a00]"
+              className="rounded-full px-[16px] py-[9px] text-[13px] font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff6a00] sm:px-[20px] sm:py-[11px] sm:text-[14px]"
               style={{ background: '#fff8ee', color: '#080808' }}
             >
               {discipline.label}
@@ -97,7 +97,7 @@ export default function PageHeader({
             <button
               key={discipline.label}
               type="button"
-              className="rounded-full px-[20px] py-[11px] text-[14px] font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff6a00]"
+              className="rounded-full px-[16px] py-[9px] text-[13px] font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff6a00] sm:px-[20px] sm:py-[11px] sm:text-[14px]"
               style={{ border: '1px solid #302923', color: '#b6ada4' }}
             >
               {discipline.label}

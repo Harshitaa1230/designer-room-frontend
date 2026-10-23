@@ -134,7 +134,7 @@ export const Navbar = () => {
         </div>
 
         {/* Right side: theme toggle + CTA + mobile menu trigger */}
-        <div className={cn('flex shrink-0 items-center gap-2 sm:gap-3', !scrolled && 'sm:pr-12 md:pr-16')}>
+        <div className={cn('flex shrink-0 items-center gap-1 sm:gap-2 md:gap-3', !scrolled && 'sm:pr-12 md:pr-16')}>
           {/* Theme toggle */}
           <button
             type="button"

@@ -103,7 +103,7 @@ export function RoadmapDetailPage() {
       />
 
       {/* Stages section */}
-      <div className="px-8 sm:px-12 md:px-16 py-[48px] flex flex-col gap-[16px]">
+      <div className="px-5 sm:px-12 md:px-16 py-[32px] sm:py-[48px] flex flex-col gap-[12px] sm:gap-[16px] overflow-x-hidden">
         {stageViews.length === 0 && (
           <p className="flex items-center gap-2 text-sm text-[#827a73]">
             <Spinner /> This roadmap has no stages yet.
@@ -119,9 +119,9 @@ export function RoadmapDetailPage() {
             />
             {/* Quote divider between stages */}
             {index < stageViews.length - 1 && quotes[index] && (
-              <div className="py-[48px] flex flex-col items-center gap-[16px]">
+              <div className="py-[32px] sm:py-[48px] flex flex-col items-center gap-[12px] sm:gap-[16px]">
                 <div className="w-[32px] h-[2px] bg-[#302923] rounded-full" />
-                <p className="text-[20px] font-medium text-[#b6ada4] text-center max-w-[720px] leading-relaxed tracking-[-0.1px] italic">
+                <p className="text-[16px] sm:text-[20px] font-medium text-[#b6ada4] text-center max-w-[720px] leading-relaxed tracking-[-0.1px] italic px-2">
                   "{quotes[index]}"
                 </p>
               </div>

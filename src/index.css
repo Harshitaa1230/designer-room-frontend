@@ -347,10 +347,10 @@ html.light .hero::after {
 /* ── Features list ───────────────────────────────────────────────────────── */
 .feature-row {
   display: grid;
-  grid-template-columns: 48px minmax(0, 1fr);
+  grid-template-columns: 32px minmax(0, 1fr);
   align-items: center;
-  column-gap: 16px;
-  row-gap: 8px;
+  column-gap: 12px;
+  row-gap: 6px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   transition: background-color 0.2s ease;
 }
@@ -366,6 +366,14 @@ html.light .feature-row {
 }
 .feature-arrow-slot {
   display: none;
+}
+
+@media (min-width: 640px) {
+  .feature-row {
+    grid-template-columns: 40px minmax(0, 1fr);
+    column-gap: 16px;
+    row-gap: 8px;
+  }
 }
 
 @media (min-width: 768px) {

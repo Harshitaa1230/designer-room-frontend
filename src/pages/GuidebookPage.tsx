@@ -10,19 +10,19 @@ import { FullScreenLoader, Spinner } from '@/components/LoadingState'
 
 const markdownComponents: Components = {
   h1: ({ children }) => (
-    <h1 className="mt-0 mb-4 text-[36px] font-medium leading-[1.1] tracking-[-0.02em] text-[#fff8ee]">
+    <h1 className="mt-0 mb-3 text-[28px] font-medium leading-[1.1] tracking-[-0.02em] text-[#fff8ee] sm:mb-4 sm:text-[36px]">
       {children}
     </h1>
   ),
   h2: ({ children }) => (
-    <h2 className="mt-10 mb-3 text-[24px] font-medium leading-tight text-[#fff8ee]">{children}</h2>
+    <h2 className="mt-8 mb-2 text-[20px] font-medium leading-tight text-[#fff8ee] sm:mt-10 sm:mb-3 sm:text-[24px]">{children}</h2>
   ),
   h3: ({ children }) => (
-    <h3 className="mt-8 mb-2 text-[19px] font-medium text-[#fff8ee]">{children}</h3>
+    <h3 className="mt-6 mb-2 text-[17px] font-medium text-[#fff8ee] sm:mt-8 sm:text-[19px]">{children}</h3>
   ),
-  p: ({ children }) => <p className="my-4 text-[16px] leading-[28px] text-[#b6ada4]">{children}</p>,
-  ul: ({ children }) => <ul className="my-4 list-disc pl-6 text-[16px] leading-[28px] text-[#b6ada4]">{children}</ul>,
-  ol: ({ children }) => <ol className="my-4 list-decimal pl-6 text-[16px] leading-[28px] text-[#b6ada4]">{children}</ol>,
+  p: ({ children }) => <p className="my-3 text-[15px] leading-[26px] text-[#b6ada4] sm:my-4 sm:text-[16px] sm:leading-[28px]">{children}</p>,
+  ul: ({ children }) => <ul className="my-3 list-disc pl-5 text-[15px] leading-[26px] text-[#b6ada4] sm:my-4 sm:pl-6 sm:text-[16px] sm:leading-[28px]">{children}</ul>,
+  ol: ({ children }) => <ol className="my-3 list-decimal pl-5 text-[15px] leading-[26px] text-[#b6ada4] sm:my-4 sm:pl-6 sm:text-[16px] sm:leading-[28px]">{children}</ol>,
   li: ({ children }) => <li className="my-1">{children}</li>,
   strong: ({ children }) => <strong className="font-semibold text-[#fff8ee]">{children}</strong>,
   em: ({ children }) => <em className="italic">{children}</em>,
@@ -32,23 +32,23 @@ const markdownComponents: Components = {
     </a>
   ),
   blockquote: ({ children }) => (
-    <blockquote className="my-6 border-l-2 border-[#ff6a00] pl-4 text-[18px] italic leading-[30px] text-[#b6ada4]">
+    <blockquote className="my-5 border-l-2 border-[#ff6a00] pl-4 text-[16px] italic leading-[26px] text-[#b6ada4] sm:my-6 sm:text-[18px] sm:leading-[30px]">
       {children}
     </blockquote>
   ),
   code: ({ children }) => (
-    <code className="rounded bg-[#1d1916] px-1.5 py-0.5 font-mono text-[14px] text-[#ffd0a3]">
+    <code className="rounded bg-[#1d1916] px-1.5 py-0.5 font-mono text-[13px] text-[#ffd0a3] sm:text-[14px]">
       {children}
     </code>
   ),
   pre: ({ children }) => (
-    <pre className="my-5 overflow-x-auto rounded-[16px] border border-[#302923] bg-[#11100f] p-4 text-[14px]">
+    <pre className="my-4 overflow-x-auto rounded-[14px] border border-[#302923] bg-[#11100f] p-3 text-[13px] sm:my-5 sm:rounded-[16px] sm:p-4 sm:text-[14px]">
       {children}
     </pre>
   ),
   hr: () => <hr className="my-8 border-[#302923]" />,
   table: ({ children }) => (
-    <table className="my-5 w-full border-collapse text-left text-[15px] text-[#b6ada4]">{children}</table>
+    <table className="my-4 w-full border-collapse text-left text-[14px] text-[#b6ada4] sm:my-5 sm:text-[15px]">{children}</table>
   ),
   th: ({ children }) => (
     <th className="border-b border-[#302923] px-3 py-2 font-semibold text-[#fff8ee]">{children}</th>
@@ -102,7 +102,7 @@ export function GuidebookPage() {
 
   if (roadmap.isError) {
     return (
-      <div className="flex min-h-[60vh] flex-col items-center justify-center gap-3 px-8 text-center">
+      <div className="flex min-h-[60vh] flex-col items-center justify-center gap-3 px-5 text-center">
         <p className="text-sm text-[#ff6a1a]">
           {messageOf(roadmap.error, 'Could not load this topic.')}
         </p>
@@ -123,9 +123,9 @@ export function GuidebookPage() {
 
   return (
     <div className="min-h-screen w-full bg-[#080808] text-white pt-20">
-      <div className="mx-auto flex w-full max-w-[820px] flex-col gap-8 px-8 pb-24 pt-[40px] sm:px-12">
+      <div className="mx-auto flex w-full max-w-[820px] flex-col gap-6 px-5 pb-16 pt-6 sm:gap-8 sm:px-12 sm:pb-24 sm:pt-10">
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-[12px] text-[#827a73]">
+        <nav className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] text-[#827a73] sm:text-[12px]">
           <Link to="/roadmaps" className="hover:text-white">
             Roadmaps
           </Link>
@@ -143,10 +143,10 @@ export function GuidebookPage() {
 
         {/* Topic header */}
         <header className="flex flex-col gap-3">
-          <h1 className="text-[36px] font-medium leading-[1.1] tracking-[-0.02em] text-[#fff8ee]">
+          <h1 className="text-[28px] font-medium leading-[1.1] tracking-[-0.02em] text-[#fff8ee] sm:text-[36px]">
             {topic?.title ?? 'Topic'}
           </h1>
-          <div className="flex flex-wrap items-center gap-3 text-[13px] text-[#827a73]">
+          <div className="flex flex-wrap items-center gap-2 text-[12px] text-[#827a73] sm:gap-3 sm:text-[13px]">
             {stage && <span>{stage.title}</span>}
             {topic?.difficulty && <span>· {topic.difficulty}</span>}
             {topic?.estimatedMinutes ? <span>· {topic.estimatedMinutes} min</span> : null}
@@ -161,7 +161,7 @@ export function GuidebookPage() {
             </p>
           )}
           {content.isError && (
-            <div className="rounded-[20px] border border-[#302923] bg-[#11100f] p-6">
+            <div className="rounded-[16px] border border-[#302923] bg-[#11100f] p-4 sm:rounded-[20px] sm:p-6">
               <p className="text-sm text-[#b6ada4]">
                 {statusOf(content.error) === 503
                   ? 'Document storage is not configured yet, so this topic cannot be served.'
@@ -182,7 +182,7 @@ export function GuidebookPage() {
             type="button"
             disabled={updateProgress.isPending}
             onClick={() => updateProgress.mutate('done')}
-            className="rounded-full bg-[#ff6a00] px-5 py-2.5 text-[14px] font-semibold text-[#080808] transition-opacity hover:opacity-90 disabled:opacity-50"
+            className="rounded-full bg-[#ff6a00] px-4 py-2 text-[13px] font-semibold text-[#080808] transition-opacity hover:opacity-90 disabled:opacity-50 sm:px-5 sm:py-2.5 sm:text-[14px]"
           >
             {status === 'done' ? 'Completed ✓' : 'Mark as done'}
           </button>
@@ -190,7 +190,7 @@ export function GuidebookPage() {
             type="button"
             disabled={updateProgress.isPending || status === 'in-progress'}
             onClick={() => updateProgress.mutate('in-progress')}
-            className="rounded-full border border-[#302923] px-5 py-2.5 text-[14px] font-medium text-white transition-colors hover:border-[#504740] hover:bg-white/[0.04] disabled:opacity-50"
+            className="rounded-full border border-[#302923] px-4 py-2 text-[13px] font-medium text-white transition-colors hover:border-[#504740] hover:bg-white/[0.04] disabled:opacity-50 sm:px-5 sm:py-2.5 sm:text-[14px]"
           >
             {status === 'in-progress' ? 'In progress' : 'Start reading'}
           </button>
