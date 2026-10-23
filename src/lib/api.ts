@@ -34,33 +34,32 @@ apiClient.interceptors.request.use((config) => {
 let refreshInFlight: Promise<string | null> | null = null
 
 async function postRefresh(): Promise<string | null> {
-  try {
-    const res = await axios.post<{ access_token: string }>(
-      `${API_BASE_URL}/auth/refresh`,
-      {},
-      { withCredentials: true, headers: { 'Content-Type': 'application/json' } },
-    )
-    return res.data.access_token
-  } catch (error) {
-    // Throttled: the request never reached the handler, so the refresh cookie
-    // was not rotated — one bounded retry keeps rapid page loads working.
-    if (axios.isAxiosError(error) && error.response?.status === 429) {
-      const retryAfter = Number(error.response.headers['retry-after'])
-      const delay = Number.isFinite(retryAfter) && retryAfter > 0 ? Math.min(retryAfter, 5) * 1000 : 3000
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    try {
+      const res = await axios.post<{ access_token: string }>(
+        `${API_BASE_URL}/auth/refresh`,
+        {},
+        { withCredentials: true, headers: { 'Content-Type': 'application/json' } },
+      )
+      return res.data.access_token
+    } catch (error) {
+      if (!axios.isAxiosError(error) || attempt === 2) return null
+
+      const status = error.response?.status
+      const retryable = !error.response || status === 429 || (status ?? 0) >= 500
+      if (!retryable) return null
+
+      const retryAfter = Number(error.response?.headers['retry-after'])
+      const delay =
+        status === 429
+          ? Number.isFinite(retryAfter) && retryAfter > 0
+            ? Math.min(retryAfter, 5) * 1000
+            : 3000
+          : 1000 * (attempt + 1)
       await new Promise((resolve) => setTimeout(resolve, delay))
-      try {
-        const res = await axios.post<{ access_token: string }>(
-          `${API_BASE_URL}/auth/refresh`,
-          {},
-          { withCredentials: true, headers: { 'Content-Type': 'application/json' } },
-        )
-        return res.data.access_token
-      } catch {
-        return null
-      }
     }
-    return null
   }
+  return null
 }
 
 export function refreshAccessToken(): Promise<string | null> {
