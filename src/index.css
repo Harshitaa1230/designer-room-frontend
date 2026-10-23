@@ -280,9 +280,11 @@ html.light .feature-row {
   }
   .feature-title {
     min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
     white-space: nowrap;
+    overflow: visible;
+    text-overflow: clip;
+    padding-bottom: 0.05em;
+    line-height: 1.02;
   }
   .feature-arrow-slot {
     display: flex;
