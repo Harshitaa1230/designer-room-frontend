@@ -19,12 +19,12 @@ export const Hero = () => {
 
       {/* Main Content */}
       <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center text-center">
-        <h1 className="mx-auto max-w-[320px] text-[38px] leading-[1.08] font-semibold tracking-[-0.03em] text-[#fffaee] [text-wrap:balance] sm:max-w-none sm:text-5xl md:text-7xl lg:text-[84px]">
+        <h1 className="mx-auto max-w-[300px] text-[34px] leading-[1.12] font-semibold tracking-[-0.03em] text-[#fffaee] [text-wrap:balance] sm:max-w-none sm:text-5xl sm:leading-[1.08] md:text-7xl lg:text-[84px]">
           <span className="block">Your design journey,</span>
-          <span className="mt-1 block">all in one room.</span>
+          <span className="mt-0.5 block">all in one room.</span>
         </h1>
 
-        <p className="mx-auto mt-6 max-w-[300px] text-[15px] leading-[1.8] font-[450] tracking-normal text-white/95 [text-shadow:0_1px_14px_rgba(0,0,0,.4)] [text-wrap:pretty] sm:mt-7 sm:max-w-[940px] sm:text-base md:text-lg lg:text-xl">
+        <p className="mx-auto mt-5 max-w-[325px] text-[13px] leading-[1.64] font-[450] tracking-normal text-white/95 [text-shadow:0_1px_14px_rgba(0,0,0,.4)] [text-wrap:pretty] sm:mt-7 sm:max-w-[940px] sm:text-base sm:leading-relaxed md:text-lg lg:text-xl">
           Everything that took us years to figure out, organized in one place. Structured roadmaps,
           <br className="hidden sm:inline" />
           theory without the fluff, challenges that build your portfolio, and a community to grow
