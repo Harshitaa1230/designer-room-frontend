@@ -6,29 +6,29 @@ interface CheckpointRowProps {
 
 export function CheckpointRow({ checkpoint }: CheckpointRowProps) {
   return (
-    <div className="flex gap-[24px] items-center px-[32px] py-[24px] border-t border-[#302923] bg-[rgba(74,27,12,0.35)]">
+    <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 gap-y-2 border-t border-[#302923] bg-[rgba(74,27,12,0.35)] px-4 py-4 sm:grid-cols-[auto_minmax(0,1fr)_auto_auto] sm:gap-x-4 sm:px-6 sm:py-5 lg:gap-x-6 lg:px-8 lg:py-6">
       {/* "CHECKPOINT" label */}
-      <span className="text-[11px] font-semibold text-[#ff6a00] tracking-[1.32px] shrink-0">
+      <span className="col-span-2 text-[11px] font-semibold tracking-[1.32px] text-[#ff6a00] sm:col-span-1 sm:shrink-0">
         CHECKPOINT
       </span>
 
       {/* Task description */}
-      <span className="text-[20px] font-medium text-[#fff8ee] tracking-[-0.1px] leading-normal min-w-0 flex-1">
+      <span className="col-span-2 min-w-0 break-words text-[16px] font-medium leading-normal tracking-[-0.1px] text-[#fff8ee] sm:col-span-1 sm:text-[18px] lg:text-[20px]">
         {checkpoint.task}
       </span>
 
       {/* Time estimate */}
-      <span className="text-[14px] text-[#b6ada4] shrink-0 whitespace-nowrap">
+      <span className="text-[12px] text-[#b6ada4] sm:text-[13px] lg:text-[14px]">
         {checkpoint.timeEstimate}
       </span>
 
       {/* Status pill */}
       {checkpoint.status === 'done' ? (
-        <span className="bg-[#4a1b0c] rounded-full px-[14px] py-[7px] text-[13px] font-medium text-[#ffd0a3] shrink-0">
+        <span className="justify-self-end whitespace-nowrap rounded-full bg-[#4a1b0c] px-3 py-1.5 text-[12px] font-medium text-[#ffd0a3] sm:px-[14px] sm:py-[7px] sm:text-[13px]">
           ✓&nbsp;&nbsp;Done
         </span>
       ) : (
-        <span className="border border-[#302923] rounded-full px-[17px] py-[9px] text-[13px] text-[#fff8ee] shrink-0">
+        <span className="justify-self-end whitespace-nowrap rounded-full border border-[#302923] px-3 py-1.5 text-[12px] text-[#fff8ee] sm:px-[17px] sm:py-[9px] sm:text-[13px]">
           See brief →
         </span>
       )}

@@ -104,24 +104,24 @@ export const Navbar = () => {
         )}
       >
         {/* Brand */}
-        <div className={cn('flex shrink-0 items-center gap-[10px]', !scrolled && 'sm:pl-12 md:pl-16')}>
+        <div className={cn('flex shrink-0 items-center gap-[10px]', !scrolled && 'sm:pl-12 md:pl-8 lg:pl-16')}>
           <NavLink to="/" className="flex shrink-0 items-center transition-opacity hover:opacity-90">
-            <img src={logo} alt="Designers Room" className="h-8 w-auto shrink-0 sm:h-12 md:h-8.5 dark:invert-0 light:invert" />
+            <img src={logo} alt="Designers Room" className="h-7 w-auto shrink-0 sm:h-12 md:h-8 lg:h-8.5 dark:invert-0 light:invert" />
           </NavLink>
-          <span className="hidden items-center rounded-full border border-white/20 bg-white/[0.04] px-2 py-0.5 text-[10px] font-medium tracking-widest text-[#fffaee] select-none sm:inline-flex light:border-zinc-300 light:bg-zinc-100 light:text-zinc-500">
+          <span className="inline-flex items-center rounded-full border border-white/20 bg-white/[0.04] px-1.5 py-0.5 text-[9px] font-medium tracking-widest text-[#fffaee] select-none sm:px-2 sm:text-[10px] light:border-zinc-300 light:bg-zinc-100 light:text-zinc-500">
             BETA
           </span>
         </div>
 
         {/* Centre nav links — hidden on small screens */}
-        <div className="hidden items-center gap-7 md:flex">
+        <div className="hidden items-center gap-4 md:flex lg:gap-7">
           {NAV_LINKS.map((link) => (
             <NavLink
               key={link.to}
               to={link.to}
               className={({ isActive }) =>
                 cn(
-                  'text-base font-medium opacity-95 transition-colors duration-150',
+                  'text-sm font-medium opacity-95 transition-colors duration-150 lg:text-base',
                   isActive
                     ? 'text-[#fffaee] light:text-zinc-900'
                     : 'text-[#fffaee] hover:text-[#fffaee] light:text-zinc-400 light:hover:text-zinc-700',
@@ -134,14 +134,14 @@ export const Navbar = () => {
         </div>
 
         {/* Right side: theme toggle + CTA + mobile menu trigger */}
-        <div className={cn('flex shrink-0 items-center gap-1 sm:gap-2 md:gap-3', !scrolled && 'sm:pr-12 md:pr-16')}>
+        <div className={cn('flex shrink-0 items-center gap-1 sm:gap-2 md:gap-3', !scrolled && 'sm:pr-12 md:pr-8 lg:pr-16')}>
           {/* Theme toggle */}
           <button
             type="button"
             onClick={toggle}
             aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
             className={cn(
-              'flex size-10 shrink-0 items-center justify-center rounded-full border transition-all duration-200',
+              'flex size-9 shrink-0 items-center justify-center rounded-full border transition-all duration-200 sm:size-10',
               'border-white/15 bg-white/[0.06] text-[#fffaee] hover:bg-white/[0.12] hover:text-[#fffaee]',
               'light:border-zinc-300 light:bg-zinc-100 light:text-zinc-500 light:hover:bg-zinc-200 light:hover:text-zinc-800',
             )}
@@ -152,7 +152,7 @@ export const Navbar = () => {
           {/* CTA */}
           <Link
             to={status === 'authed' ? '/dashboard' : '/login'}
-            className="btn-3d btn-3d--nav hidden items-center gap-2 px-5 py-2.5 text-sm sm:inline-flex"
+            className="btn-3d btn-3d--nav hidden items-center gap-2 px-5 py-2.5 text-sm sm:inline-flex md:px-4 md:text-[13px] lg:px-5 lg:text-sm"
           >
             {status === 'authed' ? 'Dashboard' : 'Get Started'}
             <img src={arrow} alt="" aria-hidden="true" className="invert" />
@@ -166,7 +166,7 @@ export const Navbar = () => {
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
             className={cn(
-              'flex size-10 shrink-0 items-center justify-center rounded-full border transition-all duration-200 md:hidden',
+              'flex size-9 shrink-0 items-center justify-center rounded-full border transition-all duration-200 sm:size-10 md:hidden',
               'border-white/15 bg-white/[0.06] text-[#fffaee] hover:bg-white/[0.12]',
               'light:border-zinc-300 light:bg-zinc-100 light:text-zinc-600 light:hover:bg-zinc-200',
             )}
