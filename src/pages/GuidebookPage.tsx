@@ -142,7 +142,7 @@ export function GuidebookPage() {
 
   return (
     <div className="min-h-screen w-full bg-[#080808] text-white pt-20">
-      <div className="mx-auto flex w-full max-w-[820px] flex-col gap-6 px-5 pb-16 pt-6 sm:gap-8 sm:px-12 sm:pb-24 sm:pt-10">
+      <div className="flex w-full flex-col gap-6 px-5 pb-16 pt-6 sm:gap-8 sm:px-8 sm:pb-24 sm:pt-10 lg:px-16 2xl:px-24">
         {/* Breadcrumb */}
         <nav className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] text-[#827a73] sm:text-[12px]">
           <Link to="/roadmaps" className="hover:text-white">
