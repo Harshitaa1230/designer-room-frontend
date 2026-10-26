@@ -364,9 +364,6 @@ html.light .feature-row {
   justify-self: start;
   min-width: 0;
 }
-.feature-arrow-slot {
-  display: none;
-}
 
 @media (min-width: 640px) {
   .feature-row {
@@ -378,7 +375,7 @@ html.light .feature-row {
 
 @media (min-width: 768px) {
   .feature-row {
-    grid-template-columns: 48px minmax(0, 1fr) 88px 320px 40px;
+    grid-template-columns: 48px minmax(0, 1fr) 88px 320px;
   }
   .feature-pill {
     grid-column: auto;
@@ -394,10 +391,6 @@ html.light .feature-row {
     text-overflow: clip;
     padding-bottom: 0.05em;
     line-height: 1.02;
-  }
-  .feature-arrow-slot {
-    display: flex;
-    justify-content: flex-end;
   }
 }
 .feature-row:hover {
@@ -422,8 +415,7 @@ html.light .feature-row:hover {
 
 @media (prefers-reduced-motion: reduce) {
   .feature-row,
-  .feature-title,
-  .feature-arrow {
+  .feature-title {
     transition: none;
   }
   .feature-row:hover .feature-title {

@@ -19,7 +19,7 @@ const FEATURES: Feature[] = [
   {
     number: '02',
     name: 'Theory',
-    status: 'live',
+    status: 'soon',
     tagline: 'Chapters, quizzes, zero fluff',
     href: '/theory',
   },
@@ -55,7 +55,7 @@ export const FeaturesSection = () => (
         <li key={f.number}>
           <Link
             to={f.href}
-            className="feature-row group w-full cursor-pointer py-5 focus-visible:outline-2 sm:py-7 focus-visible:outline-offset-2 focus-visible:outline-white/70"
+            className="feature-row w-full cursor-pointer py-5 focus-visible:outline-2 sm:py-7 focus-visible:outline-offset-2 focus-visible:outline-white/70"
           >
             {/* Number */}
             <span className="text-[12px] font-normal tabular-nums text-white/50 light:text-zinc-400 sm:text-[13px]">
@@ -88,13 +88,6 @@ export const FeaturesSection = () => (
             {/* Description */}
             <span className="feature-desc text-[13px] text-white/70 light:text-zinc-500 sm:text-[15px]">
               {f.tagline}
-            </span>
-
-            {/* Fixed arrow slot — always reserved, shown on hover */}
-            <span className="feature-arrow-slot" aria-hidden="true">
-              <span className="feature-arrow translate-x-2 text-[18px] leading-none text-white/70 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
-                ↗
-              </span>
             </span>
           </Link>
         </li>
