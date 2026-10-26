@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 interface CompletionCardProps {
   completedTopics: number
   totalTopics: number
@@ -34,20 +36,20 @@ export default function CompletionCard({
         {/* Buttons row */}
         <div className="flex flex-wrap gap-[8px] sm:gap-[12px] mt-[4px] sm:mt-[8px]">
           {/* Primary button */}
-          <button
-            type="button"
-            className="min-h-[44px] bg-[#ff6a00] rounded-full px-[18px] py-[10px] text-[14px] font-semibold text-[#080808] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff6a00] sm:min-h-0 sm:px-[24px] sm:py-[14px] sm:text-[15px]"
+          <Link
+            to="/challenge"
+            className="inline-flex min-h-[44px] items-center justify-center bg-[#ff6a00] rounded-full px-[18px] py-[10px] text-[14px] font-semibold text-[#080808] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff6a00] sm:min-h-0 sm:px-[24px] sm:py-[14px] sm:text-[15px]"
           >
             Join the Weekly Challenge →
-          </button>
+          </Link>
 
           {/* Secondary button */}
-          <button
-            type="button"
-            className="min-h-[44px] border border-[#302923] rounded-full px-[18px] py-[10px] text-[14px] text-white hover:border-[#504740] hover:bg-white/[0.04] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff6a00] sm:min-h-0 sm:px-[24px] sm:py-[14px] sm:text-[15px]"
+          <Link
+            to="/community"
+            className="inline-flex min-h-[44px] items-center justify-center border border-[#302923] rounded-full px-[18px] py-[10px] text-[14px] text-white hover:border-[#504740] hover:bg-white/[0.04] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff6a00] sm:min-h-0 sm:px-[24px] sm:py-[14px] sm:text-[15px]"
           >
             Share your progress
-          </button>
+          </Link>
 
           {/* Disabled button */}
           <button

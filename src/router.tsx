@@ -11,6 +11,7 @@ import { LoginPage } from '@/pages/LoginPage'
 import { AuthCallbackPage } from '@/pages/AuthCallbackPage'
 import { MfaPage } from '@/pages/MfaPage'
 import { WaitlistPage } from '@/pages/WaitlistPage'
+import { ComingSoonPage } from '@/pages/ComingSoonPage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 import { RequireAdmin, RequireAuth } from '@/components/RequireAuth'
 
@@ -21,6 +22,8 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       { path: 'roadmaps', element: <RoadmapsPage /> },
+      { path: 'challenge', element: <ComingSoonPage kind="challenge" /> },
+      { path: 'community', element: <ComingSoonPage kind="community" /> },
       {
         path: 'roadmaps/:id',
         element: (

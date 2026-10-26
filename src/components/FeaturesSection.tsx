@@ -26,7 +26,7 @@ const FEATURES: Feature[] = [
   {
     number: '03',
     name: 'Challenge',
-    status: 'live',
+    status: 'soon',
     tagline: 'One theme. Seven days. Every week.',
     href: '/challenge',
   },
