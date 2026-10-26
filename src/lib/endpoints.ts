@@ -293,10 +293,10 @@ export async function uploadTopicContent(
   roadmapId: string,
   topicId: string,
   file: File,
-): Promise<{ objectKey: string; sizeBytes: number }> {
+): Promise<{ objectKey: string | null; sizeBytes: number }> {
   const body = new FormData()
   body.append('file', file)
-  const { data } = await apiClient.post<{ objectKey: string; sizeBytes: number }>(
+  const { data } = await apiClient.post<{ objectKey: string | null; sizeBytes: number }>(
     `/admin/roadmaps/${roadmapId}/topics/${topicId}/content`,
     body,
     { headers: { 'Content-Type': 'multipart/form-data' } },
