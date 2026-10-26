@@ -7,6 +7,8 @@ import { getRoadmap, getRoadmapProgress, getTopicContent, setTopicProgress } fro
 import type { TopicStatus } from '@/lib/endpoints'
 import { messageOf, statusOf } from '@/lib/api'
 import { FullScreenLoader, Spinner } from '@/components/LoadingState'
+import { TopicDetails } from '@/components/roadmap/TopicDetails'
+import { TopicQuiz } from '@/components/roadmap/TopicQuiz'
 
 const markdownComponents: Components = {
   h1: ({ children }) => (
@@ -90,6 +92,23 @@ export function GuidebookPage() {
   const status = progress.data?.find((entry) => entry.topicId === topicId)?.status
 
   useEffect(() => {
+    if (!topic) {
+      return
+    }
+
+    const metadata = topic.metadata
+    document.title = metadata?.seoTitle ?? `${topic.title} · Designers Room`
+
+    let description = document.querySelector<HTMLMetaElement>('meta[name="description"]')
+    if (!description) {
+      description = document.createElement('meta')
+      description.name = 'description'
+      document.head.appendChild(description)
+    }
+    description.content = metadata?.seoDescription ?? ''
+  }, [topic])
+
+  useEffect(() => {
     if (status === 'not-started' && content.isSuccess) {
       updateProgress.mutate('in-progress')
     }
@@ -153,6 +172,12 @@ export function GuidebookPage() {
           </div>
         </header>
 
+        <TopicDetails
+          metadata={topic?.metadata ?? null}
+          roadmapId={roadmapId}
+          topics={siblingTopics}
+        />
+
         {/* Document */}
         <article className="min-h-[200px]">
           {content.isPending && (
@@ -175,6 +200,8 @@ export function GuidebookPage() {
             </Markdown>
           )}
         </article>
+
+        {topic?.metadata?.quiz?.length ? <TopicQuiz questions={topic.metadata.quiz} /> : null}
 
         {/* Actions */}
         <div className="flex flex-wrap items-center gap-3 border-t border-[#302923] pt-6">
