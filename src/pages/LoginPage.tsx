@@ -32,7 +32,7 @@ const ERROR_COPY: Record<string, string> = {
 
 function AuthCard({ children }: { children: ReactNode }) {
   return (
-    <div className="relative w-full max-w-md overflow-hidden rounded-[20px] border border-[#302923] bg-[#11100f] p-8 shadow-2xl">
+    <div className="relative w-full max-w-md overflow-hidden rounded-[20px] border border-[var(--border-subtle)] bg-[var(--bg-card)] p-8 shadow-2xl">
       <div
         className="pointer-events-none absolute -top-24 left-1/2 h-36 w-72 -translate-x-1/2 rounded-full bg-amber-600 opacity-30 blur-[60px] filter"
         aria-hidden="true"
@@ -52,21 +52,21 @@ export function LoginPage() {
   if (status === 'restoring') return <FullScreenLoader label="Checking your session…" />
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#080808] px-5 text-white">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[var(--bg-page)] px-5 text-[var(--text-primary)]">
       <div
-        className="pointer-events-none absolute -top-32 right-[-120px] h-[420px] w-[520px] rounded-full bg-[radial-gradient(ellipse_at_60%_30%,#ff7a29_0%,#ea580c_40%,transparent_70%)] opacity-50 blur-[80px] filter"
+        className="pointer-events-none absolute -top-32 right-[-120px] h-[420px] w-[520px] rounded-full bg-[radial-gradient(ellipse_at_60%_30%,#ff7a29_0%,#ea580c_40%,transparent_70%)] opacity-50 blur-[80px] filter light:opacity-20"
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute bottom-[-160px] left-[-140px] h-[380px] w-[460px] rounded-full bg-[radial-gradient(circle_at_40%_60%,#c2410c_0%,transparent_70%)] opacity-40 blur-[90px] filter"
+        className="pointer-events-none absolute bottom-[-160px] left-[-140px] h-[380px] w-[460px] rounded-full bg-[radial-gradient(circle_at_40%_60%,#c2410c_0%,transparent_70%)] opacity-40 blur-[90px] filter light:opacity-20"
         aria-hidden="true"
       />
 
       <AuthCard>
         <div className="mb-8 flex flex-col items-center text-center">
-          <img src={logo} alt="" aria-hidden="true" className="mb-5 h-12 w-auto" />
-          <h1 className="text-2xl font-medium tracking-tight text-white">Sign in</h1>
-          <p className="mt-2 max-w-[34ch] text-sm text-[#b6ada4]">
+          <img src={logo} alt="" aria-hidden="true" className="mb-5 h-12 w-auto light:invert" />
+          <h1 className="text-2xl font-medium tracking-tight text-[var(--text-primary)]">Sign in</h1>
+          <p className="mt-2 max-w-[34ch] text-sm text-[var(--text-body)]">
             One account, the whole room. Authentication is handled entirely by Google — we never
             see your password.
           </p>
@@ -75,7 +75,7 @@ export function LoginPage() {
         {error && ERROR_COPY[error] && (
           <p
             role="alert"
-            className="mb-5 rounded-lg border border-[rgba(255,106,26,0.35)] bg-[rgba(255,106,26,0.1)] px-3.5 py-2.5 text-[13px] text-[#ff8a4a]"
+            className="mb-5 rounded-lg border border-[var(--border-accent)] bg-[var(--accent-soft)] px-3.5 py-2.5 text-[13px] text-[var(--accent-text)]"
           >
             {ERROR_COPY[error]}
           </p>
@@ -103,7 +103,7 @@ export function LoginPage() {
           )}
         </button>
 
-        <p className="mt-6 text-center text-[11px] leading-relaxed text-[#827a73]">
+        <p className="mt-6 text-center text-[11px] leading-relaxed text-[var(--text-muted)]">
           New here? Signing in creates your account automatically.
         </p>
       </AuthCard>

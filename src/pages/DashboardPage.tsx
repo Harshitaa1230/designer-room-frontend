@@ -16,7 +16,7 @@ function Card({
 }) {
   return (
     <section
-      className={`rounded-[20px] border border-[#302923] bg-[#11100f] p-6 sm:p-7 ${className}`}
+      className={`rounded-[20px] border border-[var(--border-subtle)] bg-[var(--bg-card)] p-6 sm:p-7 ${className}`}
     >
       {children}
     </section>
@@ -83,10 +83,10 @@ export function DashboardPage() {
       <div className="mx-auto flex max-w-5xl flex-col gap-5">
         {/* Greeting */}
         <header className="flex flex-col gap-2">
-          <h1 className="text-[32px] leading-tight font-medium tracking-[-0.03em] text-white sm:text-[40px]">
+          <h1 className="text-[32px] leading-tight font-medium tracking-[-0.03em] text-[var(--text-primary)] sm:text-[40px]">
             Welcome back{displayName ? `, ${displayName.split(' ')[0]}` : ''}.
           </h1>
-          <p className="max-w-[52ch] text-[15px] leading-relaxed text-[#b6ada4]">
+          <p className="max-w-[52ch] text-[15px] leading-relaxed text-[var(--text-body)]">
             Your room is ready — pick a roadmap and keep the streak going.
           </p>
         </header>
@@ -95,9 +95,9 @@ export function DashboardPage() {
           {/* Profile */}
           <Card className="lg:col-span-2">
             <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-base font-medium text-white">Profile</h2>
+              <h2 className="text-base font-medium text-[var(--text-primary)]">Profile</h2>
               {role === 'ADMIN' && (
-                <span className="inline-flex items-center gap-1 rounded-full border border-[rgba(255,106,26,0.4)] bg-[rgba(255,106,26,0.14)] px-2.5 py-1 text-[10px] font-semibold tracking-wider text-[#ff8a4a] uppercase">
+                <span className="inline-flex items-center gap-1 rounded-full border border-[var(--border-accent)] bg-[var(--accent-soft)] px-2.5 py-1 text-[10px] font-semibold tracking-wider text-[var(--accent-text)] uppercase">
                   <Shield className="h-3 w-3" aria-hidden="true" />
                   Admin
                 </span>
@@ -106,11 +106,11 @@ export function DashboardPage() {
 
             {meQuery.isError ? (
               <div className="space-y-3">
-                <p className="text-sm text-[#ff8a4a]">{messageOf(meQuery.error, 'Could not load your profile.')}</p>
+                <p className="text-sm text-[var(--accent-text)]">{messageOf(meQuery.error, 'Could not load your profile.')}</p>
                 <button
                   type="button"
                   onClick={() => void meQuery.refetch()}
-                  className="rounded-full border border-[#302923] px-4 py-1.5 text-xs font-medium text-white transition-colors hover:border-[#504740] hover:bg-white/[0.04]"
+                  className="rounded-full border border-[var(--border-subtle)] px-4 py-1.5 text-xs font-medium text-[var(--text-primary)] transition-colors hover:border-[var(--border-strong)] hover:bg-[var(--bg-hover)]"
                 >
                   Try again
                 </button>
@@ -118,7 +118,7 @@ export function DashboardPage() {
             ) : (
               <div className="space-y-4">
                 <div>
-                  <p className="text-[11px] tracking-wide text-[#827a73] uppercase">Name</p>
+                  <p className="text-[11px] tracking-wide text-[var(--text-muted)] uppercase">Name</p>
                   {editingName ? (
                     <form
                       className="mt-1.5 flex items-center gap-2"
@@ -133,13 +133,13 @@ export function DashboardPage() {
                         value={nameDraft}
                         onChange={(e) => setNameDraft(e.target.value)}
                         maxLength={100}
-                        className="min-w-0 flex-1 rounded-lg border border-[#302923] bg-[#0b0a09] px-3 py-2 text-sm text-white focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/50 focus:outline-none"
+                        className="min-w-0 flex-1 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-inset)] px-3 py-2 text-sm text-[var(--text-primary)] focus:border-[var(--accent-text)] focus:ring-1 focus:ring-[var(--accent-text)] focus:outline-none"
                       />
                       <button
                         type="submit"
                         disabled={nameMutation.isPending || !nameDraft.trim() || nameDraft.trim() === displayName}
                         aria-label="Save name"
-                        className="flex size-9 items-center justify-center rounded-lg border border-[rgba(255,106,26,0.4)] text-[#ff8a4a] transition-colors hover:bg-[rgba(255,106,26,0.12)] disabled:opacity-40"
+                        className="flex size-9 items-center justify-center rounded-lg border border-[var(--border-accent)] text-[var(--accent-text)] transition-colors hover:bg-[var(--accent-soft)] disabled:opacity-40"
                       >
                         {nameMutation.isPending ? <Spinner className="h-4 w-4" /> : <Save className="h-4 w-4" />}
                       </button>
@@ -151,14 +151,14 @@ export function DashboardPage() {
                           setEditingName(false)
                           nameMutation.reset()
                         }}
-                        className="flex size-9 items-center justify-center rounded-lg border border-[#302923] text-[#827a73] transition-colors hover:text-white"
+                        className="flex size-9 items-center justify-center rounded-lg border border-[var(--border-subtle)] text-[var(--text-muted)] transition-colors hover:text-[var(--text-primary)]"
                       >
                         <X className="h-4 w-4" />
                       </button>
                     </form>
                   ) : (
                     <div className="mt-1 flex items-center gap-2">
-                      <p className="text-[15px] text-white">{displayName || '—'}</p>
+                      <p className="text-[15px] text-[var(--text-primary)]">{displayName || '—'}</p>
                       <button
                         type="button"
                         aria-label="Edit name"
@@ -166,28 +166,28 @@ export function DashboardPage() {
                           setNameDraft(displayName)
                           setEditingName(true)
                         }}
-                        className="text-[#827a73] transition-colors hover:text-[#ff8a4a]"
+                        className="text-[var(--text-muted)] transition-colors hover:text-[var(--accent-text)]"
                       >
                         <Pencil className="h-3.5 w-3.5" />
                       </button>
                     </div>
                   )}
                   {nameMutation.isError && (
-                    <p className="mt-1.5 text-xs text-[#ff8a4a]">{messageOf(nameMutation.error, 'Could not save your name.')}</p>
+                    <p className="mt-1.5 text-xs text-[var(--accent-text)]">{messageOf(nameMutation.error, 'Could not save your name.')}</p>
                   )}
                 </div>
 
                 <div>
-                  <p className="text-[11px] tracking-wide text-[#827a73] uppercase">Email</p>
-                  <p className="mt-1 text-[15px] break-all text-white">{isEmailShown}</p>
+                  <p className="text-[11px] tracking-wide text-[var(--text-muted)] uppercase">Email</p>
+                  <p className="mt-1 text-[15px] break-all text-[var(--text-primary)]">{isEmailShown}</p>
                 </div>
 
                 {role === 'ADMIN' && (
                   <Link
                     to="/admin"
-                    className="inline-flex items-center gap-2 rounded-full border border-[#302923] px-4 py-2 text-xs font-medium text-white transition-colors hover:border-[rgba(255,106,26,0.6)] hover:bg-[rgba(255,106,26,0.1)]"
+                    className="inline-flex items-center gap-2 rounded-full border border-[var(--border-subtle)] px-4 py-2 text-xs font-medium text-[var(--text-primary)] transition-colors hover:border-[var(--accent-text)] hover:bg-[var(--accent-soft)]"
                   >
-                    <Shield className="h-3.5 w-3.5 text-[#ff6a1a]" aria-hidden="true" />
+                    <Shield className="h-3.5 w-3.5 text-[var(--accent-text)]" aria-hidden="true" />
                     Manage roadmaps
                   </Link>
                 )}
@@ -197,10 +197,10 @@ export function DashboardPage() {
 
           {/* Session */}
           <Card className="lg:col-span-3">
-            <h2 className="mb-4 text-base font-medium text-white">Session</h2>
+            <h2 className="mb-4 text-base font-medium text-[var(--text-primary)]">Session</h2>
             <div className="flex flex-col gap-3">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <p className="max-w-[40ch] text-sm text-[#b6ada4]">
+                <p className="max-w-[40ch] text-sm text-[var(--text-body)]">
                   Signed in with Google. Sign out on this device, or everywhere you are logged in.
                 </p>
               </div>
@@ -217,20 +217,20 @@ export function DashboardPage() {
                 </button>
 
                 {confirmAll ? (
-                  <div className="inline-flex items-center gap-2 rounded-full border border-[rgba(255,106,26,0.4)] bg-[rgba(255,106,26,0.08)] px-3 py-1.5">
-                    <span className="text-xs text-[#ff8a4a]">Sign out everywhere?</span>
+                  <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border-accent)] bg-[var(--accent-wash)] px-3 py-1.5">
+                    <span className="text-xs text-[var(--accent-text)]">Sign out everywhere?</span>
                     <button
                       type="button"
                       onClick={() => void handleLogout(true)}
                       disabled={sessionBusy !== null}
-                      className="text-xs font-semibold text-white underline underline-offset-2 hover:text-[#ff8a4a] disabled:opacity-60"
+                      className="text-xs font-semibold text-[var(--text-primary)] underline underline-offset-2 hover:text-[var(--accent-text)] disabled:opacity-60"
                     >
                       {sessionBusy === 'all' ? 'Signing out…' : 'Yes'}
                     </button>
                     <button
                       type="button"
                       onClick={() => setConfirmAll(false)}
-                      className="text-xs text-[#827a73] hover:text-white"
+                      className="text-xs text-[var(--text-muted)] hover:text-[var(--text-primary)]"
                     >
                       Cancel
                     </button>
@@ -240,7 +240,7 @@ export function DashboardPage() {
                     type="button"
                     onClick={() => setConfirmAll(true)}
                     disabled={sessionBusy !== null}
-                    className="inline-flex items-center gap-2 rounded-full border border-[#302923] px-5 py-2.5 text-sm font-medium text-white transition-colors hover:border-[#504740] hover:bg-white/[0.04] disabled:opacity-60"
+                    className="inline-flex items-center gap-2 rounded-full border border-[var(--border-subtle)] px-5 py-2.5 text-sm font-medium text-[var(--text-primary)] transition-colors hover:border-[var(--border-strong)] hover:bg-[var(--bg-hover)] disabled:opacity-60"
                   >
                     <MonitorSmartphone className="h-4 w-4" aria-hidden="true" />
                     Sign out everywhere
@@ -249,7 +249,7 @@ export function DashboardPage() {
               </div>
 
               {sessionError && (
-                <p role="alert" className="text-xs text-[#ff8a4a]">
+                <p role="alert" className="text-xs text-[var(--accent-text)]">
                   {sessionError}
                 </p>
               )}
@@ -260,45 +260,45 @@ export function DashboardPage() {
         {/* Roadmaps preview */}
         <Card>
           <div className="mb-4 flex items-center justify-between gap-4">
-            <h2 className="text-base font-medium text-white">Guidebook</h2>
+            <h2 className="text-base font-medium text-[var(--text-primary)]">Guidebook</h2>
             <Link
               to="/roadmaps"
-              className="text-xs font-medium text-[#ff8a4a] transition-colors hover:text-white"
+              className="text-xs font-medium text-[var(--accent-text)] transition-colors hover:text-[var(--text-primary)]"
             >
               Browse all →
             </Link>
           </div>
 
           {roadmapsQuery.isPending ? (
-            <div className="flex items-center gap-2 py-6 text-sm text-[#827a73]">
+            <div className="flex items-center gap-2 py-6 text-sm text-[var(--text-muted)]">
               <Spinner /> Loading roadmaps…
             </div>
           ) : roadmapsQuery.isError ? (
             <div className="flex flex-wrap items-center gap-3 py-4">
-              <p className="text-sm text-[#ff8a4a]">
+              <p className="text-sm text-[var(--accent-text)]">
                 {messageOf(roadmapsQuery.error, 'Could not load roadmaps.')}
               </p>
               <button
                 type="button"
                 onClick={() => void roadmapsQuery.refetch()}
-                className="rounded-full border border-[#302923] px-4 py-1.5 text-xs font-medium text-white transition-colors hover:border-[#504740] hover:bg-white/[0.04]"
+                className="rounded-full border border-[var(--border-subtle)] px-4 py-1.5 text-xs font-medium text-[var(--text-primary)] transition-colors hover:border-[var(--border-strong)] hover:bg-[var(--bg-hover)]"
               >
                 Try again
               </button>
             </div>
           ) : roadmapsQuery.data.items.length === 0 ? (
-            <p className="py-6 text-sm text-[#827a73]">No roadmaps published yet — check back soon.</p>
+            <p className="py-6 text-sm text-[var(--text-muted)]">No roadmaps published yet — check back soon.</p>
           ) : (
             <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {roadmapsQuery.data.items.map((roadmap) => (
                 <li key={roadmap.id}>
                   <Link
                     to={`/roadmaps/${roadmap.id}`}
-                    className="flex h-full flex-col gap-1.5 rounded-xl border border-[#302923] bg-[#0b0a09] p-4 transition-all hover:border-[rgba(255,106,26,0.6)] hover:bg-[rgba(255,106,26,0.05)]"
+                    className="flex h-full flex-col gap-1.5 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-inset)] p-4 transition-all hover:border-[var(--accent-text)] hover:bg-[var(--accent-wash)]"
                   >
-                    <span className="text-sm font-medium text-white">{roadmap.title}</span>
+                    <span className="text-sm font-medium text-[var(--text-primary)]">{roadmap.title}</span>
                     {roadmap.description && (
-                      <span className="line-clamp-2 text-xs leading-relaxed text-[#b6ada4]">
+                      <span className="line-clamp-2 text-xs leading-relaxed text-[var(--text-body)]">
                         {roadmap.description}
                       </span>
                     )}

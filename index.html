@@ -11,6 +11,22 @@
       rel="stylesheet"
     />
     <title>Designers Room — Your design journey, all in one room</title>
+    <script>
+      (() => {
+        try {
+          const saved = localStorage.getItem('dr-theme')
+          const theme =
+            saved === 'light' || saved === 'dark'
+              ? saved
+              : window.matchMedia('(prefers-color-scheme: light)').matches
+                ? 'light'
+                : 'dark'
+          document.documentElement.classList.add(theme)
+        } catch {
+          document.documentElement.classList.add('dark')
+        }
+      })()
+    </script>
   </head>
   <body>
     <div id="root"></div>

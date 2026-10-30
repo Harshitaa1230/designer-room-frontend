@@ -64,13 +64,13 @@ export function RoadmapDetailPage() {
   if (roadmap.isError) {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center gap-3 px-8 text-center">
-        <p className="text-sm text-[#ff6a1a]">
+        <p className="text-sm text-[var(--accent-text)]">
           {messageOf(roadmap.error, 'Could not load this roadmap.')}
         </p>
         <button
           type="button"
           onClick={() => void roadmap.refetch()}
-          className="rounded-full border border-[#302923] px-4 py-2 text-xs font-medium text-white transition-colors hover:border-[#504740] hover:bg-white/[0.04]"
+          className="rounded-full border border-[var(--border-subtle)] px-4 py-2 text-xs font-medium text-[var(--text-primary)] transition-colors hover:border-[var(--border-strong)] hover:bg-[var(--bg-hover)]"
         >
           Try again
         </button>
@@ -86,7 +86,7 @@ export function RoadmapDetailPage() {
   const quotes = data.metadata?.quotes ?? []
 
   return (
-    <div className="min-h-screen w-full bg-[#080808] text-white pt-20">
+    <div className="min-h-screen w-full bg-[var(--bg-page)] text-[var(--text-primary)] pt-20">
       <PageHeader
         title={data.title}
         metadata={data.metadata}
@@ -105,7 +105,7 @@ export function RoadmapDetailPage() {
       {/* Stages section */}
       <div className="px-5 sm:px-12 md:px-16 py-[32px] sm:py-[48px] flex flex-col gap-[12px] sm:gap-[16px] overflow-x-hidden">
         {stageViews.length === 0 && (
-          <p className="flex items-center gap-2 text-sm text-[#827a73]">
+          <p className="flex items-center gap-2 text-sm text-[var(--text-muted)]">
             <Spinner /> This roadmap has no stages yet.
           </p>
         )}
@@ -120,8 +120,8 @@ export function RoadmapDetailPage() {
             {/* Quote divider between stages */}
             {index < stageViews.length - 1 && quotes[index] && (
               <div className="py-[32px] sm:py-[48px] flex flex-col items-center gap-[12px] sm:gap-[16px]">
-                <div className="w-[32px] h-[2px] bg-[#302923] rounded-full" />
-                <p className="text-[16px] sm:text-[20px] font-medium text-[#b6ada4] text-center max-w-[720px] leading-relaxed tracking-[-0.1px] italic px-2">
+                <div className="w-[32px] h-[2px] bg-[var(--border-subtle)] rounded-full" />
+                <p className="text-[16px] sm:text-[20px] font-medium text-[var(--text-body)] text-center max-w-[720px] leading-relaxed tracking-[-0.1px] italic px-2">
                   "{quotes[index]}"
                 </p>
               </div>

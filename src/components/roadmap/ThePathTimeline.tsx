@@ -19,8 +19,8 @@ export default function ThePathTimeline({
       <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 sm:gap-0 pb-[20px] sm:pb-[28px]">
         {/* Left block */}
         <div className="flex flex-col gap-[4px]">
-          <span className="text-[12px] text-[#827a73]">(The path)</span>
-          <span className="text-[24px] font-medium text-[#fff8ee] leading-[30px] tracking-[-0.3px] sm:text-[28px] sm:leading-[34px]">
+          <span className="text-[12px] text-[var(--text-muted)]">(The path)</span>
+          <span className="text-[24px] font-medium text-[var(--text-primary)] leading-[30px] tracking-[-0.3px] sm:text-[28px] sm:leading-[34px]">
             {pace}
           </span>
         </div>
@@ -31,7 +31,7 @@ export default function ThePathTimeline({
             type="button"
             onClick={onExpandAll}
             aria-label="Expand all stages"
-            className="min-h-[36px] border border-[#302923] rounded-full px-[14px] py-[7px] text-[12px] text-[#b6ada4] hover:text-white hover:border-[#504740] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff6a00] sm:min-h-0 sm:px-[17px] sm:py-[9px] sm:text-[13px]"
+            className="min-h-[36px] border border-[var(--border-subtle)] rounded-full px-[14px] py-[7px] text-[12px] text-[var(--text-body)] hover:text-[var(--text-primary)] hover:border-[var(--border-strong)] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-text)] sm:min-h-0 sm:px-[17px] sm:py-[9px] sm:text-[13px]"
           >
             Expand all
           </button>
@@ -39,7 +39,7 @@ export default function ThePathTimeline({
             type="button"
             onClick={onCollapseAll}
             aria-label="Collapse all stages"
-            className="min-h-[36px] border border-[#302923] rounded-full px-[14px] py-[7px] text-[12px] text-[#b6ada4] hover:text-white hover:border-[#504740] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff6a00] sm:min-h-0 sm:px-[17px] sm:py-[9px] sm:text-[13px]"
+            className="min-h-[36px] border border-[var(--border-subtle)] rounded-full px-[14px] py-[7px] text-[12px] text-[var(--text-body)] hover:text-[var(--text-primary)] hover:border-[var(--border-strong)] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-text)] sm:min-h-0 sm:px-[17px] sm:py-[9px] sm:text-[13px]"
           >
             Collapse all
           </button>
@@ -54,20 +54,20 @@ export default function ThePathTimeline({
             <div
               className={`h-[4px] rounded-full w-full ${
                 stage.status === 'done' || stage.status === 'in-progress'
-                  ? 'bg-[#ff6a00]'
-                  : 'bg-[#302923]'
+                  ? 'bg-[var(--accent)]'
+                  : 'bg-[var(--border-subtle)]'
               }`}
             />
             {/* Stage + week label */}
-            <span className="text-[12px] text-[#827a73]">
+            <span className="text-[12px] text-[var(--text-muted)]">
               {stage.weekLabel
                 ? `${stage.number}\u00a0\u00a0·\u00a0\u00a0${stage.weekLabel}`
                 : stage.number}
             </span>
             {/* Stage name */}
-            <span className="text-[16px] font-medium text-[#fff8ee]">{stage.name}</span>
+            <span className="text-[16px] font-medium text-[var(--text-primary)]">{stage.name}</span>
             {/* Topics count */}
-            <span className="text-[13px] text-[#b6ada4]">
+            <span className="text-[13px] text-[var(--text-body)]">
               {stage.topics.length} topic{stage.topics.length === 1 ? '' : 's'}
             </span>
           </div>

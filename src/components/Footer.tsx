@@ -28,7 +28,7 @@ export const Footer = () => {
                 href={s.href}
                 target="_blank"
                 rel="noreferrer"
-                className="text-[13px] font-normal text-[#827a73] transition-colors hover:text-white light:text-zinc-400 light:hover:text-zinc-900 sm:text-[14px]"
+                className="text-[13px] font-normal text-[#827a73] transition-colors hover:text-white light:text-zinc-600 light:hover:text-zinc-900 sm:text-[14px]"
               >
                 {s.label}
               </a>
@@ -54,10 +54,10 @@ export const Footer = () => {
 
         {/* Bottom bar */}
         <div className="flex items-center justify-between gap-3 border-t border-[#1e1c1a] py-4 light:border-zinc-200 sm:py-6">
-          <p className="text-[10px] text-[#827a73] light:text-zinc-400 sm:text-[12px]">
+          <p className="text-[10px] text-[#827a73] light:text-zinc-600 sm:text-[12px]">
             © 2026 Designer's Room
           </p>
-          <p className="text-[10px] tracking-[0.08em] text-[#827a73] uppercase light:text-zinc-400 sm:text-[12px]">
+          <p className="text-[10px] tracking-[0.08em] text-[#827a73] uppercase light:text-zinc-600 sm:text-[12px]">
             Practice is PORTFOLIO
           </p>
         </div>

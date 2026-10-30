@@ -82,7 +82,7 @@ export const Navbar = () => {
   return (
     <header
       className={cn(
-        'fixed inset-x-0 top-0 z-30 bg-black/[0.18] backdrop-blur-[12px] light:bg-white/50 transition-[padding] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]',
+        'fixed inset-x-0 top-0 z-30 bg-black/[0.18] backdrop-blur-[12px] light:bg-[#f2f0eb]/75 transition-[padding] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]',
         scrolled ? 'pt-3' : 'pt-0',
       )}
     >
@@ -108,7 +108,7 @@ export const Navbar = () => {
           <NavLink to="/" className="flex shrink-0 items-center transition-opacity hover:opacity-90">
             <img src={logo} alt="Designers Room" className="h-7 w-auto shrink-0 sm:h-12 md:h-8 lg:h-8.5 dark:invert-0 light:invert" />
           </NavLink>
-          <span className="inline-flex items-center rounded-full border border-white/20 bg-white/[0.04] px-1.5 py-0.5 text-[9px] font-medium tracking-widest text-[#fffaee] select-none sm:px-2 sm:text-[10px] light:border-zinc-300 light:bg-zinc-100 light:text-zinc-500">
+          <span className="inline-flex items-center rounded-full border border-white/20 bg-white/[0.04] px-1.5 py-0.5 text-[9px] font-medium tracking-widest text-[#fffaee] select-none sm:px-2 sm:text-[10px] light:border-zinc-300 light:bg-white/70 light:text-zinc-600">
             BETA
           </span>
         </div>
@@ -124,7 +124,7 @@ export const Navbar = () => {
                   'text-sm font-medium opacity-95 transition-colors duration-150 lg:text-base',
                   isActive
                     ? 'text-[#fffaee] light:text-zinc-900'
-                    : 'text-[#fffaee] hover:text-[#fffaee] light:text-zinc-400 light:hover:text-zinc-700',
+                    : 'text-[#fffaee] hover:text-[#fffaee] light:text-zinc-600 light:hover:text-zinc-900',
                 )
               }
             >
@@ -143,7 +143,7 @@ export const Navbar = () => {
             className={cn(
               'flex size-9 shrink-0 items-center justify-center rounded-full border transition-all duration-200 sm:size-10',
               'border-white/15 bg-white/[0.06] text-[#fffaee] hover:bg-white/[0.12] hover:text-[#fffaee]',
-              'light:border-zinc-300 light:bg-zinc-100 light:text-zinc-500 light:hover:bg-zinc-200 light:hover:text-zinc-800',
+              'light:border-zinc-300 light:bg-white/70 light:text-zinc-600 light:hover:bg-zinc-200 light:hover:text-zinc-900',
             )}
           >
             {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
@@ -168,7 +168,7 @@ export const Navbar = () => {
             className={cn(
               'flex size-9 shrink-0 items-center justify-center rounded-full border transition-all duration-200 sm:size-10 md:hidden',
               'border-white/15 bg-white/[0.06] text-[#fffaee] hover:bg-white/[0.12]',
-              'light:border-zinc-300 light:bg-zinc-100 light:text-zinc-600 light:hover:bg-zinc-200',
+              'light:border-zinc-300 light:bg-white/70 light:text-zinc-600 light:hover:bg-zinc-200',
             )}
           >
             {menuOpen ? <CloseIcon /> : <MenuIcon />}
@@ -205,7 +205,7 @@ export const Navbar = () => {
                     'mobile-menu-item flex items-center justify-between rounded-xl px-4 py-3 text-base font-medium transition-colors',
                     isActive
                       ? 'bg-white/[0.06] text-[#fffaee] light:bg-zinc-100 light:text-zinc-900'
-                      : 'text-[#fffaee]/80 hover:bg-white/[0.04] hover:text-[#fffaee] light:text-zinc-500 light:hover:bg-zinc-100 light:hover:text-zinc-900',
+                      : 'text-[#fffaee]/80 hover:bg-white/[0.04] hover:text-[#fffaee] light:text-zinc-600 light:hover:bg-zinc-100 light:hover:text-zinc-900',
                   )
                 }
                 style={{ animationDelay: `${60 + idx * 35}ms` }}

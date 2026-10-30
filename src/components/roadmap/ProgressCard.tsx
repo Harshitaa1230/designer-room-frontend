@@ -30,12 +30,12 @@ export default function ProgressCard({
   return (
     <div
       className="w-full max-w-full lg:max-w-[400px] flex flex-col gap-[16px] sm:gap-[18px] rounded-[20px] sm:rounded-[24px] p-[20px] sm:p-[28px]"
-      style={{ background: '#11100f', border: '1px solid #302923' }}
+      style={{ background: 'var(--bg-card)', border: '1px solid var(--border-subtle)' }}
     >
       {/* "YOUR PROGRESS" label */}
       <p
         className="text-[12px] font-semibold tracking-[1.44px]"
-        style={{ color: '#827a73' }}
+        style={{ color: 'var(--text-muted)' }}
       >
         YOUR PROGRESS
       </p>
@@ -44,13 +44,13 @@ export default function ProgressCard({
       <div className="flex flex-row items-end gap-[12px]">
         <span
           className="text-[56px] sm:text-[72px] font-medium leading-[56px] sm:leading-[72px] tracking-[-2.16px]"
-          style={{ color: '#fff8ee' }}
+          style={{ color: 'var(--text-primary)' }}
         >
           {pct}%
         </span>
         <span
           className="text-[14px] font-normal pb-[4px]"
-          style={{ color: '#b6ada4' }}
+          style={{ color: 'var(--text-body)' }}
         >
           {completedTopics} of {totalTopics} topics
         </span>
@@ -63,25 +63,25 @@ export default function ProgressCard({
         aria-valuemin={0}
         aria-valuemax={100}
         className="w-full h-[6px] rounded-[3px] overflow-hidden"
-        style={{ background: '#1d1916' }}
+        style={{ background: 'var(--progress-track)' }}
       >
         <div
           className="h-full rounded-[3px]"
-          style={{ width: `${pct}%`, background: '#ff6a00' }}
+          style={{ width: `${pct}%`, background: 'var(--accent)' }}
         />
       </div>
 
       {/* CTA button */}
       <Link
         to={ctaHref}
-        className="w-full rounded-full px-[20px] py-[12px] text-[14px] sm:px-[24px] sm:py-[16px] sm:text-[15px] font-semibold text-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff6a00]"
-        style={{ background: '#ff6a00', color: '#080808' }}
+        className="w-full rounded-full px-[20px] py-[12px] text-[14px] sm:px-[24px] sm:py-[16px] sm:text-[15px] font-semibold text-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-text)]"
+        style={{ background: 'var(--accent)', color: 'var(--on-accent)' }}
       >
         {ctaLabel}
       </Link>
 
       {/* Footer note */}
-      <p className="text-[12px]" style={{ color: '#827a73' }}>
+      <p className="text-[12px]" style={{ color: 'var(--text-muted)' }}>
         Progress saves when you're signed in
       </p>
     </div>

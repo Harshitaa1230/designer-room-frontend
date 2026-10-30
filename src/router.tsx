@@ -14,6 +14,11 @@ import { WaitlistPage } from '@/pages/WaitlistPage'
 import { ComingSoonPage } from '@/pages/ComingSoonPage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 import { RequireAdmin, RequireAuth } from '@/components/RequireAuth'
+import { WeeksPage } from '@/pages/challenges/WeeksPage'
+import { WeekDetailPage } from '@/pages/challenges/WeekDetailPage'
+import { ChallengeDetailPage } from '@/pages/challenges/ChallengeDetailPage'
+import { AttemptPage } from '@/pages/challenges/AttemptPage'
+import { LeaderboardPage } from '@/pages/challenges/LeaderboardPage'
 
 export const router = createBrowserRouter([
   {
@@ -22,7 +27,13 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       { path: 'roadmaps', element: <RoadmapsPage /> },
-      { path: 'challenge', element: <ComingSoonPage kind="challenge" /> },
+      { path: 'challenge', element: <WeeksPage /> },
+      { path: 'challenges', element: <WeeksPage /> },
+      { path: 'weeks', element: <WeeksPage /> },
+      { path: 'weeks/:id', element: <WeekDetailPage /> },
+      { path: 'challenges/:id', element: <RequireAuth><ChallengeDetailPage /></RequireAuth> },
+      { path: 'attempts/:id', element: <RequireAuth><AttemptPage /></RequireAuth> },
+      { path: 'leaderboard', element: <LeaderboardPage /> },
       { path: 'community', element: <ComingSoonPage kind="community" /> },
       {
         path: 'roadmaps/:id',

@@ -29,7 +29,7 @@ export default function PageHeader({
         {/* Left block */}
         <div className="flex flex-col gap-[16px] sm:gap-[20px] flex-1 min-w-0">
           {/* Roadmap label e.g. "(Roadmap 01)" */}
-          <span className="text-[12px]" style={{ color: '#827a73' }}>
+          <span className="text-[12px]" style={{ color: 'var(--text-muted)' }}>
             {metadata?.label ?? ''}
           </span>
 
@@ -37,7 +37,7 @@ export default function PageHeader({
           <h1
             className="text-[42px] sm:text-[64px] md:text-[80px] lg:text-[96px] font-medium leading-[1.02] break-words"
             style={{
-              color: '#fff8ee',
+              color: 'var(--text-primary)',
               letterSpacing: '-2.88px',
             }}
           >
@@ -47,7 +47,7 @@ export default function PageHeader({
           {/* Subtitle */}
           <p
             className="text-[16px] sm:text-[18px] font-normal leading-[26px] sm:leading-[28px] max-w-[560px] break-words"
-            style={{ color: '#b6ada4' }}
+            style={{ color: 'var(--text-body)' }}
           >
             {metadata?.subtitle ?? ''}
           </p>
@@ -59,8 +59,8 @@ export default function PageHeader({
                 key={pill}
                 className="rounded-full px-[12px] py-[6px] text-[12px] sm:px-[14px] sm:py-[7px] sm:text-[13px]"
                 style={{
-                  border: '1px solid #302923',
-                  color: '#b6ada4',
+                  border: '1px solid var(--border-subtle)',
+                  color: 'var(--text-body)',
                 }}
               >
                 {pill}
@@ -88,8 +88,8 @@ export default function PageHeader({
             <button
               key={discipline.label}
               type="button"
-              className="rounded-full px-[16px] py-[9px] text-[13px] font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff6a00] sm:px-[20px] sm:py-[11px] sm:text-[14px]"
-              style={{ background: '#fff8ee', color: '#080808' }}
+              className="rounded-full px-[16px] py-[9px] text-[13px] font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-text)] sm:px-[20px] sm:py-[11px] sm:text-[14px]"
+              style={{ background: 'var(--text-primary)', color: 'var(--bg-page)' }}
             >
               {discipline.label}
             </button>
@@ -97,8 +97,8 @@ export default function PageHeader({
             <button
               key={discipline.label}
               type="button"
-              className="rounded-full px-[16px] py-[9px] text-[13px] font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff6a00] sm:px-[20px] sm:py-[11px] sm:text-[14px]"
-              style={{ border: '1px solid #302923', color: '#b6ada4' }}
+              className="rounded-full px-[16px] py-[9px] text-[13px] font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-text)] sm:px-[20px] sm:py-[11px] sm:text-[14px]"
+              style={{ border: '1px solid var(--border-subtle)', color: 'var(--text-body)' }}
             >
               {discipline.label}
             </button>

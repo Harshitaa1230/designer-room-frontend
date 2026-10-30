@@ -16,13 +16,13 @@ export function TopicQuiz({ questions }: TopicQuizProps) {
   const allAnswered = answeredCount === questions.length
 
   return (
-    <section className="mt-10 border-t border-[#302923] pt-8 sm:mt-12 sm:pt-10">
+    <section className="mt-10 border-t border-[var(--border-subtle)] pt-8 sm:mt-12 sm:pt-10">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <p className="text-[10px] uppercase tracking-[0.18em] text-[#ff8a4a] sm:text-[11px]">
+          <p className="text-[10px] uppercase tracking-[0.18em] text-[var(--accent-text)] sm:text-[11px]">
             Quick quiz
           </p>
-          <h2 className="mt-1 text-[22px] font-medium leading-tight text-[#fff8ee] sm:text-[26px]">
+          <h2 className="mt-1 text-[22px] font-medium leading-tight text-[var(--text-primary)] sm:text-[26px]">
             Check your understanding
           </h2>
         </div>
@@ -30,7 +30,7 @@ export function TopicQuiz({ questions }: TopicQuizProps) {
           <button
             type="button"
             onClick={() => setAnswers({})}
-            className="rounded-full border border-[#302923] px-3 py-1.5 text-[12px] text-[#b6ada4] transition-colors hover:border-[#504740] hover:text-white sm:text-[13px]"
+            className="rounded-full border border-[var(--border-subtle)] px-3 py-1.5 text-[12px] text-[var(--text-body)] transition-colors hover:border-[var(--border-strong)] hover:text-[var(--text-primary)] sm:text-[13px]"
           >
             Try again
           </button>
@@ -46,9 +46,9 @@ export function TopicQuiz({ questions }: TopicQuizProps) {
           return (
             <div
               key={`${questionIndex}-${question.question}`}
-              className="rounded-[16px] border border-[#302923] bg-[#11100f] p-4 sm:p-5"
+              className="rounded-[16px] border border-[var(--border-subtle)] bg-[var(--bg-card)] p-4 sm:p-5"
             >
-              <p className="text-[15px] font-medium leading-6 text-[#fff8ee] sm:text-[16px]">
+              <p className="text-[15px] font-medium leading-6 text-[var(--text-primary)] sm:text-[16px]">
                 {questionIndex + 1}. {question.question}
               </p>
 
@@ -74,12 +74,12 @@ export function TopicQuiz({ questions }: TopicQuizProps) {
                       className={[
                         'flex w-full items-start gap-3 rounded-[10px] border px-3 py-2.5 text-left text-[13px] leading-6 transition-colors sm:text-[14px]',
                         showCorrect
-                          ? 'border-[#3f6b4a] bg-[#122017] text-[#d8f0dd]'
+                          ? 'border-[var(--success-border)] bg-[var(--success-bg)] text-[var(--success-text)]'
                           : showWrong
-                            ? 'border-[#7a3b2a] bg-[#24120d] text-[#ffd0c2]'
+                            ? 'border-[var(--danger-border)] bg-[var(--danger-bg)] text-[var(--danger-text)]'
                             : isSelected
-                              ? 'border-[#ff8a4a] bg-[#1d1916] text-[#fff8ee]'
-                              : 'border-[#302923] bg-[#0d0c0b] text-[#b6ada4] hover:border-[#504740] hover:text-white',
+                              ? 'border-[var(--accent-text)] bg-[var(--bg-inset-hover)] text-[var(--text-primary)]'
+                              : 'border-[var(--border-subtle)] bg-[var(--bg-inset)] text-[var(--text-body)] hover:border-[var(--border-strong)] hover:text-[var(--text-primary)]',
                         answered ? 'cursor-default' : '',
                       ].join(' ')}
                     >
@@ -107,8 +107,8 @@ export function TopicQuiz({ questions }: TopicQuizProps) {
                   className={[
                     'mt-3 rounded-[10px] border px-3 py-3 text-[13px] leading-6 sm:text-[14px]',
                     correct
-                      ? 'border-[#3f6b4a] bg-[#122017] text-[#d8f0dd]'
-                      : 'border-[#7a3b2a] bg-[#24120d] text-[#ffd0c2]',
+                      ? 'border-[var(--success-border)] bg-[var(--success-bg)] text-[var(--success-text)]'
+                      : 'border-[var(--danger-border)] bg-[var(--danger-bg)] text-[var(--danger-text)]',
                   ].join(' ')}
                 >
                   <p className="font-medium">{correct ? 'Correct.' : 'Not quite.'}</p>
@@ -121,7 +121,7 @@ export function TopicQuiz({ questions }: TopicQuizProps) {
       </div>
 
       {allAnswered ? (
-        <p className="mt-4 text-[13px] text-[#827a73] sm:text-[14px]">
+        <p className="mt-4 text-[13px] text-[var(--text-muted)] sm:text-[14px]">
           Quiz complete. Read the explanations, then try the practice task above.
         </p>
       ) : null}
