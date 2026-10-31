@@ -3,7 +3,7 @@ import { StrictMode, Suspense } from 'react'
 import { createRoot } from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
 
-import { AnalyticsConsent } from '@/components/AnalyticsConsent'
+import { AnalyticsNotice } from '@/components/AnalyticsNotice'
 import { SessionLoader } from '@/components/SessionLoader'
 import { initAnalytics, trackPageView } from '@/lib/analytics'
 import { queryClient } from '@/lib/queryClient'
@@ -18,7 +18,7 @@ router.subscribe((state) => trackPageView(state.location))
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <SessionLoader />
-    <AnalyticsConsent />
+    <AnalyticsNotice />
     <QueryClientProvider client={queryClient}>
       <Suspense fallback={<div className="min-h-screen bg-[var(--bg-page)]" aria-hidden="true" />}>
         <RouterProvider router={router} />
