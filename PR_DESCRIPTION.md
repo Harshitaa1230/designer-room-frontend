@@ -14,6 +14,7 @@ This change audits the Vite/React Router CSR app and applies low-risk technical 
 - **Initial HTML:** generate route-specific SEO shells after Vite build, including H1, body text, links, metadata, canonical, and WebPage JSON-LD.
 - **Routing/index control:** restrict Vercel rewrites to known routes, add a static 404, redirect duplicate challenge aliases, add private-route `X-Robots-Tag`, and cache hashed assets immutably.
 - **Performance:** lazy-load route modules; the initial JS chunk is now `430.00 kB` instead of a monolithic `812.85 kB` bundle.
+- **URL structure:** make `/guidebook` and `/challenge` canonical public paths, preserve legacy URLs with permanent redirects, and update sitemap/internal links.
 
 ## Before/after
 
@@ -22,7 +23,7 @@ This change audits the Vite/React Router CSR app and applies low-risk technical 
 - Before: footer waitlist CTA used imperative navigation; after: it is a real link.
 - Before: logo/glow had no intrinsic dimensions; after: both have width/height attributes.
 - Before: every path rewrote to the SPA shell; after: known routes are rewritten explicitly and unknown paths can reach a real 404.
-- Before: `/challenge` and `/challenges` duplicated `/weeks`; after: both permanently redirect to `/weeks`.
+- Before: `/roadmaps`, `/weeks`, and `/challenges` were duplicate public paths; after: they permanently redirect to `/guidebook` and `/challenge`.
 - Unchanged: public initial HTML is still CSR-only and unknown paths still soft-404. The confirmed production hostname is `https://designersroom.anviklabs.site`, but the live deployment has not picked up this branch.
 
 ## Risk notes

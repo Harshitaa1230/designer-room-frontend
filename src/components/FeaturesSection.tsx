@@ -14,7 +14,7 @@ const FEATURES: Feature[] = [
     name: 'Roadmaps',
     status: 'live',
     tagline: 'Step-by-step paths for every discipline',
-    href: '/roadmaps',
+            href: '/guidebook',
   },
   {
     number: '02',

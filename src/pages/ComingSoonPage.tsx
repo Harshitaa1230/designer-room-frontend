@@ -108,7 +108,7 @@ export function ComingSoonPage({ kind }: ComingSoonPageProps) {
 
         <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Link
-            to="/roadmaps"
+            to="/guidebook"
             className="btn-3d inline-flex min-h-[44px] w-full items-center justify-center gap-2 px-6 py-3 text-[14px] sm:w-auto"
           >
             Explore the guidebook

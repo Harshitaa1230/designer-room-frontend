@@ -17,7 +17,7 @@ function RoadmapCard({ roadmap }: { roadmap: RoadmapSummary }) {
 
   return (
     <Link
-      to={`/roadmaps/${roadmap.id}`}
+      to={`/guidebook/${roadmap.id}`}
       aria-label={`${roadmap.title} — ${meta}`}
       className={[
         'roadmap-card group relative flex w-full min-h-[220px] min-w-0 flex-col gap-3 rounded-[20px] border p-5 sm:min-h-[260px] sm:p-6',

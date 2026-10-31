@@ -21,8 +21,8 @@ const CloseIcon = () => (
 )
 
 const NAV_LINKS = [
-  { label: 'Guidebook', to: '/roadmaps' },
-  { label: 'Challenge', to: '/weeks' },
+  { label: 'Guidebook', to: '/guidebook' },
+  { label: 'Challenge', to: '/challenge' },
   { label: 'Community', to: '/community' },
 ]
 
