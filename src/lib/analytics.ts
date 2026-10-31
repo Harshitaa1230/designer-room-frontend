@@ -15,9 +15,7 @@ const GA4_MEASUREMENT_ID = import.meta.env.VITE_GA4_ID?.trim() ?? ''
 const CLOUDFLARE_ANALYTICS_TOKEN = import.meta.env.VITE_CLOUDFLARE_ANALYTICS_TOKEN?.trim() ?? ''
 
 const ANALYTICS_ENABLED = import.meta.env.VITE_ANALYTICS_ENABLED === 'true'
-const CONSENT_STORAGE_KEY = 'designers-room:analytics-consent'
 const IDENTIFIED_USER_KEY = 'designers-room:analytics-user'
-const CONSENT_GRANTED = 'granted'
 
 const hasProvider = Boolean(POSTHOG_KEY || GA4_MEASUREMENT_ID || CLOUDFLARE_ANALYTICS_TOKEN)
 
@@ -41,32 +39,8 @@ export function isAnalyticsAvailable(): boolean {
   return ANALYTICS_ENABLED && hasProvider
 }
 
-export function hasAnalyticsConsent(): boolean {
-  try {
-    return localStorage.getItem(CONSENT_STORAGE_KEY) === CONSENT_GRANTED
-  } catch {
-    return false
-  }
-}
-
-/**
- * Persists consent and starts the providers. There is intentionally no decline
- * action in the banner: analytics stay off until the visitor opts in.
- */
-export function acceptAnalyticsConsent(): boolean {
-  try {
-    localStorage.setItem(CONSENT_STORAGE_KEY, CONSENT_GRANTED)
-  } catch {
-    // Storage can be unavailable (private mode, blocked cookies): analytics
-    // simply remains disabled for this visit.
-    return false
-  }
-  initAnalytics()
-  return true
-}
-
 export function initAnalytics(): void {
-  if (initialized || !isAnalyticsAvailable() || !hasAnalyticsConsent()) return
+  if (initialized || !isAnalyticsAvailable()) return
   initialized = true
 
   initGA4()
