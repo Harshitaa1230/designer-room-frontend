@@ -2,6 +2,7 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { getChallenge, saveAnswer, startChallenge, submitAttempt, type ChallengeAnswer } from '@/lib/api/challenges'
+import { trackEvent } from '@/lib/analytics'
 
 export function ChallengeDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -19,6 +20,7 @@ export function ChallengeDetailPage() {
     onSuccess: (data) => {
       setAttemptId(data.id)
       if (data.answer) setAnswer(data.answer)
+      trackEvent('challenge_started', { challenge_id: id, attempt_id: data.id })
     },
   })
 
@@ -29,6 +31,7 @@ export function ChallengeDetailPage() {
   const submitMut = useMutation({
     mutationFn: () => submitAttempt(attemptId!),
     onSuccess: (data) => {
+      trackEvent('challenge_submitted', { challenge_id: id, attempt_id: data.id })
       navigate(`/attempts/${data.id}`)
     },
   })
