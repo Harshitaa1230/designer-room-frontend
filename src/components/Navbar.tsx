@@ -22,7 +22,7 @@ const CloseIcon = () => (
 
 const NAV_LINKS = [
   { label: 'Guidebook', to: '/roadmaps' },
-  { label: 'Challenge', to: '/challenge' },
+  { label: 'Challenge', to: '/weeks' },
   { label: 'Community', to: '/community' },
 ]
 

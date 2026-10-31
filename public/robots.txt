@@ -6,6 +6,7 @@ Disallow: /auth/
 Disallow: /attempts/
 Disallow: /guidebook/
 Disallow: /roadmaps/
+Disallow: /weeks/
 Disallow: /challenges/
 
 User-agent: GPTBot
