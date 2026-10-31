@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, Sparkles, Trophy, Users } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
+import { Seo } from '@/components/Seo'
 
 type ComingSoonKind = 'challenge' | 'community'
 
@@ -57,6 +58,7 @@ export function ComingSoonPage({ kind }: ComingSoonPageProps) {
       aria-labelledby="coming-soon-title"
       className="relative isolate flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[var(--bg-page)] px-5 pt-28 pb-20 text-[var(--text-primary)] sm:px-8 sm:pt-32"
     >
+      <Seo title={`${copy.eyebrow} coming soon · Designers Room`} description={copy.description} />
       <div
         className="pointer-events-none absolute -top-32 left-1/2 h-[360px] w-[520px] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,#ff7a29_0%,#ea580c_35%,transparent_70%)] opacity-30 blur-[90px] light:opacity-15"
         aria-hidden="true"

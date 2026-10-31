@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { Link, useParams } from 'react-router-dom'
 import { getWeekChallenges } from '@/lib/api/challenges'
+import { Seo } from '@/components/Seo'
 
 export function WeekDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -14,6 +15,7 @@ export function WeekDetailPage() {
 
   return (
     <section className="pt-28 pb-16 px-4 max-w-4xl mx-auto">
+      <Seo title="Weekly design challenges · Designers Room" description="Explore the challenges in this Designers Room practice week." />
       <Link to="/weeks" className="text-sm text-[var(--text-muted)]">← Back to weeks</Link>
       <h1 className="text-3xl font-medium mt-4 mb-6">Week Challenges</h1>
       <div className="grid gap-3">

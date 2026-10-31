@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 import { getWeeks } from '@/lib/api/challenges'
+import { Seo } from '@/components/Seo'
 
 export function WeeksPage() {
   const { data: weeks, isLoading } = useQuery({ queryKey: ['weeks'], queryFn: getWeeks })
@@ -9,6 +10,7 @@ export function WeeksPage() {
 
   return (
     <section className="pt-28 pb-16 px-4 max-w-4xl mx-auto">
+      <Seo title="Design challenges · Designers Room" description="Build your design portfolio through focused weekly challenges." />
       <h1 className="text-3xl font-medium mb-6">Challenges</h1>
       <div className="grid gap-4">
         {(weeks || []).map((week) => (

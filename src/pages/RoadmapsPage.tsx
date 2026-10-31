@@ -4,6 +4,7 @@ import glowPrimary from '@/assets/glow-primary.svg'
 import { listRoadmaps, type RoadmapSummary } from '@/lib/endpoints'
 import { messageOf } from '@/lib/api'
 import { Spinner } from '@/components/LoadingState'
+import { Seo } from '@/components/Seo'
 
 // ── Card ──────────────────────────────────────────────────────────────────────
 
@@ -75,6 +76,10 @@ export function RoadmapsPage() {
 
   return (
     <div className="relative min-h-screen w-full bg-[var(--bg-page)] text-[var(--text-primary)] pt-20">
+      <Seo
+        title="Design roadmaps · Designers Room"
+        description="Follow practical, step-by-step design roadmaps you can actually finish."
+      />
 
       {/* Background glow — clipped only within this decorative layer */}
       <div
@@ -85,6 +90,8 @@ export function RoadmapsPage() {
           <img
             src={glowPrimary}
             alt=""
+            width="1140"
+            height="740"
             className="absolute block light:opacity-60"
             style={{
               inset: '-38.1% -19.51%',

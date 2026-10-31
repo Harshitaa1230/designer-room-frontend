@@ -9,6 +9,34 @@ export interface Week {
   status: string
 }
 
+export interface ChallengeOption {
+  id: string
+  text: string
+}
+
+export interface ChallengePayload {
+  options?: ChallengeOption[]
+}
+
+export interface ChallengeAnswer {
+  selected?: string
+  text?: string
+  order?: string[]
+}
+
+export interface AttemptGrade {
+  method?: string
+  totalScore?: number
+  feedback?: string
+}
+
+export interface LeaderboardEntry {
+  rank: number
+  name?: string
+  userId?: string
+  totalXp: number
+}
+
 export interface ChallengeSummary {
   id: string
   weekId: string
@@ -17,7 +45,7 @@ export interface ChallengeSummary {
   title: string
   brief?: string
   imageUrls?: string[]
-  payload?: any
+  payload?: ChallengePayload
   maxXp?: number
   difficulty?: string
   status?: string
@@ -35,7 +63,7 @@ export interface ChallengeDetail {
   title: string
   brief: string
   imageUrls: string[]
-  payload: any
+  payload: ChallengePayload
   maxXp: number
   difficulty?: string
   status: string
@@ -48,12 +76,12 @@ export interface Attempt {
   challengeId: string
   challengeVersion: number
   status: string
-  answer: any
+  answer: ChallengeAnswer
   startedAt: string
   submittedAt?: string
   gradedAt?: string
-  grade?: any
-  challenge?: any
+  grade?: AttemptGrade
+  challenge?: ChallengeDetail
 }
 
 export async function getCurrentWeek() {
@@ -81,7 +109,7 @@ export async function startChallenge(challengeId: string) {
   return data
 }
 
-export async function saveAnswer(attemptId: string, answer: any) {
+export async function saveAnswer(attemptId: string, answer: ChallengeAnswer) {
   const { data } = await apiClient.put<Attempt>(`/attempts/${attemptId}/answer`, { answer })
   return data
 }
@@ -97,31 +125,31 @@ export async function getAttempt(attemptId: string) {
 }
 
 export async function getProgress() {
-  const { data } = await apiClient.get<any>('/me/progress')
+  const { data } = await apiClient.get<Record<string, unknown>>('/me/progress')
   return data
 }
 
 export async function getStreak() {
-  const { data } = await apiClient.get<any>('/me/streak')
+  const { data } = await apiClient.get<Record<string, unknown>>('/me/streak')
   return data
 }
 
 export async function getBadges() {
-  const { data } = await apiClient.get<any>('/me/badges')
+  const { data } = await apiClient.get<Record<string, unknown>[]>('/me/badges')
   return data
 }
 
 export async function getWeekSummary(weekId: string) {
-  const { data } = await apiClient.get<any>(`/weeks/${weekId}/summary`)
+  const { data } = await apiClient.get<Record<string, unknown>>(`/weeks/${weekId}/summary`)
   return data
 }
 
 export async function getLeaderboardWeekly(weekId: string, top = 50) {
-  const { data } = await apiClient.get<any[]>(`/leaderboard/weekly?weekId=${weekId}&top=${top}`)
+  const { data } = await apiClient.get<LeaderboardEntry[]>(`/leaderboard/weekly?weekId=${weekId}&top=${top}`)
   return data
 }
 
 export async function getLeaderboardAllTime(top = 50) {
-  const { data } = await apiClient.get<any[]>(`/leaderboard/all-time?top=${top}`)
+  const { data } = await apiClient.get<LeaderboardEntry[]>(`/leaderboard/all-time?top=${top}`)
   return data
 }

@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const SOCIALS = [
   { label: 'Instagram', href: 'https://instagram.com' },
@@ -8,8 +8,6 @@ const SOCIALS = [
 ]
 
 export const Footer = () => {
-  const navigate = useNavigate()
-
   return (
     <footer className="relative w-full overflow-hidden">
       {/* Bottom glow — matches the orange warmth in the screenshot */}
@@ -35,13 +33,12 @@ export const Footer = () => {
             ))}
           </div>
 
-          <button
-            type="button"
-            onClick={() => navigate('/waitlist')}
+          <Link
+            to="/waitlist"
             className="rounded-full border border-[#302923] px-5 py-2 text-[13px] font-medium text-white transition-all hover:border-[#504740] hover:bg-white/[0.04] light:border-zinc-300 light:text-zinc-800 light:hover:bg-zinc-100 sm:px-6 sm:py-2.5 sm:text-[14px]"
           >
             Join the waitlist
-          </button>
+          </Link>
         </div>
 
         {/* Brand watermark */}
