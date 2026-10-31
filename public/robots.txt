@@ -20,4 +20,4 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
-Sitemap: /sitemap.xml
+Sitemap: https://designersroom.anviklabs.site/sitemap.xml

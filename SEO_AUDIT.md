@@ -4,13 +4,13 @@
 
 The repository is a Vite 8 + React 19 + React Router 7 single-page application. `react-router.config.ts:3-6` sets `ssr: false`; `src/main.tsx` mounts the app with `createRoot`; and `vercel.json:8-11` rewrites every path to `/index.html`. Public route content is therefore client-rendered and API-backed, while authentication and dashboard routes are private.
 
-Health score: **28/100 before → 56/100 after**. This is an internal, evidence-based score, not a Lighthouse score: 10 audit areas were weighted equally, with partial credit only where the repository or localhost evidence demonstrated coverage. The increase comes from crawler files, baseline metadata/JSON-LD, client route metadata, a real waitlist link, and image dimensions. The score is capped because public route content is not present in initial HTML, the production hostname is not verified, and the SPA serves a soft 404.
+Health score: **28/100 before → 56/100 in the repository**. The currently deployed production build scores **18/100** under the same internal rubric because it is serving the pre-fix 846-byte shell. This is an internal, evidence-based score, not a Lighthouse score: 10 audit areas were weighted equally, with partial credit only where repository or live evidence demonstrated coverage. The repository score is capped because public route content is not present in initial HTML and the SPA serves a soft 404. The production score is additionally capped because crawler files and metadata fixes are not deployed.
 
 Top five issues:
 
 1. Public routes are CSR-only and initial HTML contains no route H1/body/links (`react-router.config.ts:3-6`; Googlebot curl output below).
 2. `vercel.json:8-11` rewrites unknown paths to the app shell; localhost `/does-not-exist` returned `200`.
-3. Production hostname is not evidenced; the sitemap/canonical fallback uses `https://designersroom.in` and must be confirmed before deployment.
+3. The confirmed production deployment is stale: it serves the old shell with ETag `"1e19737339a2f21d283255e91f8a9513"`, while the branch build emits a different asset and metadata.
 4. The production JS bundle is `815.09 kB` minified (`npm run build` output); Lighthouse/Core Web Vitals are unverified.
 5. Lint has 16 pre-existing `no-explicit-any` errors in challenge files; the SEO changes add no lint errors (`npm run lint` output).
 
@@ -46,7 +46,7 @@ Top five issues:
 |---|---|---|---|---|---|---|---|---|
 | SEO-001 | Critical | Rendering | Public routes have no H1, body content, links, route title, description, canonical, or route JSON-LD in initial HTML. | `react-router.config.ts:3-6`; before/after Googlebot curl output | Search engines and AI crawlers may index only the shell. | Move public pages to SSR/SSG/prerendering, including API data strategy. | Needs decision | High |
 | SEO-002 | High | Crawl/index | Unknown paths are soft 404s. | `vercel.json:8-11`; localhost `/does-not-exist` → `STATUS 200` before and after | Wastes crawl budget and weakens error handling. | Add server/edge 404 handling or adopt SSR hosting; preserve client fallback for navigation. | Needs decision | Medium |
-| SEO-003 | High | Canonical | No verified production hostname exists in repository evidence; static canonical and sitemap fallback use `https://designersroom.in`. | `index.html:24`; `scripts/generate-sitemap.mjs:3-4`; `git remote -v` only identifies GitHub | Wrong host would create incorrect canonical signals. | Set `VITE_SITE_URL` to the verified production origin in deployment config. | Needs decision | Low |
+| SEO-003 | High | Canonical | Production origin is confirmed as `https://designersroom.anviklabs.site`; the branch canonical/sitemap fallback is updated, but live deployment still serves the old build. | `index.html:24`; `scripts/generate-sitemap.mjs:3-4`; live HTML ETag and 846-byte response | Live canonical remains absent until redeploy. | Deploy this branch and verify canonical and sitemap on the live host. | Needs deployment | Low |
 | SEO-004 | High | Crawl/index | No robots or sitemap existed before the fix. | Before `/robots.txt` and `/sitemap.xml` returned the SPA shell with `STATUS 200`; no files in `public` | Crawlers lacked explicit crawl guidance and URL discovery. | Added `public/robots.txt`, build-time `public/sitemap.xml`. | Fixed | Low |
 | SEO-005 | Medium | Metadata | Only one global title existed; no description, OG/Twitter, or JSON-LD existed before. | Before `index.html:13` only; after `index.html:7-38` | Weak snippets/social previews/entity discovery. | Added global metadata and client route metadata via `src/components/Seo.tsx`. | Fixed, SSR limitation remains | Medium |
 | SEO-006 | Medium | Structured data | Organization and WebSite JSON-LD were absent from source before; BreadcrumbList/Article are not present. | Before `rg` found no JSON-LD; after `index.html:32-38`, `src/components/seo-data.ts:1-12` | Reduced entity and content understanding. | Added WebSite initial JSON-LD and Organization/WebSite client JSON-LD on home. | Fixed, server-rendering limitation remains | Low |
@@ -58,6 +58,7 @@ Top five issues:
 | SEO-012 | Low | Monitoring | No Search Console verification, `web-vitals`, or analytics setup was found. | `rg -n` search over `src`, `public`, `index.html`, `package.json` found none | No evidence of organic monitoring or CWV telemetry. | Add verified ownership and privacy-reviewed monitoring. | Needs decision | Medium |
 | SEO-013 | Low | Accessibility overlap | Viewport, language, favicon, alt text for brand logo, and semantic nav are present. | `index.html:2,5-6`; `src/components/Navbar.tsx:61-68,87`; `src/components/Footer.tsx:24-32` | Baseline mobile/a11y coverage is present. | No change needed. | Fixed/verified | Low |
 | SEO-014 | Medium | Quality gates | Lint fails on unrelated pre-existing explicit `any` errors. | `npm run lint` → 16 errors in `src/lib/api/challenges.ts`, `src/pages/challenges/ChallengeDetailPage.tsx`, `src/pages/challenges/LeaderboardPage.tsx` | Full lint gate is not green. | Fix separately; excluded to avoid unrelated business-logic changes. | Needs decision | Medium |
+| SEO-015 | Critical | Deployment | Production is not running the audited branch. | Live `GET /` and all tested routes returned `846` bytes with only the old title/viewport/favicon; branch build contains metadata and emits a different JS asset. | None of the repository fixes affect rankings until deployed. | Deploy commit `b0c5974` or later, then repeat the live crawl. | Needs deployment | Low |
 
 ## Per-route on-page audit
 
@@ -93,7 +94,7 @@ Client route titles/descriptions are defined in `src/pages/HomePage.tsx`, `src/p
 
 ## Needs human decision
 
-- Confirm the production origin and set `VITE_SITE_URL`; replace the fallback in `scripts/generate-sitemap.mjs` and static canonical if `designersroom.in` is not the verified origin.
+- Deploy the audited branch; the confirmed production origin is `https://designersroom.anviklabs.site` and the repository fallback/static URLs now use it.
 - Choose an SSR/SSG/prerendering strategy for public pages. This is required to satisfy initial-HTML SEO for API-backed route content and JSON-LD.
 - Choose a server/edge 404 strategy compatible with the Vercel SPA rewrite.
 - Confirm whether GPTBot, ClaudeBot, PerplexityBot, and Google-Extended should be allowed; the current explicit `Allow: /` rules are provisional.
@@ -101,10 +102,24 @@ Client route titles/descriptions are defined in `src/pages/HomePage.tsx`, `src/p
 - Fix the 16 pre-existing lint errors in challenge code in a separate change.
 - Add Search Console verification and privacy-reviewed `web-vitals`/analytics monitoring if required.
 
+## Live production verification
+
+Live origin tested: `https://designersroom.anviklabs.site`.
+
+| Check | Live evidence | Result |
+|---|---|---|
+| HTTPS | `http://designersroom.anviklabs.site` → `308` to `https://designersroom.anviklabs.site/` | Fixed |
+| HSTS | `strict-transport-security: max-age=63072000` | Present |
+| Canonical/metadata | `GET /` → `846` bytes; no description, OG/Twitter, canonical, JSON-LD, H1, or links | Critical gap |
+| Public routes | `/`, `/roadmaps`, `/challenge`, `/challenges`, `/weeks`, `/weeks/1`, `/community`, `/leaderboard`, `/waitlist` all → `200`, same 846-byte shell | CSR shell only |
+| Private/unknown routes | `/dashboard`, `/admin`, `/does-not-exist` → `200`, same shell | Soft 404 and private-route exposure |
+| Robots/sitemap | `/robots.txt` and `/sitemap.xml` → `200`, but both returned the same HTML shell | Not deployed |
+| Caching | `cache-control: public, max-age=0, must-revalidate`; `x-vercel-cache: HIT` | Live response observed; asset policy still needs review |
+| WWW | `https://www.designersroom.anviklabs.site` DNS resolution failed | No alternate host observed |
+
 ## UNVERIFIED items
 
-- **Production hostname/canonical correctness:** no deployed URL or `VITE_SITE_URL` was present; requires deployment configuration or a live URL.
-- **HTTPS redirect, HSTS, production cache/compression, X-Robots-Tag, and source-map exposure:** localhost preview cannot prove production headers; requires deployed `curl -I` checks.
+- **X-Robots-Tag and source-map exposure:** production header checks did not show X-Robots-Tag; source-map exposure requires checking every deployed asset URL.
 - **LCP ≤2.5 s, INP ≤200 ms, CLS ≤0.1 and Lighthouse:** Lighthouse was not available locally and no network download was attempted; requires a deployed URL or an installed Lighthouse runner.
 - **Live Googlebot rendering/indexability and sitemap validation:** requires a deployed URL and Search Console/validator access.
 - **Dynamic route completeness/lastmod/200 status:** sitemap currently includes only stable public routes; API-backed dynamic routes need a verified public data model and prerender/SSR strategy.

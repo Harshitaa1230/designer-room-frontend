@@ -18,11 +18,12 @@ This change audits the Vite/React Router CSR app and applies low-risk technical 
 - Before: global title only in initial HTML; after: description, social metadata, canonical, and WebSite JSON-LD are present in the app shell.
 - Before: footer waitlist CTA used imperative navigation; after: it is a real link.
 - Before: logo/glow had no intrinsic dimensions; after: both have width/height attributes.
-- Unchanged: public initial HTML is still CSR-only, unknown paths still soft-404, and the production hostname is not verified.
+- Unchanged: public initial HTML is still CSR-only and unknown paths still soft-404. The confirmed production hostname is `https://designersroom.anviklabs.site`, but the live deployment has not picked up this branch.
 
 ## Risk notes
 
-- The repository has no evidenced production hostname. Confirm `VITE_SITE_URL` and replace the provisional `https://designersroom.in` fallback/canonical if needed.
+- `VITE_SITE_URL` may still be set explicitly in deployment configuration; repository fallback and static URLs now use `https://designersroom.anviklabs.site`.
+- The live deployment currently serves the old 846-byte shell; deploy commit `b0c5974` or later.
 - SSR/SSG and Vercel 404 changes are intentionally not included because they require architectural/hosting decisions.
 - Named AI bot rules currently allow crawling; confirm that policy before production launch.
 - No new dependencies were added.
