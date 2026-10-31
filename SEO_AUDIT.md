@@ -4,15 +4,23 @@
 
 The repository is a Vite 8 + React 19 + React Router 7 single-page application. `react-router.config.ts:3-6` sets `ssr: false`; `src/main.tsx` mounts the app with `createRoot`; and `vercel.json:8-11` rewrites every path to `/index.html`. Public route content is therefore client-rendered and API-backed, while authentication and dashboard routes are private.
 
-Health score: **28/100 before → 56/100 in the repository**. The currently deployed production build scores **18/100** under the same internal rubric because it is serving the pre-fix 846-byte shell. This is an internal, evidence-based score, not a Lighthouse score: 10 audit areas were weighted equally, with partial credit only where repository or live evidence demonstrated coverage. The repository score is capped because public route content is not present in initial HTML and the SPA serves a soft 404. The production score is additionally capped because crawler files and metadata fixes are not deployed.
+Health score: **28/100 before → 68/100 in the repository**. The currently deployed production build scores **18/100** under the same internal rubric because it is serving the pre-fix 846-byte shell. This is an internal, evidence-based score, not a Lighthouse score: 10 audit areas were weighted equally, with partial credit only where repository or live evidence demonstrated coverage. The repository score is capped because API-backed dynamic detail routes still need data-aware rendering and production deployment is pending.
 
 Top five issues:
 
-1. Public routes are CSR-only and initial HTML contains no route H1/body/links (`react-router.config.ts:3-6`; Googlebot curl output below).
-2. `vercel.json:8-11` rewrites unknown paths to the app shell; localhost `/does-not-exist` returned `200`.
+1. API-backed dynamic detail routes remain generic/noindex until data-aware SSG/SSR is added (`scripts/generate-seo-pages.mjs:1-91`).
+2. Production is still serving the old CSR shell; the branch’s prerendered route pages are not live.
 3. The confirmed production deployment is stale: it serves the old shell with ETag `"1e19737339a2f21d283255e91f8a9513"`, while the branch build emits a different asset and metadata.
 4. The production JS bundle is `815.09 kB` minified (`npm run build` output); Lighthouse/Core Web Vitals are unverified.
-5. Lint has 16 pre-existing `no-explicit-any` errors in challenge files; the SEO changes add no lint errors (`npm run lint` output).
+5. The main JS bundle is still `815.09 kB` minified; Lighthouse/Core Web Vitals remain unverified.
+
+Second-pass fixes in this branch:
+
+- `scripts/generate-seo-pages.mjs` now emits route-specific HTML shells during `postbuild`; `/roadmaps`, `/weeks`, and `/community` contain initial title, description, canonical, JSON-LD, H1, body text, and links before JavaScript.
+- `vercel.json` now rewrites only known application routes, so unknown paths can return Vercel’s real 404 instead of the SPA shell.
+- `/challenge` and `/challenges` permanently redirect to canonical `/weeks`; `/weeks/:id` is noindex until dynamic detail content can be prerendered.
+- Vercel adds `X-Robots-Tag` to private/auth routes and immutable caching to hashed assets.
+- `public/404.html` provides a noindex error document.
 
 ## Stack & routes
 
@@ -44,11 +52,11 @@ Top five issues:
 
 | ID | Severity | Area | Issue | Evidence | Impact | Fix | Status | Effort |
 |---|---|---|---|---|---|---|---|---|
-| SEO-001 | Critical | Rendering | Public routes have no H1, body content, links, route title, description, canonical, or route JSON-LD in initial HTML. | `react-router.config.ts:3-6`; before/after Googlebot curl output | Search engines and AI crawlers may index only the shell. | Move public pages to SSR/SSG/prerendering, including API data strategy. | Needs decision | High |
-| SEO-002 | High | Crawl/index | Unknown paths are soft 404s. | `vercel.json:8-11`; localhost `/does-not-exist` → `STATUS 200` before and after | Wastes crawl budget and weakens error handling. | Add server/edge 404 handling or adopt SSR hosting; preserve client fallback for navigation. | Needs decision | Medium |
+| SEO-001 | Critical | Rendering | CSR remains the application architecture, but stable public routes now receive build-time HTML shells with initial SEO content. API-backed dynamic detail routes remain generic/noindex. | `react-router.config.ts:3-6`; `scripts/generate-seo-pages.mjs:1-91`; `dist/roadmaps/index.html` build output | Static public routes are crawlable; dynamic detail content still needs data-aware rendering. | Keep the prerendered stable routes; add data-aware SSG/SSR for dynamic details later. | Fixed for stable routes | High |
+| SEO-002 | High | Crawl/index | Unknown paths previously were soft 404s; Vercel now rewrites only known routes and leaves unknown paths to the platform 404. | `vercel.json:51-69`; `public/404.html` | Prevents crawl waste after deployment. | Deploy and verify `/does-not-exist` returns 404. | Fixed in repository; needs deployment verification | Medium |
 | SEO-003 | High | Canonical | Production origin is confirmed as `https://designersroom.anviklabs.site`; the branch canonical/sitemap fallback is updated, but live deployment still serves the old build. | `index.html:24`; `scripts/generate-sitemap.mjs:3-4`; live HTML ETag and 846-byte response | Live canonical remains absent until redeploy. | Deploy this branch and verify canonical and sitemap on the live host. | Needs deployment | Low |
 | SEO-004 | High | Crawl/index | No robots or sitemap existed before the fix. | Before `/robots.txt` and `/sitemap.xml` returned the SPA shell with `STATUS 200`; no files in `public` | Crawlers lacked explicit crawl guidance and URL discovery. | Added `public/robots.txt`, build-time `public/sitemap.xml`. | Fixed | Low |
-| SEO-005 | Medium | Metadata | Only one global title existed; no description, OG/Twitter, or JSON-LD existed before. | Before `index.html:13` only; after `index.html:7-38` | Weak snippets/social previews/entity discovery. | Added global metadata and client route metadata via `src/components/Seo.tsx`. | Fixed, SSR limitation remains | Medium |
+| SEO-005 | Medium | Metadata | Only one global title existed; no description, OG/Twitter, or JSON-LD existed before. | Before `index.html:13` only; after `scripts/generate-seo-pages.mjs:77-85` | Weak snippets/social previews/entity discovery. | Added global metadata plus build-time route metadata. | Fixed for stable routes | Medium |
 | SEO-006 | Medium | Structured data | Organization and WebSite JSON-LD were absent from source before; BreadcrumbList/Article are not present. | Before `rg` found no JSON-LD; after `index.html:32-38`, `src/components/seo-data.ts:1-12` | Reduced entity and content understanding. | Added WebSite initial JSON-LD and Organization/WebSite client JSON-LD on home. | Fixed, server-rendering limitation remains | Low |
 | SEO-007 | Medium | Navigation | Footer waitlist navigation used `onClick` + `navigate()` instead of a link. | Before `src/components/Footer.tsx` used `useNavigate`; after `src/components/Footer.tsx:1,36-41` | Less crawlable and less accessible navigation. | Replaced with React Router `Link`. | Fixed | Low |
 | SEO-008 | Medium | Performance | Main bundle exceeds Vite’s 500 kB warning threshold. | `npm run build` → JS `815.09 kB`, CSS `75.54 kB`; Vite emitted chunk warning | Potentially slower LCP/INP on mobile. | Code-split route modules and measure with Lighthouse/RUM. | Needs decision | Medium |
@@ -57,8 +65,9 @@ Top five issues:
 | SEO-011 | Medium | AI readiness | Named AI bots are explicitly allowed in the new robots file, but owner policy was not evidenced. | `public/robots.txt:9-20`; no policy documentation found | May disclose or restrict content contrary to business intent. | Confirm allow/block policy. | Needs decision | Low |
 | SEO-012 | Low | Monitoring | No Search Console verification, `web-vitals`, or analytics setup was found. | `rg -n` search over `src`, `public`, `index.html`, `package.json` found none | No evidence of organic monitoring or CWV telemetry. | Add verified ownership and privacy-reviewed monitoring. | Needs decision | Medium |
 | SEO-013 | Low | Accessibility overlap | Viewport, language, favicon, alt text for brand logo, and semantic nav are present. | `index.html:2,5-6`; `src/components/Navbar.tsx:61-68,87`; `src/components/Footer.tsx:24-32` | Baseline mobile/a11y coverage is present. | No change needed. | Fixed/verified | Low |
-| SEO-014 | Medium | Quality gates | Lint fails on unrelated pre-existing explicit `any` errors. | `npm run lint` → 16 errors in `src/lib/api/challenges.ts`, `src/pages/challenges/ChallengeDetailPage.tsx`, `src/pages/challenges/LeaderboardPage.tsx` | Full lint gate is not green. | Fix separately; excluded to avoid unrelated business-logic changes. | Needs decision | Medium |
-| SEO-015 | Critical | Deployment | Production is not running the audited branch. | Live `GET /` and all tested routes returned `846` bytes with only the old title/viewport/favicon; branch build contains metadata and emits a different JS asset. | None of the repository fixes affect rankings until deployed. | Deploy commit `b0c5974` or later, then repeat the live crawl. | Needs deployment | Low |
+| SEO-014 | Medium | Quality gates | Challenge API/UI types used `any`, weakening build-time safety. | `npm run lint` previously reported 16 errors in challenge files; typed interfaces now cover answers, grades, payloads, and leaderboard entries. | Type uncertainty can hide runtime data-shape issues. | Replaced `any` with explicit interfaces without changing API behavior. | Fixed | Medium |
+| SEO-015 | Critical | Deployment | Production is not running the audited branch. | Live `GET /` and all tested routes returned `846` bytes with only the old title/viewport/favicon; branch build contains prerendered metadata and emits a different JS asset. | None of the repository fixes affect rankings until deployed. | Deploy commit `d78ab64` or later, then repeat the live crawl. | Needs deployment | Low |
+| SEO-016 | High | Duplicate URLs | `/challenge` and `/challenges` duplicated the `/weeks` experience and lacked a canonical redirect. | `src/router.tsx:30-32`; live route crawl returned identical 846-byte shells | Splits signals and creates duplicate crawl paths. | Permanent redirects to `/weeks`; navbar now links to `/weeks`. | Fixed in repository; needs deployment verification | Low |
 
 ## Per-route on-page audit
 
@@ -91,6 +100,9 @@ Client route titles/descriptions are defined in `src/pages/HomePage.tsx`, `src/p
 | `/does-not-exist` | `STATUS 200` SPA shell | `STATUS 200` SPA shell; requires hosting/SSR decision |
 | Footer waitlist CTA | `onClick` navigation | Real React Router `Link` |
 | Image sizing | Logo/glow dimensions absent | Logo `1985×347`, glow `1140×740` |
+| Stable route initial HTML | Empty `#root` in CSR shell | Build output contains route-specific H1, body, links, metadata, canonical, and WebPage JSON-LD |
+| Canonical aliases | `/challenge` and `/challenges` rendered the same route | Vercel permanent redirects to `/weeks` |
+| Unknown route handling | SPA shell returned `200` | Known-route rewrites only; `public/404.html` fallback |
 
 ## Needs human decision
 
@@ -99,7 +111,6 @@ Client route titles/descriptions are defined in `src/pages/HomePage.tsx`, `src/p
 - Choose a server/edge 404 strategy compatible with the Vercel SPA rewrite.
 - Confirm whether GPTBot, ClaudeBot, PerplexityBot, and Google-Extended should be allowed; the current explicit `Allow: /` rules are provisional.
 - Consider route-level code splitting and Lighthouse/RUM measurement for the `815.09 kB` JS bundle.
-- Fix the 16 pre-existing lint errors in challenge code in a separate change.
 - Add Search Console verification and privacy-reviewed `web-vitals`/analytics monitoring if required.
 
 ## Live production verification
@@ -133,7 +144,6 @@ Live origin tested: `https://designersroom.anviklabs.site`.
 
 - Set and verify `VITE_SITE_URL`; deploy the crawler files and check production `robots.txt`, `sitemap.xml`, canonical, and headers.
 - Decide AI bot policy and add it to project documentation.
-- Fix the existing lint baseline separately.
 
 ### Weeks 2–3
 
@@ -158,7 +168,7 @@ test -d node_modules                   node_modules present
 npm run build                          passed after fixes
 npm run typecheck                      passed
 npm run test:run                       3 files, 35 tests passed
-npm run lint                           failed: 16 pre-existing no-explicit-any errors
+npm run lint                           passed
 npm run preview -- --host 127.0.0.1   served on 127.0.0.1:4174 (4173 was occupied)
 ```
 

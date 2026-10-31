@@ -11,6 +11,8 @@ This change audits the Vite/React Router CSR app and applies low-risk technical 
 - **Structured data:** add Organization and WebSite data for the home route after hydration.
 - **Crawlable navigation:** replace the footer waitlist `onClick` navigation with a real React Router `Link`.
 - **Layout stability:** add intrinsic dimensions to the brand logo and decorative roadmap glow.
+- **Initial HTML:** generate route-specific SEO shells after Vite build, including H1, body text, links, metadata, canonical, and WebPage JSON-LD.
+- **Routing/index control:** restrict Vercel rewrites to known routes, add a static 404, redirect duplicate challenge aliases, add private-route `X-Robots-Tag`, and cache hashed assets immutably.
 
 ## Before/after
 
@@ -18,12 +20,15 @@ This change audits the Vite/React Router CSR app and applies low-risk technical 
 - Before: global title only in initial HTML; after: description, social metadata, canonical, and WebSite JSON-LD are present in the app shell.
 - Before: footer waitlist CTA used imperative navigation; after: it is a real link.
 - Before: logo/glow had no intrinsic dimensions; after: both have width/height attributes.
+- Before: every path rewrote to the SPA shell; after: known routes are rewritten explicitly and unknown paths can reach a real 404.
+- Before: `/challenge` and `/challenges` duplicated `/weeks`; after: both permanently redirect to `/weeks`.
 - Unchanged: public initial HTML is still CSR-only and unknown paths still soft-404. The confirmed production hostname is `https://designersroom.anviklabs.site`, but the live deployment has not picked up this branch.
 
 ## Risk notes
 
 - `VITE_SITE_URL` may still be set explicitly in deployment configuration; repository fallback and static URLs now use `https://designersroom.anviklabs.site`.
-- The live deployment currently serves the old 846-byte shell; deploy commit `b0c5974` or later.
+- The live deployment currently serves the old 846-byte shell; deploy commit `d78ab64` or later.
+- Dynamic API-backed detail routes are intentionally noindex until they have data-aware prerendering.
 - SSR/SSG and Vercel 404 changes are intentionally not included because they require architectural/hosting decisions.
 - Named AI bot rules currently allow crawling; confirm that policy before production launch.
 - No new dependencies were added.
@@ -41,4 +46,4 @@ curl -sS http://127.0.0.1:4174/robots.txt
 curl -sS http://127.0.0.1:4174/sitemap.xml
 ```
 
-Expected: build, typecheck, and 35 tests pass. `npm run lint` remains blocked by 16 pre-existing `no-explicit-any` errors in challenge code. Full evidence and the decision list are in `SEO_AUDIT.md`.
+Expected: build, typecheck, 35 tests, and lint pass. Full evidence and the decision list are in `SEO_AUDIT.md`.
