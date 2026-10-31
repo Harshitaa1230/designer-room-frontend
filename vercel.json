@@ -3,13 +3,33 @@
   "trailingSlash": false,
   "redirects": [
     {
-      "source": "/challenge",
-      "destination": "/weeks",
+      "source": "/roadmaps",
+      "destination": "/guidebook",
+      "permanent": true
+    },
+    {
+      "source": "/roadmaps/:id",
+      "destination": "/guidebook/:id",
+      "permanent": true
+    },
+    {
+      "source": "/weeks",
+      "destination": "/challenge",
+      "permanent": true
+    },
+    {
+      "source": "/weeks/:id",
+      "destination": "/challenge/week/:id",
       "permanent": true
     },
     {
       "source": "/challenges",
-      "destination": "/weeks",
+      "destination": "/challenge",
+      "permanent": true
+    },
+    {
+      "source": "/challenges/:id",
+      "destination": "/challenge/:id",
       "permanent": true
     }
   ],
@@ -48,11 +68,11 @@
       "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
     },
     {
-      "source": "/roadmaps/:id",
+      "source": "/guidebook/:id",
       "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
     },
     {
-      "source": "/weeks/:id",
+      "source": "/challenge/week/:id",
       "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
     },
     {
@@ -60,7 +80,7 @@
       "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
     },
     {
-      "source": "/challenges/:id",
+      "source": "/challenge/:id",
       "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
     },
     {
@@ -74,10 +94,12 @@
       "destination": "https://auth.anviklabs.site/:path*"
     },
     { "source": "/", "destination": "/index.html" },
-    { "source": "/roadmaps", "destination": "/roadmaps/index.html" },
-    { "source": "/roadmaps/:id", "destination": "/roadmaps/index.html" },
-    { "source": "/weeks", "destination": "/weeks/index.html" },
-    { "source": "/weeks/:id", "destination": "/weeks/index.html" },
+    { "source": "/guidebook", "destination": "/guidebook/index.html" },
+    { "source": "/guidebook/:id", "destination": "/guidebook/index.html" },
+    { "source": "/guidebook/:roadmapId/:topicId", "destination": "/guidebook/index.html" },
+    { "source": "/challenge", "destination": "/challenge/index.html" },
+    { "source": "/challenge/week/:id", "destination": "/challenge/index.html" },
+    { "source": "/challenge/:id", "destination": "/challenge/index.html" },
     { "source": "/community", "destination": "/community/index.html" },
     { "source": "/leaderboard", "destination": "/leaderboard/index.html" },
     { "source": "/waitlist", "destination": "/waitlist/index.html" },
@@ -86,8 +108,6 @@
     { "source": "/auth/mfa", "destination": "/login/index.html" },
     { "source": "/dashboard", "destination": "/index.html" },
     { "source": "/admin", "destination": "/index.html" },
-    { "source": "/challenges/:id", "destination": "/weeks/index.html" },
-    { "source": "/attempts/:id", "destination": "/weeks/index.html" },
-    { "source": "/guidebook/:roadmapId/:topicId", "destination": "/roadmaps/index.html" }
+    { "source": "/attempts/:id", "destination": "/challenge/index.html" }
   ]
 }

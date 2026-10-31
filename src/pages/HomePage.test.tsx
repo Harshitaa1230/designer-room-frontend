@@ -28,7 +28,7 @@ describe('HomePage', () => {
     )
     expect(screen.getByRole('link', { name: /browse guidebook/i })).toHaveAttribute(
       'href',
-      '/roadmaps',
+      '/guidebook',
     )
   })
 

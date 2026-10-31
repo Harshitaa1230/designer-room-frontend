@@ -18,7 +18,7 @@ describe('ComingSoonPage', () => {
     ).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /explore the guidebook/i })).toHaveAttribute(
       'href',
-      '/roadmaps',
+      '/guidebook',
     )
     expect(screen.getByRole('link', { name: /back home/i })).toHaveAttribute('href', '/')
   })

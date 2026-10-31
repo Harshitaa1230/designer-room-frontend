@@ -25,7 +25,7 @@ export default function ProgressCard({
     : 'Start where you left off'
   const ctaHref = continueTopicId
     ? `/guidebook/${roadmapId}/${continueTopicId}`
-    : `/roadmaps/${roadmapId}`
+    : `/guidebook/${roadmapId}`
 
   return (
     <div

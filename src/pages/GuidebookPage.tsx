@@ -126,7 +126,7 @@ export function GuidebookPage() {
           {messageOf(roadmap.error, 'Could not load this topic.')}
         </p>
         <Link
-          to="/roadmaps"
+          to="/guidebook"
           className="rounded-full border border-[var(--border-subtle)] px-4 py-2 text-xs font-medium text-[var(--text-primary)] transition-colors hover:border-[var(--border-strong)] hover:bg-[var(--bg-hover)]"
         >
           Back to the roadmaps
@@ -145,11 +145,11 @@ export function GuidebookPage() {
       <div className="flex w-full flex-col gap-6 px-5 pb-16 pt-6 sm:gap-8 sm:px-8 sm:pb-24 sm:pt-10 lg:px-16 2xl:px-24">
         {/* Breadcrumb */}
         <nav className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] text-[var(--text-muted)] sm:text-[12px]">
-          <Link to="/roadmaps" className="hover:text-[var(--text-primary)]">
+          <Link to="/guidebook" className="hover:text-[var(--text-primary)]">
             Roadmaps
           </Link>
           <span aria-hidden="true">/</span>
-          <Link to={`/roadmaps/${roadmapId}`} className="hover:text-[var(--text-primary)]">
+          <Link to={`/guidebook/${roadmapId}`} className="hover:text-[var(--text-primary)]">
             {roadmap.data?.title ?? 'Roadmap'}
           </Link>
           {stage && (

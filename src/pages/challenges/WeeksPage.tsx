@@ -16,7 +16,7 @@ export function WeeksPage() {
         {(weeks || []).map((week) => (
           <Link
             key={week.id}
-            to={`/weeks/${week.id}`}
+            to={`/challenge/week/${week.id}`}
             className="border border-[var(--border-subtle)] rounded-xl p-6 bg-[var(--bg-card)] hover:bg-[var(--bg-card-hover)] transition"
           >
             <div className="flex justify-between items-center">
