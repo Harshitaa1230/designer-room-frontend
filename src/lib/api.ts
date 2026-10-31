@@ -1,7 +1,8 @@
 import axios, { AxiosError, type InternalAxiosRequestConfig } from 'axios'
 import { useAuthStore, type UserProfile } from '@/store/auth'
 
-export const API_BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000'
+const configuredApiUrl = import.meta.env.VITE_API_URL?.trim()
+export const API_BASE_URL = configuredApiUrl || (import.meta.env.PROD ? '/api' : 'http://localhost:3000')
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,
