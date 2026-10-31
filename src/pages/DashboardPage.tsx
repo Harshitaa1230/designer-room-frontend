@@ -262,7 +262,7 @@ export function DashboardPage() {
           <div className="mb-4 flex items-center justify-between gap-4">
             <h2 className="text-base font-medium text-[var(--text-primary)]">Guidebook</h2>
             <Link
-              to="/roadmaps"
+              to="/guidebook"
               className="text-xs font-medium text-[var(--accent-text)] transition-colors hover:text-[var(--text-primary)]"
             >
               Browse all →
@@ -293,7 +293,7 @@ export function DashboardPage() {
               {roadmapsQuery.data.items.map((roadmap) => (
                 <li key={roadmap.id}>
                   <Link
-                    to={`/roadmaps/${roadmap.id}`}
+                    to={`/guidebook/${roadmap.id}`}
                     className="flex h-full flex-col gap-1.5 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-inset)] p-4 transition-all hover:border-[var(--accent-text)] hover:bg-[var(--accent-wash)]"
                   >
                     <span className="text-sm font-medium text-[var(--text-primary)]">{roadmap.title}</span>

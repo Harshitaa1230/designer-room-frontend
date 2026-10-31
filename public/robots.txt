@@ -8,6 +8,8 @@ Disallow: /guidebook/
 Disallow: /roadmaps/
 Disallow: /weeks/
 Disallow: /challenges/
+Disallow: /guidebook/
+Disallow: /challenge/
 
 User-agent: GPTBot
 Allow: /

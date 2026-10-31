@@ -7,20 +7,20 @@ const siteUrl = (process.env.VITE_SITE_URL || process.env.VERCEL_PROJECT_PRODUCT
 
 const routes = [
   {
-    path: '/roadmaps',
+    path: '/guidebook',
     title: 'Design roadmaps · Designers Room',
     description: 'Follow practical, step-by-step design roadmaps you can actually finish.',
     heading: 'Pick your path.',
     body: 'Step-by-step plans you can actually finish. Explore structured design roadmaps and build skills through practice.',
-    links: [{ href: '/weeks', label: 'Explore challenges' }],
+    links: [{ href: '/challenge', label: 'Explore challenges' }],
   },
   {
-    path: '/weeks',
+    path: '/challenge',
     title: 'Design challenges · Designers Room',
     description: 'Build your design portfolio through focused weekly challenges.',
     heading: 'Challenges',
     body: 'Build your design portfolio through focused weekly design challenges.',
-    links: [{ href: '/roadmaps', label: 'Browse design roadmaps' }],
+    links: [{ href: '/guidebook', label: 'Browse design roadmaps' }],
   },
   {
     path: '/community',
@@ -37,7 +37,7 @@ const routes = [
     heading: 'Leaderboard',
     body: 'Track progress across Designers Room challenges.',
     robots: 'noindex, nofollow',
-    links: [{ href: '/weeks', label: 'Explore challenges' }],
+    links: [{ href: '/challenge', label: 'Explore challenges' }],
   },
   {
     path: '/waitlist',

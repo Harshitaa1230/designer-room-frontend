@@ -16,7 +16,7 @@ export function WeekDetailPage() {
   return (
     <section className="pt-28 pb-16 px-4 max-w-4xl mx-auto">
       <Seo title="Weekly design challenges · Designers Room" description="Explore the challenges in this Designers Room practice week." />
-      <Link to="/weeks" className="text-sm text-[var(--text-muted)]">← Back to weeks</Link>
+      <Link to="/challenge" className="text-sm text-[var(--text-muted)]">← Back to challenges</Link>
       <h1 className="text-3xl font-medium mt-4 mb-6">Week Challenges</h1>
       <div className="grid gap-3">
         {(challenges || []).map((c) => (
@@ -29,7 +29,7 @@ export function WeekDetailPage() {
             {c.locked ? (
               <span className="text-sm text-[var(--text-muted)]">Locked</span>
             ) : (
-              <Link to={`/challenges/${c.id}`} className="btn-3d px-4 py-2 text-sm">Start/View</Link>
+              <Link to={`/challenge/${c.id}`} className="btn-3d px-4 py-2 text-sm">Start/View</Link>
             )}
           </div>
         ))}

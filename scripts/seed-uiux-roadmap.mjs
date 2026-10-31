@@ -127,7 +127,7 @@ async function main() {
 
   console.log('✅  Done!')
   console.log(`\n   Roadmap ID (save this): ${roadmap.id}`)
-  console.log(`   Use this ID when navigating to /roadmaps/${roadmap.id}\n`)
+  console.log(`   Use this ID when navigating to /guidebook/${roadmap.id}\n`)
 }
 
 main().catch((err) => {

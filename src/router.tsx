@@ -28,17 +28,15 @@ export const router = createBrowserRouter([
     element: <AppLayout />,
     children: [
       { index: true, element: <HomePage /> },
-      { path: 'roadmaps', element: <RoadmapsPage /> },
+      { path: 'guidebook', element: <RoadmapsPage /> },
       { path: 'challenge', element: <WeeksPage /> },
-      { path: 'challenges', element: <WeeksPage /> },
-      { path: 'weeks', element: <WeeksPage /> },
-      { path: 'weeks/:id', element: <WeekDetailPage /> },
-      { path: 'challenges/:id', element: <RequireAuth><ChallengeDetailPage /></RequireAuth> },
+      { path: 'challenge/week/:id', element: <WeekDetailPage /> },
+      { path: 'challenge/:id', element: <RequireAuth><ChallengeDetailPage /></RequireAuth> },
       { path: 'attempts/:id', element: <RequireAuth><AttemptPage /></RequireAuth> },
       { path: 'leaderboard', element: <LeaderboardPage /> },
       { path: 'community', element: <ComingSoonPage kind="community" /> },
       {
-        path: 'roadmaps/:id',
+        path: 'guidebook/:id',
         element: (
           <RequireAuth>
             <RoadmapDetailPage />

@@ -41,7 +41,7 @@ export const Hero = () => {
             Start Practising →
           </Link>
           <Link
-            to="/roadmaps"
+            to="/guidebook"
             className="btn-3d-ghost inline-flex items-center justify-center px-3 py-3 text-xs whitespace-nowrap sm:px-6 sm:py-3.5 sm:text-sm"
           >
             Browse Guidebook
