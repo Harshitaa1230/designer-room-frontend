@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 export const Hero = () => {
   return (
     <section className="hero relative overflow-hidden px-6 pt-36 pb-24 sm:pt-40 sm:pb-32 md:pt-48 md:pb-40">
-      {/* Ambient arc — dark mode: cutout uses #080808; light mode: #f5f4f0.
+      {/* Ambient arc. The hero canvas stays dark in both themes, so the cut-out
+          matches the canvas rather than the page background.
           No overflow-hidden here: clipping the blurred blobs at this box's edge
           caused a visible vertical seam (blur cut hard at the clip boundary). */}
       <div
@@ -14,17 +15,17 @@ export const Hero = () => {
         <div className="animate-ambient-glow absolute top-10 right-4 h-[350px] w-[450px] rounded-full bg-[radial-gradient(circle_at_65%_35%,#ff7a29_10%,#ea580c_35%,#9a3412_60%,transparent_75%)] opacity-85 blur-[60px] filter md:right-16 md:h-[550px] md:w-[700px]" />
         <div className="absolute top-16 right-10 h-[200px] w-[280px] rounded-full bg-[radial-gradient(ellipse_at_60%_30%,#ffa24c_0%,#ea580c_50%,transparent_70%)] opacity-70 blur-[40px] filter md:right-32 md:h-[300px] md:w-[420px]" />
         {/* Cut-out that carves the crescent — matches page background */}
-        <div className="absolute top-36 right-36 h-[260px] w-[360px] rounded-full bg-[var(--bg-page)] opacity-95 blur-[50px] filter md:right-64 md:h-[400px] md:w-[540px]" />
+        <div className="absolute top-36 right-36 h-[260px] w-[360px] rounded-full bg-[var(--hero-cutout)] opacity-95 blur-[50px] filter md:right-64 md:h-[400px] md:w-[540px]" />
       </div>
 
       {/* Main Content */}
       <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center text-center">
-        <h1 className="mx-auto max-w-[300px] text-[34px] leading-[1.12] font-semibold tracking-[-0.03em] text-[#fffaee] [text-wrap:balance] sm:max-w-none sm:text-5xl sm:leading-[1.08] md:text-7xl lg:text-[84px]">
+        <h1 className="mx-auto max-w-[300px] text-[34px] leading-[1.12] font-semibold tracking-[-0.03em] text-[#fffaee] light:text-[var(--text-primary)] [text-wrap:balance] sm:max-w-none sm:text-5xl sm:leading-[1.08] md:text-7xl lg:text-[84px]">
           <span className="block">Your design journey,</span>
           <span className="mt-0.5 block">all in one room.</span>
         </h1>
 
-        <p className="mx-auto mt-5 max-w-[325px] text-[13px] leading-[1.64] font-[450] tracking-normal text-white/95 [text-shadow:0_1px_14px_rgba(0,0,0,.4)] [text-wrap:pretty] sm:mt-7 sm:max-w-[940px] sm:text-base sm:leading-relaxed md:text-lg lg:text-xl">
+        <p className="mx-auto mt-5 max-w-[325px] text-[13px] leading-[1.64] font-[450] tracking-normal text-white/95 light:text-[var(--text-soft)] light:[text-shadow:none] [text-shadow:0_1px_14px_rgba(0,0,0,.4)] [text-wrap:pretty] sm:mt-7 sm:max-w-[940px] sm:text-base sm:leading-relaxed md:text-lg lg:text-xl">
           Everything that took us years to figure out, organized in one place. Structured roadmaps,
           <br className="hidden sm:inline" />
           theory without the fluff, challenges that build your portfolio, and a community to grow

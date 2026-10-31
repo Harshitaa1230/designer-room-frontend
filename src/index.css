@@ -1,7 +1,8 @@
 @import 'tailwindcss';
 
-/* Tell Tailwind v4 to use the .dark class on <html> for dark: variants */
+/* Tell Tailwind v4 to use the .dark / .light classes on <html> */
 @variant dark (&:is(.dark *));
+@custom-variant light (&:where(.light, .light *));
 
 @theme {
   --font-sans:
@@ -56,26 +57,92 @@
 
 /* ── Theme tokens ────────────────────────────────────────────────────────── */
 :root {
-  --bg-page:        #080808;
-  --bg-card:        rgba(18, 18, 18, 0.55);
-  --bg-card-hover:  rgba(18, 18, 18, 0.65);
-  --border-card:    rgba(255, 255, 255, 0.10);
+  --bg-page:           #080808;
+  --hero-cutout:       #080808;
+  --bg-card:           #11100f;
+  --bg-card-hover:     #17140f;
+  --bg-inset:          #0b0a09;
+  --bg-inset-hover:    #1c1916;
+  --bg-hover:          rgba(255, 255, 255, 0.04);
+  --bg-hover-strong:   rgba(255, 255, 255, 0.08);
+  --border-card:       rgba(255, 255, 255, 0.10);
   --border-card-hover: rgba(255, 255, 255, 0.18);
-  --text-primary:   #ffffff;
-  --text-muted:     #ffffff;
-  --text-faint:     #ffffff;
+  --border-subtle:     #302923;
+  --border-strong:     #504740;
+  --border-accent:     rgba(255, 106, 26, 0.40);
+  --text-primary:      #fff8ee;
+  --text-soft:         #d8cfc4;
+  --text-body:         #b6ada4;
+  --text-muted:        #918980;
+  --text-faint:        #827a73;
+  --accent:            #ff6a00;
+  --accent-text:       #ff8a4a;
+  --accent-label:      #ff6a00;
+  --accent-strong:     #ff6a1a;
+  --accent-soft-text:  #ffd0a3;
+  --accent-soft:       rgba(255, 106, 26, 0.10);
+  --accent-soft-hover: rgba(255, 106, 26, 0.18);
+  --accent-wash:       rgba(255, 106, 26, 0.06);
+  --on-accent:         #080808;
+  --success-bg:        #122017;
+  --success-border:    #3f6b4a;
+  --success-text:      #d8f0dd;
+  --danger-bg:         #24120d;
+  --danger-border:     #7a3b2a;
+  --danger-text:       #ffd0c2;
+  --danger-wash:       rgba(255, 60, 0, 0.12);
+  --progress-track:    #1d1916;
+  --checkpoint-bg:     rgba(74, 27, 12, 0.35);
+  --done-pill-bg:      #4a1b0c;
+  --accent-panel-bg:   #1a130e;
+  --accent-panel-border: #3a2c22;
+  --glass-bg:          rgba(18, 18, 18, 0.70);
+  --glass-border:      rgba(255, 255, 255, 0.08);
   color-scheme: dark;
 }
 
 html.light {
   --bg-page:           #f2f0eb;
-  --bg-card:           rgba(250, 248, 244, 0.80);
-  --bg-card-hover:     rgba(250, 248, 244, 0.95);
-  --border-card:       rgba(0, 0, 0, 0.07);
-  --border-card-hover: rgba(0, 0, 0, 0.14);
-  --text-primary:      #0f0f0f;
-  --text-muted:        rgba(15, 15, 15, 0.58);
-  --text-faint:        rgba(15, 15, 15, 0.36);
+  --hero-cutout:       #f2f0eb;
+  --bg-card:           #fbf9f5;
+  --bg-card-hover:     #ffffff;
+  --bg-inset:          #ede8e0;
+  --bg-inset-hover:    #e4ded5;
+  --bg-hover:          rgba(23, 19, 16, 0.045);
+  --bg-hover-strong:   rgba(23, 19, 16, 0.08);
+  --border-card:       rgba(42, 34, 26, 0.12);
+  --border-card-hover: rgba(42, 34, 26, 0.22);
+  --border-subtle:     rgba(42, 34, 26, 0.16);
+  --border-strong:     rgba(42, 34, 26, 0.30);
+  --border-accent:     rgba(166, 58, 0, 0.38);
+  --text-primary:      #171310;
+  --text-soft:         #3f3832;
+  --text-body:         #564f48;
+  --text-muted:        #6b635b;
+  --text-faint:        #746c64;
+  --accent:            #ff6a00;
+  --accent-text:       #ad3d00;
+  --accent-label:      #ad3d00;
+  --accent-strong:     #a63a00;
+  --accent-soft-text:  #8a3a00;
+  --accent-soft:       rgba(255, 106, 26, 0.12);
+  --accent-soft-hover: rgba(255, 106, 26, 0.18);
+  --accent-wash:       rgba(255, 106, 26, 0.07);
+  --on-accent:         #171310;
+  --success-bg:        #eaf6ec;
+  --success-border:    #9fcaa9;
+  --success-text:      #1c5b2b;
+  --danger-bg:         #fbebe6;
+  --danger-border:     #dda895;
+  --danger-text:       #8a2c12;
+  --danger-wash:       rgba(166, 58, 0, 0.10);
+  --progress-track:    #ddd7cf;
+  --checkpoint-bg:     rgba(255, 106, 26, 0.07);
+  --done-pill-bg:      #f7e7dd;
+  --accent-panel-bg:   #fbefe7;
+  --accent-panel-border: rgba(166, 58, 0, 0.22);
+  --glass-bg:          rgba(250, 248, 244, 0.78);
+  --glass-border:      rgba(42, 34, 26, 0.12);
   color-scheme: light;
 }
 
@@ -83,6 +150,8 @@ html.light {
 html {
   scroll-behavior: smooth;
   background-color: var(--bg-page);
+  caret-color: var(--accent-text);
+  scrollbar-color: var(--border-strong) var(--bg-page);
   transition: background-color 300ms ease;
 }
 
@@ -98,6 +167,23 @@ body {
   transition: background-color 300ms ease, color 300ms ease;
 }
 
+::selection {
+  background: var(--accent-soft-hover);
+  color: var(--text-primary);
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-page);
+}
+::-webkit-scrollbar-thumb {
+  border: 3px solid var(--bg-page);
+  border-radius: 999px;
+  background: var(--border-strong);
+}
+
 /* ── Hero ─────────────────────────────────────────────────────────────────── */
 /* Readability scrim over the gradient canvas, under the hero text */
 .hero::before {
@@ -109,7 +195,11 @@ body {
   background: radial-gradient(ellipse 60% 45% at 50% 48%, rgba(0, 0, 0, 0.35), transparent 70%);
 }
 
-/* Soft fade from the hero canvas into the next section */
+/* In light mode the canvas is washed out so the hero text can be dark. */
+html.light .hero::before {
+  background: rgba(242, 240, 235, 0.72);
+}
+
 .hero::after {
   content: '';
   position: absolute;
@@ -119,10 +209,7 @@ body {
   z-index: 1;
   height: 360px;
   pointer-events: none;
-  background: linear-gradient(to bottom, transparent, #111);
-}
-html.light .hero::after {
-  background: linear-gradient(to bottom, transparent, #f2f0eb);
+  background: linear-gradient(to bottom, transparent, var(--bg-page));
 }
 
 /* ── Tactile 3D buttons ──────────────────────────────────────────────────── */
@@ -206,10 +293,16 @@ html.light .hero::after {
     0 10px 22px rgba(0, 0, 0, 0.3);
 }
 
+html.light .btn-3d-ghost {
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.52));
+}
+
 /* Focus + shine sweep (shared) */
 .btn-3d:focus-visible,
 .btn-3d-ghost:focus-visible {
-  outline: 2px solid #fff;
+  outline: 2px solid var(--accent-text);
   outline-offset: 4px;
 }
 .btn-3d::after,
@@ -459,12 +552,8 @@ html.light .animate-alive-text {
 
 /* ── Glassmorphism helpers ───────────────────────────────────────────────── */
 .glass-panel {
-  background: rgba(18, 18, 18, 0.70);
+  background: var(--glass-bg);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255,255,255,0.08);
-}
-html.light .glass-panel {
-  background: rgba(255,255,255,0.70);
-  border-color: rgba(0,0,0,0.08);
+  border: 1px solid var(--glass-border);
 }

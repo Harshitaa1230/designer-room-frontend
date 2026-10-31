@@ -29,12 +29,12 @@ import { AuthorizationError } from '@/components/AuthorizationError'
 import { Spinner } from '@/components/LoadingState'
 
 const inputClasses =
-  'w-full rounded-lg border border-[#302923] bg-[#0b0a09] px-3 py-2 text-sm text-white placeholder-[#57504a] transition-colors focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/50 focus:outline-none'
+  'w-full rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-inset)] px-3 py-2 text-sm text-[var(--text-primary)] placeholder-[var(--text-faint)] transition-colors focus:border-[var(--accent-text)] focus:ring-1 focus:ring-[var(--accent-text)] focus:outline-none'
 
 const smallButtonClasses =
-  'inline-flex items-center gap-1.5 rounded-full border border-[#302923] px-3.5 py-1.5 text-xs font-medium text-white transition-colors hover:border-[#504740] hover:bg-white/[0.04] disabled:cursor-not-allowed disabled:opacity-50'
+  'inline-flex items-center gap-1.5 rounded-full border border-[var(--border-subtle)] px-3.5 py-1.5 text-xs font-medium text-[var(--text-primary)] transition-colors hover:border-[var(--border-strong)] hover:bg-[var(--bg-hover)] disabled:cursor-not-allowed disabled:opacity-50'
 
-const accentButtonClasses = `${smallButtonClasses} border-[rgba(255,106,26,0.4)] text-[#ff8a4a] hover:bg-[rgba(255,106,26,0.1)]`
+const accentButtonClasses = `${smallButtonClasses} border-[var(--border-accent)] text-[var(--accent-text)] hover:bg-[var(--accent-soft)]`
 
 const DIFFICULTIES: Difficulty[] = ['beginner', 'intermediate', 'advanced']
 
@@ -121,7 +121,7 @@ function TopicRow({
 
   if (editing) {
     return (
-      <li className="flex flex-col gap-2 rounded-lg border border-[#302923] bg-[#0b0a09] p-3">
+      <li className="flex flex-col gap-2 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-inset)] p-3">
         <div className="flex flex-col gap-2 sm:flex-row">
           <input
             autoFocus
@@ -188,7 +188,7 @@ function TopicRow({
             Cancel
           </button>
           {update.isError && (
-            <span className="text-xs text-[#ff8a4a]">{messageOf(update.error, 'Save failed.')}</span>
+            <span className="text-xs text-[var(--accent-text)]">{messageOf(update.error, 'Save failed.')}</span>
           )}
         </div>
       </li>
@@ -197,8 +197,8 @@ function TopicRow({
 
   if (confirmDelete) {
     return (
-      <li className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-[rgba(255,106,26,0.4)] bg-[rgba(255,106,26,0.06)] px-3 py-2">
-        <span className="text-xs text-[#ff8a4a]">
+      <li className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-[var(--border-accent)] bg-[var(--accent-wash)] px-3 py-2">
+        <span className="text-xs text-[var(--accent-text)]">
           Delete topic “{topic.title}”? This cannot be undone.
         </span>
         <span className="flex gap-3">
@@ -206,14 +206,14 @@ function TopicRow({
             type="button"
             disabled={remove.isPending}
             onClick={() => remove.mutate()}
-            className="text-xs font-semibold text-white underline underline-offset-2 hover:text-[#ff8a4a] disabled:opacity-60"
+            className="text-xs font-semibold text-[var(--text-primary)] underline underline-offset-2 hover:text-[var(--accent-text)] disabled:opacity-60"
           >
             {remove.isPending ? 'Deleting…' : 'Delete'}
           </button>
           <button
             type="button"
             onClick={() => setConfirmDelete(false)}
-            className="text-xs text-[#827a73] hover:text-white"
+            className="text-xs text-[var(--text-muted)] hover:text-[var(--text-primary)]"
           >
             Cancel
           </button>
@@ -225,8 +225,8 @@ function TopicRow({
   return (
     <li className="flex flex-wrap items-center justify-between gap-3 px-3 py-2">
       <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-        <span className="truncate text-sm text-[#b6ada4]">{topic.title}</span>
-        <span className="text-[11px] text-[#827a73]">
+        <span className="truncate text-sm text-[var(--text-body)]">{topic.title}</span>
+        <span className="text-[11px] text-[var(--text-muted)]">
           {topic.stage === null ? 'No stage' : `Stage ${topic.stage}`} · {topic.difficulty ?? 'beginner'}
           {topic.estimatedMinutes ? ` · ${topic.estimatedMinutes} min` : ''} ·{' '}
           {topic.hasContent ? 'document uploaded' : 'no document'}
@@ -266,7 +266,7 @@ function TopicRow({
             aria-label={`Delete the document of ${topic.title}`}
             disabled={removeDocument.isPending}
             onClick={() => removeDocument.mutate()}
-            className="flex size-7 items-center justify-center rounded-md text-[#827a73] transition-colors hover:bg-[rgba(255,60,0,0.12)] hover:text-[#ff8a4a]"
+            className="flex size-7 items-center justify-center rounded-md text-[var(--text-muted)] transition-colors hover:bg-[var(--danger-wash)] hover:text-[var(--accent-text)]"
           >
             <Trash2 className="h-3.5 w-3.5" />
           </button>
@@ -275,7 +275,7 @@ function TopicRow({
           type="button"
           aria-label={`Edit topic ${topic.title}`}
           onClick={() => setEditing(true)}
-          className="flex size-7 items-center justify-center rounded-md text-[#827a73] transition-colors hover:bg-white/[0.05] hover:text-white"
+          className="flex size-7 items-center justify-center rounded-md text-[var(--text-muted)] transition-colors hover:bg-[var(--bg-hover)] hover:text-[var(--text-primary)]"
         >
           <Pencil className="h-3.5 w-3.5" />
         </button>
@@ -283,14 +283,14 @@ function TopicRow({
           type="button"
           aria-label={`Delete topic ${topic.title}`}
           onClick={() => setConfirmDelete(true)}
-          className="flex size-7 items-center justify-center rounded-md text-[#827a73] transition-colors hover:bg-[rgba(255,60,0,0.12)] hover:text-[#ff8a4a]"
+          className="flex size-7 items-center justify-center rounded-md text-[var(--text-muted)] transition-colors hover:bg-[var(--danger-wash)] hover:text-[var(--accent-text)]"
         >
           <Trash2 className="h-3.5 w-3.5" />
         </button>
       </span>
-      {fileError && <span className="w-full text-xs text-[#ff8a4a]">{fileError}</span>}
+      {fileError && <span className="w-full text-xs text-[var(--accent-text)]">{fileError}</span>}
       {upload.isError && (
-        <span className="w-full text-xs text-[#ff8a1a]">{messageOf(upload.error, 'Upload failed.')}</span>
+        <span className="w-full text-xs text-[var(--accent-text)]">{messageOf(upload.error, 'Upload failed.')}</span>
       )}
     </li>
   )
@@ -336,7 +336,7 @@ function CheckpointRow({
 
   if (editing) {
     return (
-      <li className="flex flex-col gap-2 rounded-lg border border-[#302923] bg-[#0b0a09] p-2 sm:flex-row sm:items-center">
+      <li className="flex flex-col gap-2 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-inset)] p-2 sm:flex-row sm:items-center">
         <input
           autoFocus
           value={taskDraft}
@@ -378,16 +378,16 @@ function CheckpointRow({
 
   return (
     <li className="flex items-center justify-between gap-3 px-3 py-1.5">
-      <span className="min-w-0 flex-1 truncate text-xs text-[#b6ada4]">{checkpoint.task}</span>
+      <span className="min-w-0 flex-1 truncate text-xs text-[var(--text-body)]">{checkpoint.task}</span>
       {checkpoint.timeEstimate && (
-        <span className="shrink-0 text-[11px] text-[#827a73]">{checkpoint.timeEstimate}</span>
+        <span className="shrink-0 text-[11px] text-[var(--text-muted)]">{checkpoint.timeEstimate}</span>
       )}
       <span className="flex shrink-0 items-center gap-1">
         <button
           type="button"
           aria-label={`Edit checkpoint ${checkpoint.task}`}
           onClick={() => setEditing(true)}
-          className="flex size-6 items-center justify-center rounded-md text-[#827a73] transition-colors hover:bg-white/[0.05] hover:text-white"
+          className="flex size-6 items-center justify-center rounded-md text-[var(--text-muted)] transition-colors hover:bg-[var(--bg-hover)] hover:text-[var(--text-primary)]"
         >
           <Pencil className="h-3 w-3" />
         </button>
@@ -396,7 +396,7 @@ function CheckpointRow({
           disabled={remove.isPending}
           aria-label={`Delete checkpoint ${checkpoint.task}`}
           onClick={() => remove.mutate()}
-          className="flex size-6 items-center justify-center rounded-md text-[#827a73] transition-colors hover:bg-[rgba(255,60,0,0.12)] hover:text-[#ff8a4a]"
+          className="flex size-6 items-center justify-center rounded-md text-[var(--text-muted)] transition-colors hover:bg-[var(--danger-wash)] hover:text-[var(--accent-text)]"
         >
           <Trash2 className="h-3 w-3" />
         </button>
@@ -475,7 +475,7 @@ function StageRow({
   })
 
   return (
-    <li className="rounded-xl border border-[#302923] bg-[#0b0a09] p-3">
+    <li className="rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-inset)] p-3">
       {editing ? (
         <div className="flex flex-col gap-2">
           <div className="flex flex-wrap gap-2">
@@ -538,7 +538,7 @@ function StageRow({
               Cancel
             </button>
             {update.isError && (
-              <span className="text-xs text-[#ff8a4a]">
+              <span className="text-xs text-[var(--accent-text)]">
                 {messageOf(update.error, 'Save failed.')}
               </span>
             )}
@@ -547,10 +547,10 @@ function StageRow({
       ) : (
         <div className="flex flex-wrap items-center justify-between gap-2">
           <span className="flex min-w-0 flex-col gap-0.5">
-            <span className="truncate text-sm text-white">
+            <span className="truncate text-sm text-[var(--text-primary)]">
               {stage.position}. {stage.title}
             </span>
-            <span className="text-[11px] text-[#827a73]">
+            <span className="text-[11px] text-[var(--text-muted)]">
               {stage.subtitle ?? 'No subtitle'}
               {stage.prerequisiteStage ? ` · needs stage ${stage.prerequisiteStage}` : ''}
             </span>
@@ -560,7 +560,7 @@ function StageRow({
               type="button"
               aria-label={`Edit stage ${stage.title}`}
               onClick={() => setEditing(true)}
-              className="flex size-7 items-center justify-center rounded-md text-[#827a73] transition-colors hover:bg-white/[0.05] hover:text-white"
+              className="flex size-7 items-center justify-center rounded-md text-[var(--text-muted)] transition-colors hover:bg-[var(--bg-hover)] hover:text-[var(--text-primary)]"
             >
               <Pencil className="h-3.5 w-3.5" />
             </button>
@@ -568,7 +568,7 @@ function StageRow({
               type="button"
               aria-label={`Delete stage ${stage.title}`}
               onClick={() => setConfirmDelete(true)}
-              className="flex size-7 items-center justify-center rounded-md text-[#827a73] transition-colors hover:bg-[rgba(255,60,0,0.12)] hover:text-[#ff8a4a]"
+              className="flex size-7 items-center justify-center rounded-md text-[var(--text-muted)] transition-colors hover:bg-[var(--danger-wash)] hover:text-[var(--accent-text)]"
             >
               <Trash2 className="h-3.5 w-3.5" />
             </button>
@@ -577,8 +577,8 @@ function StageRow({
       )}
 
       {confirmDelete && (
-        <div className="mt-2 flex flex-wrap items-center justify-between gap-2 rounded-lg border border-[rgba(255,106,26,0.4)] bg-[rgba(255,106,26,0.06)] px-3 py-2">
-          <span className="text-xs text-[#ff8a4a]">
+        <div className="mt-2 flex flex-wrap items-center justify-between gap-2 rounded-lg border border-[var(--border-accent)] bg-[var(--accent-wash)] px-3 py-2">
+          <span className="text-xs text-[var(--accent-text)]">
             Delete stage “{stage.title}” and its checkpoints?
           </span>
           <span className="flex gap-3">
@@ -586,14 +586,14 @@ function StageRow({
               type="button"
               disabled={remove.isPending}
               onClick={() => remove.mutate()}
-              className="text-xs font-semibold text-white underline underline-offset-2 hover:text-[#ff8a4a] disabled:opacity-60"
+              className="text-xs font-semibold text-[var(--text-primary)] underline underline-offset-2 hover:text-[var(--accent-text)] disabled:opacity-60"
             >
               {remove.isPending ? 'Deleting…' : 'Delete'}
             </button>
             <button
               type="button"
               onClick={() => setConfirmDelete(false)}
-              className="text-xs text-[#827a73] hover:text-white"
+              className="text-xs text-[var(--text-muted)] hover:text-[var(--text-primary)]"
             >
               Cancel
             </button>
@@ -602,13 +602,13 @@ function StageRow({
       )}
 
       {/* Checkpoints */}
-      <div className="mt-3 border-t border-[#302923] pt-2">
-        <p className="px-3 pb-1 text-[11px] font-semibold tracking-[0.1em] text-[#827a73] uppercase">
+      <div className="mt-3 border-t border-[var(--border-subtle)] pt-2">
+        <p className="px-3 pb-1 text-[11px] font-semibold tracking-[0.1em] text-[var(--text-muted)] uppercase">
           Checkpoints
         </p>
         <ul className="flex flex-col gap-1">
           {stage.checkpoints.length === 0 && (
-            <li className="px-3 py-1 text-xs text-[#827a73]">No checkpoints yet.</li>
+            <li className="px-3 py-1 text-xs text-[var(--text-muted)]">No checkpoints yet.</li>
           )}
           {stage.checkpoints.map((checkpoint) => (
             <CheckpointRow
@@ -655,7 +655,7 @@ function StageRow({
           </button>
         </form>
         {addCheckpoint.isError && (
-          <p className="px-3 pt-1 text-xs text-[#ff8a4a]">
+          <p className="px-3 pt-1 text-xs text-[var(--accent-text)]">
             {messageOf(addCheckpoint.error, 'Adding the checkpoint failed.')}
           </p>
         )}
@@ -745,12 +745,12 @@ function RoadmapAdminCard({
   const stages = detail.data?.stages ?? []
 
   return (
-    <article className="rounded-[20px] border border-[#302923] bg-[#11100f]">
+    <article className="rounded-[20px] border border-[var(--border-subtle)] bg-[var(--bg-card)]">
       <div className="flex flex-wrap items-center justify-between gap-3 p-5">
         <div className="min-w-0">
-          <h3 className="truncate text-base font-medium text-white">{roadmap.title}</h3>
+          <h3 className="truncate text-base font-medium text-[var(--text-primary)]">{roadmap.title}</h3>
           {roadmap.description && !editing && (
-            <p className="mt-0.5 line-clamp-1 text-sm text-[#b6ada4]">{roadmap.description}</p>
+            <p className="mt-0.5 line-clamp-1 text-sm text-[var(--text-body)]">{roadmap.description}</p>
           )}
         </div>
         <div className="flex shrink-0 items-center gap-2">
@@ -767,20 +767,20 @@ function RoadmapAdminCard({
             {editing ? 'Cancel' : 'Edit'}
           </button>
           {confirmDelete ? (
-            <span className="inline-flex items-center gap-2 rounded-full border border-[rgba(255,106,26,0.4)] bg-[rgba(255,106,26,0.08)] px-3 py-1.5">
-              <span className="text-xs text-[#ff8a4a]">Delete this roadmap and all its topics?</span>
+            <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border-accent)] bg-[var(--accent-wash)] px-3 py-1.5">
+              <span className="text-xs text-[var(--accent-text)]">Delete this roadmap and all its topics?</span>
               <button
                 type="button"
                 disabled={remove.isPending}
                 onClick={() => remove.mutate()}
-                className="text-xs font-semibold text-white underline underline-offset-2 hover:text-[#ff8a4a] disabled:opacity-60"
+                className="text-xs font-semibold text-[var(--text-primary)] underline underline-offset-2 hover:text-[var(--accent-text)] disabled:opacity-60"
               >
                 {remove.isPending ? 'Deleting…' : 'Yes, delete'}
               </button>
               <button
                 type="button"
                 onClick={() => setConfirmDelete(false)}
-                className="text-xs text-[#827a73] hover:text-white"
+                className="text-xs text-[var(--text-muted)] hover:text-[var(--text-primary)]"
               >
                 Cancel
               </button>
@@ -790,7 +790,7 @@ function RoadmapAdminCard({
               type="button"
               onClick={() => setConfirmDelete(true)}
               disabled={remove.isPending}
-              className={`${smallButtonClasses} hover:border-[rgba(255,60,0,0.5)] hover:text-[#ff8a4a]`}
+              className={`${smallButtonClasses} hover:border-[var(--danger-border)] hover:text-[var(--accent-text)]`}
             >
               <Trash2 className="h-3.5 w-3.5" />
               Delete
@@ -801,7 +801,7 @@ function RoadmapAdminCard({
 
       {editing && (
         <form
-          className="flex flex-col gap-3 border-t border-[#302923] p-5"
+          className="flex flex-col gap-3 border-t border-[var(--border-subtle)] p-5"
           onSubmit={(e: FormEvent) => {
             e.preventDefault()
             if (titleDraft.trim()) update.mutate()
@@ -832,18 +832,18 @@ function RoadmapAdminCard({
               Save changes
             </button>
             {update.isError && (
-              <span className="text-xs text-[#ff8a1a]">{messageOf(update.error, 'Save failed.')}</span>
+              <span className="text-xs text-[var(--accent-text)]">{messageOf(update.error, 'Save failed.')}</span>
             )}
           </div>
         </form>
       )}
 
-      <div className="border-t border-[#302923]">
+      <div className="border-t border-[var(--border-subtle)]">
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
-          className="flex w-full items-center justify-between px-5 py-3.5 text-left text-sm font-medium text-[#b6ada4] transition-colors hover:text-white"
+          className="flex w-full items-center justify-between px-5 py-3.5 text-left text-sm font-medium text-[var(--text-body)] transition-colors hover:text-[var(--text-primary)]"
         >
           Stages, topics and documents
           <ChevronDown
@@ -855,23 +855,23 @@ function RoadmapAdminCard({
         {open && (
           <div className="space-y-4 px-5 pb-5">
             {detail.isPending ? (
-              <div className="flex items-center gap-2 py-2 text-xs text-[#827a73]">
+              <div className="flex items-center gap-2 py-2 text-xs text-[var(--text-muted)]">
                 <Spinner /> Loading roadmap…
               </div>
             ) : detail.isError ? (
-              <p className="py-2 text-xs text-[#ff8a4a]">
+              <p className="py-2 text-xs text-[var(--accent-text)]">
                 {messageOf(detail.error, 'Could not load the roadmap.')}
               </p>
             ) : (
               <>
                 {/* Stages */}
                 <section>
-                  <h3 className="mb-2 text-xs font-semibold tracking-[0.1em] text-[#827a73] uppercase">
+                  <h3 className="mb-2 text-xs font-semibold tracking-[0.1em] text-[var(--text-muted)] uppercase">
                     Stages
                   </h3>
                   <ul className="flex flex-col gap-2">
                     {stages.length === 0 && (
-                      <li className="px-3 py-2 text-xs text-[#827a73]">No stages yet.</li>
+                      <li className="px-3 py-2 text-xs text-[var(--text-muted)]">No stages yet.</li>
                     )}
                     {stages.map((stage) => (
                       <StageRow
@@ -911,7 +911,7 @@ function RoadmapAdminCard({
                     </button>
                   </form>
                   {addStage.isError && (
-                    <p className="pt-1 text-xs text-[#ff8a4a]">
+                    <p className="pt-1 text-xs text-[var(--accent-text)]">
                       {messageOf(addStage.error, 'Adding the stage failed.')}
                     </p>
                   )}
@@ -919,12 +919,12 @@ function RoadmapAdminCard({
 
                 {/* Topics */}
                 <section>
-                  <h3 className="mb-2 text-xs font-semibold tracking-[0.1em] text-[#827a73] uppercase">
+                  <h3 className="mb-2 text-xs font-semibold tracking-[0.1em] text-[var(--text-muted)] uppercase">
                     Topics
                   </h3>
                   <ul className="flex flex-col gap-1">
                     {detail.data.topics.length === 0 && (
-                      <li className="px-3 py-2 text-xs text-[#827a73]">No topics yet.</li>
+                      <li className="px-3 py-2 text-xs text-[var(--text-muted)]">No topics yet.</li>
                     )}
                     {detail.data.topics.map((topic) => (
                       <TopicRow
@@ -986,7 +986,7 @@ function RoadmapAdminCard({
                     </button>
                   </form>
                   {addTopic.isError && (
-                    <p className="pt-1 text-xs text-[#ff8a4a]">
+                    <p className="pt-1 text-xs text-[var(--accent-text)]">
                       {messageOf(addTopic.error, 'Adding the topic failed.')}
                     </p>
                   )}
@@ -1045,10 +1045,10 @@ export function AdminPage() {
     <div className="px-6 pt-28 pb-16 sm:px-10 md:px-16">
       <div className="mx-auto flex max-w-3xl flex-col gap-5">
         <header className="flex flex-col gap-2">
-          <h1 className="text-[32px] leading-tight font-medium tracking-[-0.03em] text-white sm:text-[38px]">
+          <h1 className="text-[32px] leading-tight font-medium tracking-[-0.03em] text-[var(--text-primary)] sm:text-[38px]">
             Roadmap manager
           </h1>
-          <p className="max-w-[56ch] text-[15px] leading-relaxed text-[#b6ada4]">
+          <p className="max-w-[56ch] text-[15px] leading-relaxed text-[var(--text-body)]">
             Create roadmaps, arrange stages, topics and checkpoints, and upload the Markdown
             document behind every topic.
           </p>
@@ -1057,14 +1057,14 @@ export function AdminPage() {
         {actionError && (
           <p
             role="alert"
-            className="flex items-center justify-between gap-3 rounded-xl border border-[rgba(255,106,26,0.35)] bg-[rgba(255,106,26,0.08)] px-4 py-3 text-sm text-[#ff8a4a]"
+            className="flex items-center justify-between gap-3 rounded-xl border border-[var(--border-accent)] bg-[var(--accent-wash)] px-4 py-3 text-sm text-[var(--accent-text)]"
           >
             {actionError}
             <button
               type="button"
               onClick={() => setActionError(null)}
               aria-label="Dismiss error"
-              className="text-[#827a73] hover:text-white"
+              className="text-[var(--text-muted)] hover:text-[var(--text-primary)]"
             >
               <X className="h-4 w-4" />
             </button>
@@ -1072,8 +1072,8 @@ export function AdminPage() {
         )}
 
         {/* Create */}
-        <section className="rounded-[20px] border border-[#302923] bg-[#11100f] p-6">
-          <h2 className="mb-4 text-base font-medium text-white">New roadmap</h2>
+        <section className="rounded-[20px] border border-[var(--border-subtle)] bg-[var(--bg-card)] p-6">
+          <h2 className="mb-4 text-base font-medium text-[var(--text-primary)]">New roadmap</h2>
           <form
             className="flex flex-col gap-3"
             onSubmit={(e: FormEvent) => {
@@ -1106,7 +1106,7 @@ export function AdminPage() {
                 Create roadmap
               </button>
               {create.isError && (
-                <span className="text-xs text-[#ff8a4a]">{messageOf(create.error, 'Creation failed.')}</span>
+                <span className="text-xs text-[var(--accent-text)]">{messageOf(create.error, 'Creation failed.')}</span>
               )}
             </div>
           </form>
@@ -1114,17 +1114,17 @@ export function AdminPage() {
 
         {/* List */}
         <section>
-          <h2 className="mb-3 text-base font-medium text-white">Roadmaps</h2>
+          <h2 className="mb-3 text-base font-medium text-[var(--text-primary)]">Roadmaps</h2>
           {roadmaps.isPending ? (
-            <div className="flex items-center gap-2 rounded-[20px] border border-[#302923] bg-[#11100f] p-6 text-sm text-[#827a73]">
+            <div className="flex items-center gap-2 rounded-[20px] border border-[var(--border-subtle)] bg-[var(--bg-card)] p-6 text-sm text-[var(--text-muted)]">
               <Spinner /> Loading roadmaps…
             </div>
           ) : roadmaps.isError ? (
             statusOf(roadmaps.error) === 403 ? (
               <AuthorizationError message="Listing roadmaps as an admin was denied by the server." />
             ) : (
-              <div className="flex flex-wrap items-center gap-3 rounded-[20px] border border-[#302923] bg-[#11100f] p-6">
-                <p className="text-sm text-[#ff8a4a]">
+              <div className="flex flex-wrap items-center gap-3 rounded-[20px] border border-[var(--border-subtle)] bg-[var(--bg-card)] p-6">
+                <p className="text-sm text-[var(--accent-text)]">
                   {messageOf(roadmaps.error, 'Could not load roadmaps.')}
                 </p>
                 <button
@@ -1137,7 +1137,7 @@ export function AdminPage() {
               </div>
             )
           ) : roadmaps.data.items.length === 0 ? (
-            <p className="rounded-[20px] border border-[#302923] bg-[#11100f] p-6 text-sm text-[#827a73]">
+            <p className="rounded-[20px] border border-[var(--border-subtle)] bg-[var(--bg-card)] p-6 text-sm text-[var(--text-muted)]">
               Nothing here yet — create the first roadmap above.
             </p>
           ) : (

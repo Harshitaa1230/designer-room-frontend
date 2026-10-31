@@ -4,6 +4,7 @@ import glowPrimary from '@/assets/glow-primary.svg'
 import { listRoadmaps, type RoadmapSummary } from '@/lib/endpoints'
 import { messageOf } from '@/lib/api'
 import { Spinner } from '@/components/LoadingState'
+import { Seo } from '@/components/Seo'
 
 // ── Card ──────────────────────────────────────────────────────────────────────
 
@@ -20,41 +21,41 @@ function RoadmapCard({ roadmap }: { roadmap: RoadmapSummary }) {
       aria-label={`${roadmap.title} — ${meta}`}
       className={[
         'roadmap-card group relative flex w-full min-h-[220px] min-w-0 flex-col gap-3 rounded-[20px] border p-5 sm:min-h-[260px] sm:p-6',
-        'bg-[#11100f] transition-all duration-300',
-        'hover:-translate-y-0.5 hover:border-[rgba(255,106,26,0.6)] hover:shadow-[0_0_40px_rgba(255,106,26,0.18)]',
-        'focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#ff6a1a]',
-        'border-[#302923]',
+        'bg-[var(--bg-card)] transition-all duration-300',
+        'hover:-translate-y-0.5 hover:border-[var(--accent-text)] hover:shadow-[0_18px_40px_-24px_var(--accent-text)]',
+        'focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent-text)]',
+        'border-[var(--border-subtle)]',
       ].join(' ')}
     >
       {/* Top row: number + pill */}
       <div className="flex items-center justify-between">
-        <span className="text-[12px] font-semibold tracking-[1.12px] font-mono text-[#827a73]">
+        <span className="text-[12px] font-semibold tracking-[1.12px] font-mono text-[var(--text-muted)]">
           {number}
         </span>
-        <span className="rounded-full border border-white/20 px-2.5 py-1 text-[10px] font-medium text-white/70">
+        <span className="rounded-full border border-[var(--border-card)] px-2.5 py-1 text-[10px] font-medium text-[var(--text-body)]">
           {pill}
         </span>
       </div>
 
       {/* Title */}
-      <h2 className="text-[22px] font-medium leading-[1.25] tracking-[-0.4px] text-white break-words sm:text-[28px] sm:leading-[34px]">
+      <h2 className="text-[22px] font-medium leading-[1.25] tracking-[-0.4px] text-[var(--text-primary)] break-words sm:text-[28px] sm:leading-[34px]">
         {roadmap.title}
       </h2>
 
       {/* Description */}
-      <p className="max-w-[420px] text-[14px] font-normal leading-[21px] text-[#b6ada4] break-words sm:text-[15px] sm:leading-[22px]">
+      <p className="max-w-[420px] text-[14px] font-normal leading-[21px] text-[var(--text-body)] break-words sm:text-[15px] sm:leading-[22px]">
         {roadmap.description ?? roadmap.metadata?.subtitle ?? ''}
       </p>
 
       {/* Bottom row: meta + arrow */}
       <div className="mt-auto flex items-center justify-between">
-        <span className="text-[12px] text-white/60">{meta}</span>
+        <span className="text-[12px] text-[var(--text-muted)]">{meta}</span>
         <span
           className={[
             'roadmap-card-arrow text-[20px] font-light transition-all duration-[250ms]',
-            'text-white/40',
-            'group-hover:translate-x-1 group-hover:text-[#ff6a1a]',
-            'group-focus-visible:translate-x-1 group-focus-visible:text-[#ff6a1a]',
+            'text-[var(--text-faint)]',
+            'group-hover:translate-x-1 group-hover:text-[var(--accent-text)]',
+            'group-focus-visible:translate-x-1 group-focus-visible:text-[var(--accent-text)]',
           ].join(' ')}
           aria-hidden="true"
         >
@@ -74,7 +75,11 @@ export function RoadmapsPage() {
   })
 
   return (
-    <div className="relative min-h-screen w-full bg-[#080808] text-white pt-20">
+    <div className="relative min-h-screen w-full bg-[var(--bg-page)] text-[var(--text-primary)] pt-20">
+      <Seo
+        title="Design roadmaps · Designers Room"
+        description="Follow practical, step-by-step design roadmaps you can actually finish."
+      />
 
       {/* Background glow — clipped only within this decorative layer */}
       <div
@@ -85,7 +90,9 @@ export function RoadmapsPage() {
           <img
             src={glowPrimary}
             alt=""
-            className="absolute block"
+            width="1140"
+            height="740"
+            className="absolute block light:opacity-60"
             style={{
               inset: '-38.1% -19.51%',
               width: 'calc(100% + 39.02%)',
@@ -98,10 +105,10 @@ export function RoadmapsPage() {
 
       {/* ── Header ── */}
       <header className="relative z-10 flex flex-col gap-3 px-5 pb-6 pt-6 sm:px-12 sm:pb-8 sm:pt-8 md:px-16">
-        <h1 id="roadmaps-heading" className="text-[28px] leading-none font-medium tracking-[-0.03em] text-white sm:text-[36px] md:text-[40px] lg:text-[44px]">
+        <h1 id="roadmaps-heading" className="text-[28px] leading-none font-medium tracking-[-0.03em] text-[var(--text-primary)] sm:text-[36px] md:text-[40px] lg:text-[44px]">
           Pick your path.
         </h1>
-        <p className="max-w-[52ch] text-[15px] font-normal leading-[23px] text-white/[0.72] text-balance sm:text-[16px] sm:leading-[24px]">
+        <p className="max-w-[52ch] text-[15px] font-normal leading-[23px] text-[var(--text-body)] text-balance sm:text-[16px] sm:leading-[24px]">
           Step-by-step plans you can actually finish. Tick things off, watch the bar move, switch
           paths anytime.
         </p>
@@ -110,26 +117,26 @@ export function RoadmapsPage() {
       {/* ── Grid ── */}
       <section aria-labelledby="roadmaps-heading" className="relative z-10 grid grid-cols-1 gap-4 px-5 pb-12 sm:grid-cols-2 sm:px-12 sm:pb-16 md:px-16 lg:grid-cols-4">
         {roadmaps.isPending && (
-          <div className="flex items-center gap-2 rounded-[20px] border border-[#302923] bg-[#11100f] p-6 text-sm text-[#827a73] sm:col-span-2 lg:col-span-4">
+          <div className="flex items-center gap-2 rounded-[20px] border border-[var(--border-subtle)] bg-[var(--bg-card)] p-6 text-sm text-[var(--text-muted)] sm:col-span-2 lg:col-span-4">
             <Spinner /> Loading roadmaps…
           </div>
         )}
         {roadmaps.isError && (
-          <div className="flex flex-wrap items-center gap-3 rounded-[20px] border border-[#302923] bg-[#11100f] p-6 sm:col-span-2 lg:col-span-4">
-            <p className="text-sm text-[#ff6a1a]">
+          <div className="flex flex-wrap items-center gap-3 rounded-[20px] border border-[var(--border-subtle)] bg-[var(--bg-card)] p-6 sm:col-span-2 lg:col-span-4">
+            <p className="text-sm text-[var(--accent-text)]">
               {messageOf(roadmaps.error, 'Could not load roadmaps.')}
             </p>
             <button
               type="button"
               onClick={() => void roadmaps.refetch()}
-              className="rounded-full border border-[#302923] px-3.5 py-1.5 text-xs font-medium text-white transition-colors hover:border-[#504740] hover:bg-white/[0.04]"
+              className="rounded-full border border-[var(--border-subtle)] px-3.5 py-1.5 text-xs font-medium text-[var(--text-primary)] transition-colors hover:border-[var(--border-strong)] hover:bg-[var(--bg-hover)]"
             >
               Try again
             </button>
           </div>
         )}
         {roadmaps.data && roadmaps.data.items.length === 0 && (
-          <p className="rounded-[20px] border border-[#302923] bg-[#11100f] p-6 text-sm text-[#827a73] sm:col-span-2 lg:col-span-4">
+          <p className="rounded-[20px] border border-[var(--border-subtle)] bg-[var(--bg-card)] p-6 text-sm text-[var(--text-muted)] sm:col-span-2 lg:col-span-4">
             No roadmaps have been published yet.
           </p>
         )}
@@ -140,15 +147,15 @@ export function RoadmapsPage() {
       </section>
 
       {/* ── Footer ── */}
-      <footer className="relative z-10 flex flex-col items-start gap-3 border-t border-[#302923] px-5 py-6 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-12 sm:py-8 md:px-16">
-        <p className="text-[12px] text-[#827a73]">© 2026 Designer's Room · Beta 1</p>
+      <footer className="relative z-10 flex flex-col items-start gap-3 border-t border-[var(--border-subtle)] px-5 py-6 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-12 sm:py-8 md:px-16">
+        <p className="text-[12px] text-[var(--text-muted)]">© 2026 Designer's Room · Beta 1</p>
         <button
           type="button"
-          className="rounded-full border border-[#302923] px-4 py-2.5 text-[12px] font-medium text-white transition-colors hover:border-[#504740] hover:bg-white/[0.04] sm:py-2"
+          className="rounded-full border border-[var(--border-subtle)] px-4 py-2.5 text-[12px] font-medium text-[var(--text-primary)] transition-colors hover:border-[var(--border-strong)] hover:bg-[var(--bg-hover)] sm:py-2"
         >
           Send feedback
         </button>
-        <p className="text-[12px] tracking-[0.08em] text-[#827a73] uppercase">
+        <p className="text-[12px] tracking-[0.08em] text-[var(--text-muted)] uppercase">
           Practice Is Portfolio
         </p>
       </footer>

@@ -55,10 +55,10 @@ export const FeaturesSection = () => (
         <li key={f.number}>
           <Link
             to={f.href}
-            className="feature-row w-full cursor-pointer py-5 focus-visible:outline-2 sm:py-7 focus-visible:outline-offset-2 focus-visible:outline-white/70"
+            className="feature-row w-full cursor-pointer py-5 focus-visible:outline-2 sm:py-7 focus-visible:outline-offset-2 focus-visible:outline-[var(--text-primary)]"
           >
             {/* Number */}
-            <span className="text-[12px] font-normal tabular-nums text-white/50 light:text-zinc-400 sm:text-[13px]">
+            <span className="text-[12px] font-normal tabular-nums text-white/50 light:text-zinc-600 sm:text-[13px]">
               {f.number}
             </span>
 
@@ -72,13 +72,13 @@ export const FeaturesSection = () => (
               className={[
                 'feature-pill inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[10px] font-medium sm:px-3 sm:py-1 sm:text-[11px]',
                 f.status === 'live'
-                  ? 'border-[#ff8a4a]/50 text-[#ff8a4a]'
-                  : 'border-white/20 text-white/50 light:border-zinc-300 light:text-zinc-400',
+                  ? 'border-[var(--border-accent)] text-[var(--accent-text)]'
+                  : 'border-white/20 text-white/50 light:border-zinc-400 light:text-zinc-600',
               ].join(' ')}
             >
               {f.status === 'live' && (
                 <span
-                  className="size-1.5 rounded-full bg-[#ff8a4a] shadow-[0_0_6px_#ff8a4a]"
+                  className="size-1.5 rounded-full bg-[var(--accent)] shadow-[0_0_6px_var(--accent)]"
                   aria-hidden="true"
                 />
               )}
@@ -86,7 +86,7 @@ export const FeaturesSection = () => (
             </span>
 
             {/* Description */}
-            <span className="feature-desc text-[13px] text-white/70 light:text-zinc-500 sm:text-[15px]">
+            <span className="feature-desc text-[13px] text-white/70 light:text-zinc-600 sm:text-[15px]">
               {f.tagline}
             </span>
           </Link>

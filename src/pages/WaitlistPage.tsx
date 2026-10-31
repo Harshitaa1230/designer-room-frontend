@@ -5,6 +5,7 @@ import logo from '@/assets/logo.svg'
 import { messageOf } from '@/lib/api'
 import { joinWaitlist } from '@/lib/endpoints'
 import { Spinner } from '@/components/LoadingState'
+import { Seo } from '@/components/Seo'
 
 const WHATSAPP_LINK = (import.meta.env.VITE_WHATSAPP_LINK ??
   import.meta.env.VITE_WHASTAPP_LINK) as string | undefined
@@ -39,17 +40,18 @@ export function WaitlistPage() {
   }
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#080808] px-5 text-white">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[var(--bg-page)] px-5 text-[var(--text-primary)]">
+      <Seo title="Join the Designers Room waitlist" description="Save your spot for the Designers Room beta." noindex />
       <div
-        className="pointer-events-none absolute -top-32 right-[-120px] h-[420px] w-[520px] rounded-full bg-[radial-gradient(ellipse_at_60%_30%,#ff7a29_0%,#ea580c_40%,transparent_70%)] opacity-50 blur-[80px] filter"
+        className="pointer-events-none absolute -top-32 right-[-120px] h-[420px] w-[520px] rounded-full bg-[radial-gradient(ellipse_at_60%_30%,#ff7a29_0%,#ea580c_40%,transparent_70%)] opacity-50 blur-[80px] filter light:opacity-20"
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute bottom-[-160px] left-[-140px] h-[380px] w-[460px] rounded-full bg-[radial-gradient(circle_at_40%_60%,#c2410c_0%,transparent_70%)] opacity-40 blur-[90px] filter"
+        className="pointer-events-none absolute bottom-[-160px] left-[-140px] h-[380px] w-[460px] rounded-full bg-[radial-gradient(circle_at_40%_60%,#c2410c_0%,transparent_70%)] opacity-40 blur-[90px] filter light:opacity-20"
         aria-hidden="true"
       />
 
-      <div className="relative w-full max-w-md overflow-hidden rounded-[20px] border border-[#302923] bg-[#11100f] p-8 shadow-2xl">
+      <div className="relative w-full max-w-md overflow-hidden rounded-[20px] border border-[var(--border-subtle)] bg-[var(--bg-card)] p-8 shadow-2xl">
         <div
           className="pointer-events-none absolute -top-24 left-1/2 h-36 w-72 -translate-x-1/2 rounded-full bg-amber-600 opacity-30 blur-[60px] filter"
           aria-hidden="true"
@@ -57,17 +59,17 @@ export function WaitlistPage() {
 
         <div className="relative">
           <div className="mb-8 flex flex-col items-center text-center">
-            <img src={logo} alt="" aria-hidden="true" className="mb-5 h-12 w-auto" />
-            <span className="mb-4 inline-flex items-center gap-1.5 rounded-full border border-[rgba(255,106,26,0.35)] bg-[rgba(255,106,26,0.1)] px-3 py-1 text-[11px] font-medium tracking-[0.08em] text-[#ff8a4a] uppercase">
+            <img src={logo} alt="" aria-hidden="true" className="mb-5 h-12 w-auto light:invert" />
+            <span className="mb-4 inline-flex items-center gap-1.5 rounded-full border border-[var(--border-accent)] bg-[var(--accent-soft)] px-3 py-1 text-[11px] font-medium tracking-[0.08em] text-[var(--accent-text)] uppercase">
               <Users className="h-3 w-3" aria-hidden="true" />
               Waitlist · First beta 8 Nov
             </span>
-            <h1 className="text-2xl font-medium tracking-tight text-white">
+            <h1 className="text-2xl font-medium tracking-tight text-[var(--text-primary)]">
               Join Designer&rsquo;s Room
             </h1>
-            <p className="mt-2 max-w-[36ch] text-sm text-[#b6ada4]">
+            <p className="mt-2 max-w-[36ch] text-sm text-[var(--text-body)]">
               Your design journey, all in one room. The first beta opens on{' '}
-              <span className="font-medium text-white">8 Nov</span> — drop your email to save your
+              <span className="font-medium text-[var(--text-primary)]">8 Nov</span> — drop your email to save your
               spot and hop into the community before the doors open.
             </p>
           </div>
@@ -75,14 +77,14 @@ export function WaitlistPage() {
           {joinedEmail ? (
             <div className="flex flex-col items-center text-center">
               <div
-                className="mb-5 flex h-12 w-12 items-center justify-center rounded-full border border-[rgba(255,106,26,0.35)] bg-[rgba(255,106,26,0.1)]"
+                className="mb-5 flex h-12 w-12 items-center justify-center rounded-full border border-[var(--border-accent)] bg-[var(--accent-soft)]"
                 aria-hidden="true"
               >
-                <Check className="h-5 w-5 text-[#ff8a4a]" />
+                <Check className="h-5 w-5 text-[var(--accent-text)]" />
               </div>
-              <h2 className="text-lg font-medium text-white">You&rsquo;re on the list</h2>
-              <p className="mt-2 max-w-[34ch] text-sm text-[#b6ada4]">
-                We saved <span className="text-white">{joinedEmail}</span>. The community is already
+              <h2 className="text-lg font-medium text-[var(--text-primary)]">You&rsquo;re on the list</h2>
+              <p className="mt-2 max-w-[34ch] text-sm text-[var(--text-body)]">
+                We saved <span className="text-[var(--text-primary)]">{joinedEmail}</span>. The community is already
                 buzzing — join the WhatsApp group and introduce yourself.
               </p>
 
@@ -91,19 +93,19 @@ export function WaitlistPage() {
                   href={WHATSAPP_LINK}
                   target="_blank"
                   rel="noreferrer"
-                  className="mt-6 inline-flex w-full items-center justify-center gap-2.5 rounded-full border border-[rgba(37,211,102,0.4)] bg-[linear-gradient(180deg,#128c4a,#0b6b38)] px-6 py-3.5 text-sm font-semibold text-white shadow-[0_6px_0_#064e29,0_16px_28px_rgba(0,0,0,0.45)] transition-all hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white active:translate-y-1.5 active:shadow-[0_0_0_#064e29,0_8px_18px_rgba(0,0,0,0.4)]"
+                  className="mt-6 inline-flex w-full items-center justify-center gap-2.5 rounded-full border border-[rgba(37,211,102,0.4)] bg-[linear-gradient(180deg,#128c4a,#0b6b38)] px-6 py-3.5 text-sm font-semibold text-white shadow-[0_6px_0_#064e29,0_16px_28px_rgba(0,0,0,0.45)] transition-all hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0b6b38] active:translate-y-1.5 active:shadow-[0_0_0_#064e29,0_8px_18px_rgba(0,0,0,0.4)]"
                 >
                   <WhatsAppIcon className="h-4.5 w-4.5" />
                   Open the WhatsApp group
                 </a>
               ) : (
-                <p className="mt-6 flex items-center justify-center gap-2 rounded-lg border border-[#302923] bg-[#0b0a09] px-4 py-3 text-[13px] text-[#b6ada4]">
-                  <Mail className="h-3.5 w-3.5 shrink-0 text-[#827a73]" aria-hidden="true" />
+                <p className="mt-6 flex items-center justify-center gap-2 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-inset)] px-4 py-3 text-[13px] text-[var(--text-body)]">
+                  <Mail className="h-3.5 w-3.5 shrink-0 text-[var(--text-muted)]" aria-hidden="true" />
                   Your invite is on its way — watch your inbox.
                 </p>
               )}
 
-              <p className="mt-4 text-[11px] text-[#827a73]">
+              <p className="mt-4 text-[11px] text-[var(--text-muted)]">
                 Spot saved. Invite links rotate, so come back here anytime for a fresh one.
               </p>
             </div>
@@ -112,7 +114,7 @@ export function WaitlistPage() {
               <div>
                 <label
                   htmlFor="waitlist-email"
-                  className="mb-1.5 block text-xs font-medium text-[#b6ada4]"
+                  className="mb-1.5 block text-xs font-medium text-[var(--text-body)]"
                 >
                   Email address
                 </label>
@@ -127,12 +129,12 @@ export function WaitlistPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@example.com"
-                  className="w-full rounded-lg border border-[#302923] bg-[#0b0a09] px-3.5 py-2.5 text-white placeholder-[#57504a] transition-colors focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/50 focus:outline-none"
+                  className="w-full rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-inset)] px-3.5 py-2.5 text-[var(--text-primary)] placeholder-[var(--text-faint)] transition-colors focus:border-[var(--accent-text)] focus:ring-1 focus:ring-[var(--accent-text)] focus:outline-none"
                 />
               </div>
 
               {error && (
-                <p role="alert" className="text-[13px] text-[#ff8a4a]">
+                <p role="alert" className="text-[13px] text-[var(--accent-text)]">
                   {error}
                 </p>
               )}
@@ -148,8 +150,8 @@ export function WaitlistPage() {
             </form>
           )}
 
-          <p className="mt-6 text-center text-[11px] leading-relaxed text-[#827a73]">
-            <Link to="/" className="transition-colors hover:text-white">
+          <p className="mt-6 text-center text-[11px] leading-relaxed text-[var(--text-muted)]">
+            <Link to="/" className="transition-colors hover:text-[var(--text-primary)]">
               &larr; Back to home
             </Link>
             <span className="mx-2 opacity-40">·</span>

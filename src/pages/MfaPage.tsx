@@ -19,9 +19,9 @@ export function MfaPage() {
 
   if (!mfaToken) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-[#080808] px-5 text-center text-white">
+      <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-[var(--bg-page)] px-5 text-center text-[var(--text-primary)]">
         <h1 className="text-xl font-medium">Missing MFA token</h1>
-        <p className="max-w-[40ch] text-sm text-[#b6ada4]">
+        <p className="max-w-[40ch] text-sm text-[var(--text-body)]">
           This link is only valid right after signing in with Google.
         </p>
         <Link to="/login" className="btn-3d px-6 py-3 text-sm">
@@ -54,23 +54,23 @@ export function MfaPage() {
   }
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#080808] px-5 text-white">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[var(--bg-page)] px-5 text-[var(--text-primary)]">
       <div
-        className="pointer-events-none absolute -top-32 left-1/2 h-[380px] w-[560px] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_50%_30%,#ff7a29_0%,#c2410c_45%,transparent_70%)] opacity-45 blur-[90px] filter"
+        className="pointer-events-none absolute -top-32 left-1/2 h-[380px] w-[560px] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_50%_30%,#ff7a29_0%,#c2410c_45%,transparent_70%)] opacity-45 blur-[90px] filter light:opacity-15"
         aria-hidden="true"
       />
 
-      <div className="relative w-full max-w-md rounded-[20px] border border-[#302923] bg-[#11100f] p-8 shadow-2xl">
+      <div className="relative w-full max-w-md rounded-[20px] border border-[var(--border-subtle)] bg-[var(--bg-card)] p-8 shadow-2xl">
         <div className="mb-7 flex flex-col items-center text-center">
-          <img src={logo} alt="" aria-hidden="true" className="mb-5 h-12 w-auto" />
+          <img src={logo} alt="" aria-hidden="true" className="mb-5 h-12 w-auto light:invert" />
           <h1 className="text-2xl font-medium tracking-tight">Two-factor check</h1>
-          <p className="mt-2 max-w-[36ch] text-sm text-[#b6ada4]">
+          <p className="mt-2 max-w-[36ch] text-sm text-[var(--text-body)]">
             Your account is protected. Enter the code from your authenticator app to finish signing
             in.
           </p>
         </div>
 
-        <div className="mb-6 grid grid-cols-2 rounded-lg border border-[#302923] bg-[#0b0a09] p-1 text-xs font-medium">
+        <div className="mb-6 grid grid-cols-2 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-inset)] p-1 text-xs font-medium">
           <button
             type="button"
             onClick={() => {
@@ -79,7 +79,7 @@ export function MfaPage() {
               setCode('')
             }}
             className={`flex items-center justify-center gap-1.5 rounded-md py-2 transition-colors ${
-              mode === 'totp' ? 'bg-[#1c1916] text-white shadow-xs' : 'text-[#827a73] hover:text-white'
+              mode === 'totp' ? 'bg-[var(--bg-inset-hover)] text-[var(--text-primary)] shadow-xs' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
             }`}
           >
             <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" />
@@ -94,8 +94,8 @@ export function MfaPage() {
             }}
             className={`flex items-center justify-center gap-1.5 rounded-md py-2 transition-colors ${
               mode === 'recovery'
-                ? 'bg-[#1c1916] text-white shadow-xs'
-                : 'text-[#827a73] hover:text-white'
+                ? 'bg-[var(--bg-inset-hover)] text-[var(--text-primary)] shadow-xs'
+                : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
             }`}
           >
             <KeyRound className="h-3.5 w-3.5" aria-hidden="true" />
@@ -105,7 +105,7 @@ export function MfaPage() {
 
         <form onSubmit={submit} className="space-y-4">
           <div>
-            <label htmlFor="mfa-code" className="mb-1.5 block text-xs font-medium text-[#b6ada4]">
+            <label htmlFor="mfa-code" className="mb-1.5 block text-xs font-medium text-[var(--text-body)]">
               {mode === 'totp' ? '6-digit code' : 'Recovery code'}
             </label>
             <input
@@ -118,12 +118,12 @@ export function MfaPage() {
               value={code}
               onChange={(e) => setCode(e.target.value)}
               placeholder={mode === 'totp' ? '123456' : 'xxxx-xxxx-xxxx'}
-              className="w-full rounded-lg border border-[#302923] bg-[#0b0a09] px-3.5 py-2.5 text-center font-mono text-base tracking-[0.3em] text-white placeholder-[#57504a] transition-colors focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/50 focus:outline-none"
+              className="w-full rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-inset)] px-3.5 py-2.5 text-center font-mono text-base tracking-[0.3em] text-[var(--text-primary)] placeholder-[var(--text-faint)] transition-colors focus:border-[var(--accent-text)] focus:ring-1 focus:ring-[var(--accent-text)] focus:outline-none"
             />
           </div>
 
           {error && (
-            <p role="alert" className="text-[13px] text-[#ff8a4a]">
+            <p role="alert" className="text-[13px] text-[var(--accent-text)]">
               {error}
             </p>
           )}
@@ -138,7 +138,7 @@ export function MfaPage() {
           </button>
         </form>
 
-        <p className="mt-6 text-center text-[11px] text-[#827a73]">
+        <p className="mt-6 text-center text-[11px] text-[var(--text-muted)]">
           Lost your device? Switch to a recovery code above.
         </p>
       </div>

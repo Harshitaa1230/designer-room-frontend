@@ -13,23 +13,23 @@ export default function CompletionCard({
 
   return (
     <div className="px-5 sm:px-12 md:px-16 pt-[32px] sm:pt-[48px] pb-[48px] sm:pb-[64px]">
-      <div className="relative overflow-hidden bg-[#11100f] border border-[#302923] rounded-[16px] sm:rounded-[24px] p-[24px] sm:p-[40px] lg:p-[64px] flex flex-col gap-[16px] sm:gap-[24px]">
+      <div className="relative overflow-hidden bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-[16px] sm:rounded-[24px] p-[24px] sm:p-[40px] lg:p-[64px] flex flex-col gap-[16px] sm:gap-[24px]">
         {/* Label */}
-        <p className="text-[12px] text-[#827a73]">(The finish line)</p>
+        <p className="text-[12px] text-[var(--text-muted)]">(The finish line)</p>
 
         {/* Heading */}
-        <h2 className="text-[36px] sm:text-[48px] md:text-[56px] lg:text-[64px] font-medium text-[#fff8ee] leading-[1.02] tracking-[-1.2px] sm:tracking-[-1.92px] break-words">
+        <h2 className="text-[36px] sm:text-[48px] md:text-[56px] lg:text-[64px] font-medium text-[var(--text-primary)] leading-[1.02] tracking-[-1.2px] sm:tracking-[-1.92px] break-words">
           Now go ship it.
         </h2>
 
         {/* Subtitle */}
-        <p className="text-[16px] sm:text-[18px] text-[#b6ada4] leading-relaxed max-w-[560px] break-words">
+        <p className="text-[16px] sm:text-[18px] text-[var(--text-body)] leading-relaxed max-w-[560px] break-words">
           Finish the six stages, publish a case study, then apply for jobs or
           freelance. That's the whole plan.
         </p>
 
         {/* Completion status */}
-        <p className="text-[14px] text-[#827a73]">
+        <p className="text-[14px] text-[var(--text-muted)]">
           {completedTopics} of {totalTopics} topics done ({pct}%)
         </p>
 
@@ -38,7 +38,7 @@ export default function CompletionCard({
           {/* Primary button */}
           <Link
             to="/challenge"
-            className="inline-flex min-h-[44px] items-center justify-center bg-[#ff6a00] rounded-full px-[18px] py-[10px] text-[14px] font-semibold text-[#080808] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff6a00] sm:min-h-0 sm:px-[24px] sm:py-[14px] sm:text-[15px]"
+            className="inline-flex min-h-[44px] items-center justify-center bg-[var(--accent)] rounded-full px-[18px] py-[10px] text-[14px] font-semibold text-[var(--on-accent)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-text)] sm:min-h-0 sm:px-[24px] sm:py-[14px] sm:text-[15px]"
           >
             Join the Weekly Challenge →
           </Link>
@@ -46,7 +46,7 @@ export default function CompletionCard({
           {/* Secondary button */}
           <Link
             to="/community"
-            className="inline-flex min-h-[44px] items-center justify-center border border-[#302923] rounded-full px-[18px] py-[10px] text-[14px] text-white hover:border-[#504740] hover:bg-white/[0.04] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff6a00] sm:min-h-0 sm:px-[24px] sm:py-[14px] sm:text-[15px]"
+            className="inline-flex min-h-[44px] items-center justify-center border border-[var(--border-subtle)] rounded-full px-[18px] py-[10px] text-[14px] text-[var(--text-primary)] hover:border-[var(--border-strong)] hover:bg-[var(--bg-hover)] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-text)] sm:min-h-0 sm:px-[24px] sm:py-[14px] sm:text-[15px]"
           >
             Share your progress
           </Link>
@@ -55,7 +55,7 @@ export default function CompletionCard({
           <button
             type="button"
             disabled
-            className="min-h-[44px] border border-[#302923] rounded-full px-[18px] py-[10px] text-[14px] text-[#827a73] opacity-50 cursor-not-allowed sm:min-h-0 sm:px-[24px] sm:py-[14px] sm:text-[15px]"
+            className="min-h-[44px] border border-[var(--border-subtle)] rounded-full px-[18px] py-[10px] text-[14px] text-[var(--text-muted)] opacity-50 cursor-not-allowed sm:min-h-0 sm:px-[24px] sm:py-[14px] sm:text-[15px]"
           >
             Challenge opens after beta
           </button>

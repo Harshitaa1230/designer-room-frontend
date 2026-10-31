@@ -21,31 +21,31 @@ export function TopicRow({ topic, roadmapId }: TopicRowProps) {
 
   switch (topic.status) {
     case 'done':
-      circleClass = `${circleBase} bg-[#ff6a00]`
+      circleClass = `${circleBase} bg-[var(--accent)]`
       circleAriaLabel = 'Completed'
       circleInner = (
-        <span className="text-[#080808] text-[14px] font-semibold leading-none">✓</span>
+        <span className="text-[var(--on-accent)] text-[14px] font-semibold leading-none">✓</span>
       )
       break
     case 'in-progress':
-      circleClass = `${circleBase} border border-[#302923]`
+      circleClass = `${circleBase} border border-[var(--border-subtle)]`
       circleAriaLabel = 'In progress'
-      circleInner = <span className="w-[10px] h-[10px] rounded-full bg-[#ff6a00]" />
+      circleInner = <span className="w-[10px] h-[10px] rounded-full bg-[var(--accent)]" />
       break
     case 'not-started':
-      circleClass = `${circleBase} border border-[#302923]`
+      circleClass = `${circleBase} border border-[var(--border-subtle)]`
       circleAriaLabel = 'Not started'
       circleInner = null
       break
     case 'locked':
-      circleClass = `${circleBase} border border-[#302923] opacity-40`
+      circleClass = `${circleBase} border border-[var(--border-subtle)] opacity-40`
       circleAriaLabel = 'Locked'
       circleInner = null
       break
   }
 
   return (
-    <div className="grid grid-cols-[26px_minmax(0,1fr)] items-center gap-x-3 gap-y-2 border-t border-[#302923] px-4 py-4 sm:gap-x-4 sm:px-6 lg:flex lg:items-center lg:gap-5 lg:px-8 lg:py-5">
+    <div className="grid grid-cols-[26px_minmax(0,1fr)] items-center gap-x-3 gap-y-2 border-t border-[var(--border-subtle)] px-4 py-4 sm:gap-x-4 sm:px-6 lg:flex lg:items-center lg:gap-5 lg:px-8 lg:py-5">
       {/* Check circle */}
       <div
         className={`${circleClass} col-start-1 row-start-1 lg:col-auto lg:row-auto`}
@@ -58,8 +58,8 @@ export function TopicRow({ topic, roadmapId }: TopicRowProps) {
       <Link
         to={topicHref}
         className={[
-          'col-start-2 row-start-1 min-w-0 break-words text-[16px] font-medium leading-normal sm:text-[18px] lg:col-auto lg:row-auto lg:flex-1 hover:text-[#ff8a4a] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff6a00]',
-          isMuted ? 'text-[#827a73]' : 'text-[#fff8ee]',
+          'col-start-2 row-start-1 min-w-0 break-words text-[16px] font-medium leading-normal sm:text-[18px] lg:col-auto lg:row-auto lg:flex-1 hover:text-[var(--accent-text)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-text)]',
+          isMuted ? 'text-[var(--text-muted)]' : 'text-[var(--text-primary)]',
         ].join(' ')}
       >
         {topic.title}
@@ -69,18 +69,18 @@ export function TopicRow({ topic, roadmapId }: TopicRowProps) {
       <div className="col-span-2 row-start-2 flex flex-wrap items-center gap-x-3 gap-y-2 sm:gap-x-4 lg:col-auto lg:row-auto lg:ml-auto lg:flex-nowrap lg:gap-5">
         {/* Needs pill (locked topics only) */}
         {topic.needsStage !== undefined && (
-          <span className="shrink-0 whitespace-nowrap rounded-full border border-[#302923] px-3 py-1.5 text-[11px] text-[#827a73] sm:text-[12px]">
+          <span className="shrink-0 whitespace-nowrap rounded-full border border-[var(--border-subtle)] px-3 py-1.5 text-[11px] text-[var(--text-muted)] sm:text-[12px]">
             Needs: Stage 0{topic.needsStage}
           </span>
         )}
 
         {/* Difficulty slot */}
-        <span className="text-[12px] text-[#b6ada4] sm:text-[13px] lg:w-[130px] lg:shrink-0">
+        <span className="text-[12px] text-[var(--text-body)] sm:text-[13px] lg:w-[130px] lg:shrink-0">
           {getDifficultyLabel(topic.difficulty)}
         </span>
 
         {/* Time slot */}
-        <span className="text-[12px] text-[#827a73] sm:text-[13px] lg:w-[60px] lg:shrink-0 lg:text-right lg:text-[14px]">
+        <span className="text-[12px] text-[var(--text-muted)] sm:text-[13px] lg:w-[60px] lg:shrink-0 lg:text-right lg:text-[14px]">
           {formatTime(topic.timeMinutes)}
         </span>
 
@@ -89,7 +89,7 @@ export function TopicRow({ topic, roadmapId }: TopicRowProps) {
           {actionLabel === 'review' && (
             <Link
               to={topicHref}
-              className="inline-flex min-h-[36px] items-center px-1 text-[13px] text-[#827a73] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff6a00] sm:min-h-0"
+              className="inline-flex min-h-[36px] items-center px-1 text-[13px] text-[var(--text-muted)] hover:text-[var(--text-primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-text)] sm:min-h-0"
             >
               Review
             </Link>
@@ -97,7 +97,7 @@ export function TopicRow({ topic, roadmapId }: TopicRowProps) {
           {actionLabel === 'start' && (
             <Link
               to={topicHref}
-              className="inline-flex min-h-[36px] items-center rounded-full border border-[#ff6a00] px-3 py-1.5 text-[12px] text-[#ff6a00] hover:bg-[rgba(255,106,0,0.12)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff6a00] sm:min-h-0 sm:px-[12px] sm:py-[4px]"
+              className="inline-flex min-h-[36px] items-center rounded-full border border-[var(--border-accent)] px-3 py-1.5 text-[12px] text-[var(--accent-text)] hover:bg-[var(--accent-soft)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-text)] sm:min-h-0 sm:px-[12px] sm:py-[4px]"
             >
               Start →
             </Link>

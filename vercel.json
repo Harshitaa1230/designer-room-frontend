@@ -1,13 +1,93 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/challenge",
+      "destination": "/weeks",
+      "permanent": true
+    },
+    {
+      "source": "/challenges",
+      "destination": "/weeks",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/assets/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/dashboard",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    },
+    {
+      "source": "/admin",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    },
+    {
+      "source": "/login",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    },
+    {
+      "source": "/waitlist",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    },
+    {
+      "source": "/leaderboard",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    },
+    {
+      "source": "/auth/:path*",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    },
+    {
+      "source": "/roadmaps/:id",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    },
+    {
+      "source": "/weeks/:id",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    },
+    {
+      "source": "/guidebook/:path*",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    },
+    {
+      "source": "/challenges/:id",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    },
+    {
+      "source": "/attempts/:id",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    }
+  ],
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://designersroom-designers-room-backen.vercel.app/:path*"
+      "destination": "https://auth.anviklabs.site/:path*"
     },
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/roadmaps", "destination": "/roadmaps/index.html" },
+    { "source": "/roadmaps/:id", "destination": "/roadmaps/index.html" },
+    { "source": "/weeks", "destination": "/weeks/index.html" },
+    { "source": "/weeks/:id", "destination": "/weeks/index.html" },
+    { "source": "/community", "destination": "/community/index.html" },
+    { "source": "/leaderboard", "destination": "/leaderboard/index.html" },
+    { "source": "/waitlist", "destination": "/waitlist/index.html" },
+    { "source": "/login", "destination": "/login/index.html" },
+    { "source": "/auth/callback", "destination": "/login/index.html" },
+    { "source": "/auth/mfa", "destination": "/login/index.html" },
+    { "source": "/dashboard", "destination": "/index.html" },
+    { "source": "/admin", "destination": "/index.html" },
+    { "source": "/challenges/:id", "destination": "/weeks/index.html" },
+    { "source": "/attempts/:id", "destination": "/weeks/index.html" },
+    { "source": "/guidebook/:roadmapId/:topicId", "destination": "/roadmaps/index.html" }
   ]
 }
