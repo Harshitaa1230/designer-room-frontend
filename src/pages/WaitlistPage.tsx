@@ -5,6 +5,7 @@ import logo from '@/assets/logo.svg'
 import { messageOf } from '@/lib/api'
 import { joinWaitlist } from '@/lib/endpoints'
 import { Spinner } from '@/components/LoadingState'
+import { Seo } from '@/components/Seo'
 
 const WHATSAPP_LINK = (import.meta.env.VITE_WHATSAPP_LINK ??
   import.meta.env.VITE_WHASTAPP_LINK) as string | undefined
@@ -40,6 +41,7 @@ export function WaitlistPage() {
 
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[var(--bg-page)] px-5 text-[var(--text-primary)]">
+      <Seo title="Join the Designers Room waitlist" description="Save your spot for the Designers Room beta." noindex />
       <div
         className="pointer-events-none absolute -top-32 right-[-120px] h-[420px] w-[520px] rounded-full bg-[radial-gradient(ellipse_at_60%_30%,#ff7a29_0%,#ea580c_40%,transparent_70%)] opacity-50 blur-[80px] filter light:opacity-20"
         aria-hidden="true"

@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { getLeaderboardAllTime, getLeaderboardWeekly, getWeeks } from '@/lib/api/challenges'
+import { Seo } from '@/components/Seo'
 
 export function LeaderboardPage() {
   const [tab, setTab] = useState<'weekly' | 'alltime'>('weekly')
@@ -23,6 +24,7 @@ export function LeaderboardPage() {
 
   return (
     <section className="pt-28 pb-16 px-4 max-w-3xl mx-auto">
+      <Seo title="Designers Room leaderboard" description="See the Designers Room challenge leaderboard." noindex />
       <h1 className="text-3xl font-medium mb-6">Leaderboard</h1>
       <div className="flex gap-2 mb-4">
         <button onClick={() => setTab('weekly')} className={`px-4 py-2 rounded-lg ${tab === 'weekly' ? 'btn-3d' : 'border border-[var(--border-subtle)]'}`}>Weekly</button>

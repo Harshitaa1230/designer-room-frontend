@@ -84,7 +84,7 @@ export const Navbar = () => {
         {/* Brand */}
         <div className={cn('flex shrink-0 items-center gap-[10px]', !scrolled && 'sm:pl-12 md:pl-8 lg:pl-16')}>
           <NavLink to="/" className="flex shrink-0 items-center transition-opacity hover:opacity-90">
-            <img src={logo} alt="Designers Room" className="h-7 w-auto shrink-0 sm:h-12 md:h-8 lg:h-8.5 dark:invert-0 light:invert" />
+            <img src={logo} alt="Designers Room" width="1985" height="347" className="h-7 w-auto shrink-0 sm:h-12 md:h-8 lg:h-8.5 dark:invert-0 light:invert" />
           </NavLink>
           <span className="inline-flex items-center rounded-full border border-white/20 bg-white/[0.04] px-1.5 py-0.5 text-[9px] font-medium tracking-widest text-[#fffaee] select-none sm:px-2 sm:text-[10px] light:border-zinc-300 light:bg-white/70 light:text-zinc-600">
             BETA
