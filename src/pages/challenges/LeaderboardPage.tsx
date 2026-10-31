@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
-import { getLeaderboardAllTime, getLeaderboardWeekly, getWeeks } from '@/lib/api/challenges'
+import { getLeaderboardAllTime, getLeaderboardWeekly, getWeeks, type LeaderboardEntry } from '@/lib/api/challenges'
 import { Seo } from '@/components/Seo'
 
 export function LeaderboardPage() {
@@ -32,7 +32,7 @@ export function LeaderboardPage() {
       </div>
       {tab === 'weekly' && (
         <div className="border border-[var(--border-subtle)] rounded-xl overflow-hidden">
-          {(weekly || []).map((entry: any, idx: number) => (
+          {(weekly || []).map((entry: LeaderboardEntry, idx: number) => (
             <div key={idx} className="flex justify-between p-3 border-b border-[var(--border-subtle)] last:border-0">
               <div className="flex gap-3">
                 <span className="text-[var(--text-muted)]">#{entry.rank}</span>
@@ -45,7 +45,7 @@ export function LeaderboardPage() {
       )}
       {tab === 'alltime' && (
         <div className="border border-[var(--border-subtle)] rounded-xl overflow-hidden">
-          {(alltime || []).map((entry: any, idx: number) => (
+          {(alltime || []).map((entry: LeaderboardEntry, idx: number) => (
             <div key={idx} className="flex justify-between p-3 border-b border-[var(--border-subtle)] last:border-0">
               <div className="flex gap-3">
                 <span className="text-[var(--text-muted)]">#{entry.rank}</span>

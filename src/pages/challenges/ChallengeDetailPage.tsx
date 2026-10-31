@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { getChallenge, saveAnswer, startChallenge, submitAttempt } from '@/lib/api/challenges'
+import { getChallenge, saveAnswer, startChallenge, submitAttempt, type ChallengeAnswer } from '@/lib/api/challenges'
 
 export function ChallengeDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -12,7 +12,7 @@ export function ChallengeDetailPage() {
     enabled: !!id,
   })
   const [attemptId, setAttemptId] = useState<string | null>(null)
-  const [answer, setAnswer] = useState<any>({})
+  const [answer, setAnswer] = useState<ChallengeAnswer>({})
 
   const startMut = useMutation({
     mutationFn: () => startChallenge(id!),
@@ -59,7 +59,7 @@ export function ChallengeDetailPage() {
               <div>
                 <p className="mb-2">Select answer</p>
                 <div className="grid gap-2">
-                  {(challenge.payload?.options || []).map((opt: any) => (
+                  {(challenge.payload?.options || []).map((opt) => (
                     <label key={opt.id} className="flex items-center gap-2 p-3 border border-[var(--border-subtle)] rounded-lg">
                       <input
                         type="radio"
