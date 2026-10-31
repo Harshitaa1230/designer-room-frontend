@@ -11,8 +11,8 @@ Top five issues:
 1. API-backed dynamic detail routes remain generic/noindex until data-aware SSG/SSR is added (`scripts/generate-seo-pages.mjs:1-91`).
 2. Production is still serving the old CSR shell; the branch’s prerendered route pages are not live.
 3. The confirmed production deployment is stale: it serves the old shell with ETag `"1e19737339a2f21d283255e91f8a9513"`, while the branch build emits a different asset and metadata.
-4. The production JS bundle is `815.09 kB` minified (`npm run build` output); Lighthouse/Core Web Vitals are unverified.
-5. The main JS bundle is still `815.09 kB` minified; Lighthouse/Core Web Vitals remain unverified.
+4. Lighthouse/Core Web Vitals remain unverified on the live deployment.
+5. Hashed route chunks are split, but Lighthouse/field CWV and real device performance remain unverified.
 
 Second-pass fixes in this branch:
 
@@ -21,6 +21,7 @@ Second-pass fixes in this branch:
 - `/challenge` and `/challenges` permanently redirect to canonical `/weeks`; `/weeks/:id` is noindex until dynamic detail content can be prerendered.
 - Vercel adds `X-Robots-Tag` to private/auth routes and immutable caching to hashed assets.
 - `public/404.html` provides a noindex error document.
+- Route modules now lazy-load; the largest initial JS chunk is `430.00 kB` and the Vite chunk warning is gone.
 
 ## Stack & routes
 
@@ -59,7 +60,7 @@ Second-pass fixes in this branch:
 | SEO-005 | Medium | Metadata | Only one global title existed; no description, OG/Twitter, or JSON-LD existed before. | Before `index.html:13` only; after `scripts/generate-seo-pages.mjs:77-85` | Weak snippets/social previews/entity discovery. | Added global metadata plus build-time route metadata. | Fixed for stable routes | Medium |
 | SEO-006 | Medium | Structured data | Organization and WebSite JSON-LD were absent from source before; BreadcrumbList/Article are not present. | Before `rg` found no JSON-LD; after `index.html:32-38`, `src/components/seo-data.ts:1-12` | Reduced entity and content understanding. | Added WebSite initial JSON-LD and Organization/WebSite client JSON-LD on home. | Fixed, server-rendering limitation remains | Low |
 | SEO-007 | Medium | Navigation | Footer waitlist navigation used `onClick` + `navigate()` instead of a link. | Before `src/components/Footer.tsx` used `useNavigate`; after `src/components/Footer.tsx:1,36-41` | Less crawlable and less accessible navigation. | Replaced with React Router `Link`. | Fixed | Low |
-| SEO-008 | Medium | Performance | Main bundle exceeds Vite’s 500 kB warning threshold. | `npm run build` → JS `815.09 kB`, CSS `75.54 kB`; Vite emitted chunk warning | Potentially slower LCP/INP on mobile. | Code-split route modules and measure with Lighthouse/RUM. | Needs decision | Medium |
+| SEO-008 | Medium | Performance | Initial client bundle was monolithic. | Before `npm run build` → JS `812.85 kB` and Vite warning; after route splitting → initial chunk `430.00 kB`, no Vite warning | Reduces initial JS work; field CWV still needs measurement. | Lazy-load route modules; measure with Lighthouse/RUM. | Fixed, measurement pending | Medium |
 | SEO-009 | Low | Images | Logo and decorative roadmap glow lacked intrinsic dimensions. | Before `src/components/Navbar.tsx` logo and `src/pages/RoadmapsPage.tsx` glow had no width/height; after dimensions added | Possible layout shifts and weaker image sizing hints. | Added intrinsic dimensions. | Fixed | Low |
 | SEO-010 | Medium | Headers/security | Local preview sends `Cache-Control: no-cache` and no HSTS/X-Robots-Tag; production headers are not locally verifiable. | `curl -sSI http://127.0.0.1:4174/` output below; `vercel.json:1-12` has no headers | Caching/security behavior may be suboptimal in production. | Configure production headers after deployment policy is confirmed. | UNVERIFIED | Medium |
 | SEO-011 | Medium | AI readiness | Named AI bots are explicitly allowed in the new robots file, but owner policy was not evidenced. | `public/robots.txt:9-20`; no policy documentation found | May disclose or restrict content contrary to business intent. | Confirm allow/block policy. | Needs decision | Low |
@@ -68,6 +69,7 @@ Second-pass fixes in this branch:
 | SEO-014 | Medium | Quality gates | Challenge API/UI types used `any`, weakening build-time safety. | `npm run lint` previously reported 16 errors in challenge files; typed interfaces now cover answers, grades, payloads, and leaderboard entries. | Type uncertainty can hide runtime data-shape issues. | Replaced `any` with explicit interfaces without changing API behavior. | Fixed | Medium |
 | SEO-015 | Critical | Deployment | Production is not running the audited branch. | Live `GET /` and all tested routes returned `846` bytes with only the old title/viewport/favicon; branch build contains prerendered metadata and emits a different JS asset. | None of the repository fixes affect rankings until deployed. | Deploy commit `d78ab64` or later, then repeat the live crawl. | Needs deployment | Low |
 | SEO-016 | High | Duplicate URLs | `/challenge` and `/challenges` duplicated the `/weeks` experience and lacked a canonical redirect. | `src/router.tsx:30-32`; live route crawl returned identical 846-byte shells | Splits signals and creates duplicate crawl paths. | Permanent redirects to `/weeks`; navbar now links to `/weeks`. | Fixed in repository; needs deployment verification | Low |
+| SEO-017 | Low | Developer quality | Lazy route components trigger Fast Refresh warnings in the router module. | `npm run lint` → 0 errors, 17 `react-refresh/only-export-components` warnings in `src/router.tsx:7-23` | No production SEO impact; can make local HMR less precise. | Move lazy component declarations to a dedicated module or adjust the rule deliberately. | Needs decision | Low |
 
 ## Per-route on-page audit
 
@@ -89,10 +91,10 @@ Client route titles/descriptions are defined in `src/pages/HomePage.tsx`, `src/p
 
 | Check | Before | After |
 |---|---|---|
-| Build | Passed: Vite emitted `812.85 kB` JS and `75.54 kB` CSS | Passed: Vite emitted `815.09 kB` JS and `75.54 kB` CSS; same >500 kB warning |
+| Build | Passed: Vite emitted `812.85 kB` JS and `75.54 kB` CSS | Passed: initial JS chunk `430.00 kB`, CSS `75.54 kB`; route chunks split and no Vite warning |
 | Tests | Not yet run in recon | `npm run test:run`: 3 files, 35 tests passed |
 | Typecheck | Not yet run in recon | `npm run typecheck`: passed |
-| Lint | Existing challenge errors not yet recorded | Fails with 16 existing `no-explicit-any` errors; no SEO-file errors |
+| Lint | Existing challenge errors not yet recorded | Passes with 0 errors; 17 Fast Refresh warnings in `src/router.tsx` |
 | `/robots.txt` | SPA shell, `STATUS 200` | `STATUS 200`, explicit generic/private rules and named bot rules, Sitemap line |
 | `/sitemap.xml` | SPA shell, `STATUS 200` | `STATUS 200`, XML with five configured public routes |
 | `/` initial HTML | Global title only | Description, OG/Twitter, canonical, WebSite JSON-LD; still no rendered H1/body because CSR |
@@ -107,10 +109,9 @@ Client route titles/descriptions are defined in `src/pages/HomePage.tsx`, `src/p
 ## Needs human decision
 
 - Deploy the audited branch; the confirmed production origin is `https://designersroom.anviklabs.site` and the repository fallback/static URLs now use it.
-- Choose an SSR/SSG/prerendering strategy for public pages. This is required to satisfy initial-HTML SEO for API-backed route content and JSON-LD.
-- Choose a server/edge 404 strategy compatible with the Vercel SPA rewrite.
+- Add data-aware SSG/SSR for `/weeks/:id` and other API-backed detail routes if those pages should rank individually.
 - Confirm whether GPTBot, ClaudeBot, PerplexityBot, and Google-Extended should be allowed; the current explicit `Allow: /` rules are provisional.
-- Consider route-level code splitting and Lighthouse/RUM measurement for the `815.09 kB` JS bundle.
+- Run Lighthouse/RUM after deployment and address measured CWV issues.
 - Add Search Console verification and privacy-reviewed `web-vitals`/analytics monitoring if required.
 
 ## Live production verification
@@ -168,7 +169,7 @@ test -d node_modules                   node_modules present
 npm run build                          passed after fixes
 npm run typecheck                      passed
 npm run test:run                       3 files, 35 tests passed
-npm run lint                           passed
+npm run lint                           passed with 0 errors, 17 Fast Refresh warnings
 npm run preview -- --host 127.0.0.1   served on 127.0.0.1:4174 (4173 was occupied)
 ```
 

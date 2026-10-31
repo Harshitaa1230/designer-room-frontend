@@ -13,6 +13,7 @@ This change audits the Vite/React Router CSR app and applies low-risk technical 
 - **Layout stability:** add intrinsic dimensions to the brand logo and decorative roadmap glow.
 - **Initial HTML:** generate route-specific SEO shells after Vite build, including H1, body text, links, metadata, canonical, and WebPage JSON-LD.
 - **Routing/index control:** restrict Vercel rewrites to known routes, add a static 404, redirect duplicate challenge aliases, add private-route `X-Robots-Tag`, and cache hashed assets immutably.
+- **Performance:** lazy-load route modules; the initial JS chunk is now `430.00 kB` instead of a monolithic `812.85 kB` bundle.
 
 ## Before/after
 
@@ -29,6 +30,7 @@ This change audits the Vite/React Router CSR app and applies low-risk technical 
 - `VITE_SITE_URL` may still be set explicitly in deployment configuration; repository fallback and static URLs now use `https://designersroom.anviklabs.site`.
 - The live deployment currently serves the old 846-byte shell; deploy commit `d78ab64` or later.
 - Dynamic API-backed detail routes are intentionally noindex until they have data-aware prerendering.
+- Lint has 0 errors; it reports 17 Fast Refresh warnings for lazy route declarations.
 - SSR/SSG and Vercel 404 changes are intentionally not included because they require architectural/hosting decisions.
 - Named AI bot rules currently allow crawling; confirm that policy before production launch.
 - No new dependencies were added.
