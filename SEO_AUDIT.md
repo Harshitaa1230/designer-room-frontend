@@ -16,7 +16,8 @@ Top five issues:
 
 Second-pass fixes in this branch:
 
-- `scripts/generate-seo-pages.mjs` now emits route-specific HTML shells during `postbuild`; `/roadmaps`, `/weeks`, and `/community` contain initial title, description, canonical, JSON-LD, H1, body text, and links before JavaScript.
+- Canonical public URLs are now `/guidebook` and `/challenge`; legacy `/roadmaps`, `/weeks`, and `/challenges` URLs permanently redirect to them. Backend API paths remain unchanged.
+- `scripts/generate-seo-pages.mjs` now emits route-specific HTML shells during `postbuild`; `/guidebook`, `/challenge`, and `/community` contain initial title, description, canonical, JSON-LD, H1, body text, and links before JavaScript.
 - `vercel.json` now rewrites only known application routes, so unknown paths can return Vercel’s real 404 instead of the SPA shell.
 - `/challenge` and `/challenges` permanently redirect to canonical `/weeks`; `/weeks/:id` is noindex until dynamic detail content can be prerendered.
 - Vercel adds `X-Robots-Tag` to private/auth routes and immutable caching to hashed assets.
@@ -37,15 +38,15 @@ Second-pass fixes in this branch:
 | Route | Classification | Rendering/data |
 |---|---|---|
 | `/` | Public SEO route | CSR; static content |
-| `/roadmaps` | Public SEO route | CSR; `listRoadmaps` API query |
-| `/challenge`, `/challenges`, `/weeks` | Public challenge/index routes | CSR; challenge API query |
-| `/weeks/:id` | Public detail route | CSR; challenge API query |
+| `/guidebook` | Public SEO route | CSR; `listRoadmaps` API query |
+| `/challenge` | Public challenge/index route | CSR; challenge API query |
+| `/challenge/week/:id` | Public detail route | CSR; challenge API query; noindex until data-aware prerendering |
 | `/community` | Public coming-soon route | CSR; static component |
 | `/leaderboard` | Public but recommended `noindex` | CSR; challenge API queries |
 | `/waitlist` | Public conversion route, `noindex` | CSR; form/API |
 | `/login`, `/auth/callback`, `/auth/mfa` | Auth routes; not SEO targets | CSR/auth state |
-| `/roadmaps/:id`, `/guidebook/:roadmapId/:topicId` | Private | `RequireAuth`, CSR/API |
-| `/challenges/:id`, `/attempts/:id` | Private | `RequireAuth`, CSR/API |
+| `/guidebook/:id`, `/guidebook/:roadmapId/:topicId` | Private | `RequireAuth`, CSR/API |
+| `/challenge/:id`, `/attempts/:id` | Private | `RequireAuth`, CSR/API |
 | `/dashboard`, `/admin` | Private | `RequireAuth`/`RequireAdmin`, CSR/API |
 | `*` | Not-found UI | CSR; hosting currently returns app shell |
 
@@ -68,7 +69,7 @@ Second-pass fixes in this branch:
 | SEO-013 | Low | Accessibility overlap | Viewport, language, favicon, alt text for brand logo, and semantic nav are present. | `index.html:2,5-6`; `src/components/Navbar.tsx:61-68,87`; `src/components/Footer.tsx:24-32` | Baseline mobile/a11y coverage is present. | No change needed. | Fixed/verified | Low |
 | SEO-014 | Medium | Quality gates | Challenge API/UI types used `any`, weakening build-time safety. | `npm run lint` previously reported 16 errors in challenge files; typed interfaces now cover answers, grades, payloads, and leaderboard entries. | Type uncertainty can hide runtime data-shape issues. | Replaced `any` with explicit interfaces without changing API behavior. | Fixed | Medium |
 | SEO-015 | Critical | Deployment | Production is not running the audited branch. | Live `GET /` and all tested routes returned `846` bytes with only the old title/viewport/favicon; branch build contains prerendered metadata and emits a different JS asset. | None of the repository fixes affect rankings until deployed. | Deploy commit `d78ab64` or later, then repeat the live crawl. | Needs deployment | Low |
-| SEO-016 | High | Duplicate URLs | `/challenge` and `/challenges` duplicated the `/weeks` experience and lacked a canonical redirect. | `src/router.tsx:30-32`; live route crawl returned identical 846-byte shells | Splits signals and creates duplicate crawl paths. | Permanent redirects to `/weeks`; navbar now links to `/weeks`. | Fixed in repository; needs deployment verification | Low |
+| SEO-016 | High | Duplicate URLs | `/roadmaps`, `/weeks`, and `/challenges` were legacy aliases for the desired `/guidebook` and `/challenge` URLs. | `src/router.tsx:31-34`; `vercel.json:5-34` | Splits signals and creates duplicate crawl paths. | Permanent redirects to `/guidebook` and `/challenge`; internal links now use canonical paths. | Fixed in repository; needs deployment verification | Low |
 | SEO-017 | Low | Developer quality | Lazy route components trigger Fast Refresh warnings in the router module. | `npm run lint` → 0 errors, 17 `react-refresh/only-export-components` warnings in `src/router.tsx:7-23` | No production SEO impact; can make local HMR less precise. | Move lazy component declarations to a dedicated module or adjust the rule deliberately. | Needs decision | Low |
 
 ## Per-route on-page audit
@@ -103,7 +104,7 @@ Client route titles/descriptions are defined in `src/pages/HomePage.tsx`, `src/p
 | Footer waitlist CTA | `onClick` navigation | Real React Router `Link` |
 | Image sizing | Logo/glow dimensions absent | Logo `1985×347`, glow `1140×740` |
 | Stable route initial HTML | Empty `#root` in CSR shell | Build output contains route-specific H1, body, links, metadata, canonical, and WebPage JSON-LD |
-| Canonical aliases | `/challenge` and `/challenges` rendered the same route | Vercel permanent redirects to `/weeks` |
+| Canonical aliases | `/roadmaps`, `/weeks`, and `/challenges` duplicated canonical public routes | Vercel permanent redirects to `/guidebook` and `/challenge` |
 | Unknown route handling | SPA shell returned `200` | Known-route rewrites only; `public/404.html` fallback |
 
 ## Needs human decision
