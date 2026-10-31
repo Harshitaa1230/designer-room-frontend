@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Check, Mail, Users } from 'lucide-react'
 import logo from '@/assets/logo.svg'
 import { messageOf } from '@/lib/api'
+import { trackEvent } from '@/lib/analytics'
 import { joinWaitlist } from '@/lib/endpoints'
 import { Spinner } from '@/components/LoadingState'
 import { Seo } from '@/components/Seo'
@@ -31,6 +32,7 @@ export function WaitlistPage() {
     setError(null)
     try {
       await joinWaitlist(trimmed)
+      trackEvent('waitlist_joined')
       setJoinedEmail(trimmed)
     } catch (err) {
       setError(messageOf(err, 'Could not join the waitlist right now. Please try again.'))
