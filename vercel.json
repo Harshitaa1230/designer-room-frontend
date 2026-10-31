@@ -3,7 +3,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://designersroom-designers-room-backen.vercel.app/:path*"
+      "destination": "https://auth.anviklabs.site/:path*"
     },
     {
       "source": "/(.*)",
