@@ -13,28 +13,42 @@ export const GradientBackground = () => {
     const canvas = canvasRef.current
     if (!canvas) return
 
-    // Render a single static frame when the user prefers reduced motion.
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
-    const gradient = new NeatGradient({
-      ref: canvas,
-      ...gradientConfig,
-      speed: reducedMotion ? 0 : gradientConfig.speed,
-      // Cap the drawing buffer at 2× CSS size (devicePixelRatio clamp).
-      renderScale: Math.min(window.devicePixelRatio || 1, 2),
-    })
-
-    // NOTE: the library already pauses its rAF loop via an internal
-    // IntersectionObserver when the canvas is offscreen or the tab is hidden.
+    let gradient: NeatGradient | null = null
+    let disposed = false
 
     const handleScroll = () => {
-      gradient.yOffset = window.scrollY
+      if (gradient) gradient.yOffset = window.scrollY
     }
-    window.addEventListener('scroll', handleScroll, { passive: true })
+
+    // Defer creation by a tick so StrictMode's throwaway first mount in dev is
+    // torn down before any WebGL instance exists. The library's destroy() does
+    // not guard already-queued IntersectionObserver/ResizeObserver callbacks,
+    // which can otherwise restart a destroyed render loop and spam WebGL
+    // "deleted object" errors.
+    const startTimer = window.setTimeout(() => {
+      if (disposed) return
+
+      // Render a single static frame when the user prefers reduced motion.
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+      gradient = new NeatGradient({
+        ref: canvas,
+        ...gradientConfig,
+        speed: reducedMotion ? 0 : gradientConfig.speed,
+        // Cap the drawing buffer at 2× CSS size (devicePixelRatio clamp).
+        renderScale: Math.min(window.devicePixelRatio || 1, 2),
+      })
+
+      // NOTE: the library already pauses its rAF loop via an internal
+      // IntersectionObserver when the canvas is offscreen or the tab is hidden.
+      window.addEventListener('scroll', handleScroll, { passive: true })
+    }, 0)
 
     return () => {
+      disposed = true
+      window.clearTimeout(startTimer)
       window.removeEventListener('scroll', handleScroll)
-      gradient.destroy()
+      gradient?.destroy()
     }
   }, [])
 
