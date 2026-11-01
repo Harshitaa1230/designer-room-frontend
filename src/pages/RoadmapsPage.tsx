@@ -15,20 +15,14 @@ function RoadmapCard({ roadmap }: { roadmap: RoadmapSummary }) {
   const meta = `${roadmap.stageCount} stage${roadmap.stageCount === 1 ? '' : 's'} · ${
     roadmap.topicCount
   } topic${roadmap.topicCount === 1 ? '' : 's'}`
-  const pill = roadmap.metadata?.label ?? 'Full roadmap'
   const isAvailable = roadmap.slug === AVAILABLE_ROADMAP_SLUG
 
   const body = (
     <>
-      {/* Top row: number + pill */}
-      <div className="flex items-center justify-between">
-        <span className="text-[12px] font-semibold tracking-[1.12px] font-mono text-[var(--text-muted)]">
-          {number}
-        </span>
-        <span className="rounded-full border border-[var(--border-card)] px-2.5 py-1 text-[10px] font-medium text-[var(--text-body)]">
-          {pill}
-        </span>
-      </div>
+      {/* Top row: number */}
+      <span className="text-[12px] font-semibold tracking-[1.12px] font-mono text-[var(--text-muted)]">
+        {number}
+      </span>
 
       {/* Title */}
       <h2 className="text-[22px] font-medium leading-[1.25] tracking-[-0.4px] text-[var(--text-primary)] break-words sm:text-[28px] sm:leading-[34px]">
