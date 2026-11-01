@@ -1,10 +1,10 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, useParams } from 'react-router-dom'
 import Markdown, { type Components } from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { getRoadmap, getRoadmapProgress, getTopicContent, setTopicProgress } from '@/lib/endpoints'
-import type { TopicStatus } from '@/lib/endpoints'
+import type { ProgressEntry, TopicStatus } from '@/lib/endpoints'
 import { messageOf, statusOf } from '@/lib/api'
 import { FullScreenLoader, Spinner } from '@/components/LoadingState'
 import { TopicDetails } from '@/components/roadmap/TopicDetails'
@@ -61,6 +61,7 @@ const markdownComponents: Components = {
 export function GuidebookPage() {
   const { roadmapId = '', topicId = '' } = useParams()
   const queryClient = useQueryClient()
+  const autoStarted = useRef(new Set<string>())
 
   const roadmap = useQuery({
     queryKey: ['roadmap', roadmapId],
@@ -82,7 +83,11 @@ export function GuidebookPage() {
 
   const updateProgress = useMutation({
     mutationFn: (status: TopicStatus) => setTopicProgress(roadmapId, topicId, status),
-    onSuccess: () => {
+    onSuccess: (entry) => {
+      queryClient.setQueryData<ProgressEntry[]>(['roadmap', roadmapId, 'progress'], (current) => [
+        ...(current ?? []).filter((item) => item.topicId !== entry.topicId),
+        entry,
+      ])
       void queryClient.invalidateQueries({ queryKey: ['roadmap', roadmapId, 'progress'] })
     },
   })
@@ -109,11 +114,18 @@ export function GuidebookPage() {
   }, [topic])
 
   useEffect(() => {
-    if (status === 'not-started' && content.isSuccess) {
-      updateProgress.mutate('in-progress')
+    if (!content.isSuccess || !progress.isSuccess || !topic) {
+      return
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [content.isSuccess])
+    if (status && status !== 'not-started') {
+      return
+    }
+    if (autoStarted.current.has(topicId)) {
+      return
+    }
+    autoStarted.current.add(topicId)
+    updateProgress.mutate('in-progress')
+  }, [content.isSuccess, progress.isSuccess, status, topic, topicId, updateProgress])
 
   if (roadmap.isPending) {
     return <FullScreenLoader label="Loading topic…" />

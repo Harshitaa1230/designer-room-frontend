@@ -57,7 +57,7 @@ export function RoadmapDetailPage() {
     setCollapsedStages(new Set(stageViews.map((stage) => stage.id)))
   }
 
-  if (roadmap.isPending) {
+  if (roadmap.isPending || progress.isPending) {
     return <FullScreenLoader label="Loading roadmap…" />
   }
 
@@ -70,6 +70,23 @@ export function RoadmapDetailPage() {
         <button
           type="button"
           onClick={() => void roadmap.refetch()}
+          className="rounded-full border border-[var(--border-subtle)] px-4 py-2 text-xs font-medium text-[var(--text-primary)] transition-colors hover:border-[var(--border-strong)] hover:bg-[var(--bg-hover)]"
+        >
+          Try again
+        </button>
+      </div>
+    )
+  }
+
+  if (progress.isError) {
+    return (
+      <div className="flex min-h-[60vh] flex-col items-center justify-center gap-3 px-8 text-center">
+        <p className="text-sm text-[var(--accent-text)]">
+          {messageOf(progress.error, 'Could not load your progress.')}
+        </p>
+        <button
+          type="button"
+          onClick={() => void progress.refetch()}
           className="rounded-full border border-[var(--border-subtle)] px-4 py-2 text-xs font-medium text-[var(--text-primary)] transition-colors hover:border-[var(--border-strong)] hover:bg-[var(--bg-hover)]"
         >
           Try again
