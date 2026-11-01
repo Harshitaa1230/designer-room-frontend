@@ -8,25 +8,18 @@ import { Seo } from '@/components/Seo'
 
 // ── Card ──────────────────────────────────────────────────────────────────────
 
+const AVAILABLE_ROADMAP_SLUG = 'ui-ux-designer'
+
 function RoadmapCard({ roadmap }: { roadmap: RoadmapSummary }) {
   const number = String(roadmap.position).padStart(2, '0')
   const meta = `${roadmap.stageCount} stage${roadmap.stageCount === 1 ? '' : 's'} · ${
     roadmap.topicCount
   } topic${roadmap.topicCount === 1 ? '' : 's'}`
   const pill = roadmap.metadata?.label ?? 'Full roadmap'
+  const isAvailable = roadmap.slug === AVAILABLE_ROADMAP_SLUG
 
-  return (
-    <Link
-      to={`/guidebook/${roadmap.id}`}
-      aria-label={`${roadmap.title} — ${meta}`}
-      className={[
-        'roadmap-card group relative flex w-full min-h-[220px] min-w-0 flex-col gap-3 rounded-[20px] border p-5 sm:min-h-[260px] sm:p-6',
-        'bg-[var(--bg-card)] transition-all duration-300',
-        'hover:-translate-y-0.5 hover:border-[var(--accent-text)] hover:shadow-[0_18px_40px_-24px_var(--accent-text)]',
-        'focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent-text)]',
-        'border-[var(--border-subtle)]',
-      ].join(' ')}
-    >
+  const body = (
+    <>
       {/* Top row: number + pill */}
       <div className="flex items-center justify-between">
         <span className="text-[12px] font-semibold tracking-[1.12px] font-mono text-[var(--text-muted)]">
@@ -46,6 +39,37 @@ function RoadmapCard({ roadmap }: { roadmap: RoadmapSummary }) {
       <p className="max-w-[420px] text-[14px] font-normal leading-[21px] text-[var(--text-body)] break-words sm:text-[15px] sm:leading-[22px]">
         {roadmap.description ?? roadmap.metadata?.subtitle ?? ''}
       </p>
+    </>
+  )
+
+  const baseClassName =
+    'relative flex w-full min-h-[220px] min-w-0 flex-col gap-3 rounded-[20px] border border-[var(--border-subtle)] bg-[var(--bg-card)] p-5 sm:min-h-[260px] sm:p-6'
+
+  if (!isAvailable) {
+    return (
+      <div className={baseClassName}>
+        {body}
+
+        {/* Bottom row: coming soon */}
+        <div className="mt-auto flex items-center justify-between">
+          <span className="text-[12px] text-[var(--text-muted)]">Coming soon</span>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <Link
+      to={`/guidebook/${roadmap.id}`}
+      aria-label={`${roadmap.title} — ${meta}`}
+      className={[
+        baseClassName,
+        'roadmap-card group transition-all duration-300',
+        'hover:-translate-y-0.5 hover:border-[var(--accent-text)] hover:shadow-[0_18px_40px_-24px_var(--accent-text)]',
+        'focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent-text)]',
+      ].join(' ')}
+    >
+      {body}
 
       {/* Bottom row: meta + arrow */}
       <div className="mt-auto flex items-center justify-between">
