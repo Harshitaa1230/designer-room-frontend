@@ -1,11 +1,14 @@
 import { useEffect, useRef } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import Markdown, { type Components } from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { getRoadmap, getRoadmapProgress, getTopicContent, setTopicProgress } from '@/lib/endpoints'
 import type { ProgressEntry, TopicStatus } from '@/lib/endpoints'
 import { messageOf, statusOf } from '@/lib/api'
+import { rememberAuthRedirect } from '@/lib/authRedirect'
+import { clearPendingProgress, readPendingProgress, rememberPendingProgress } from '@/lib/progressIntent'
+import { findPreviewTopicId } from '@/data/roadmapUtils'
 import { useAuthStore } from '@/store/auth'
 import { FullScreenLoader, Spinner } from '@/components/LoadingState'
 import { TopicDetails } from '@/components/roadmap/TopicDetails'
@@ -61,9 +64,13 @@ const markdownComponents: Components = {
 
 export function GuidebookPage() {
   const { roadmapId = '', topicId = '' } = useParams()
+  const authStatus = useAuthStore((state) => state.status)
   const userId = useAuthStore((state) => state.user?.id ?? '')
   const queryClient = useQueryClient()
+  const location = useLocation()
+  const navigate = useNavigate()
   const autoStarted = useRef(new Set<string>())
+  const pendingApplied = useRef(false)
 
   const roadmap = useQuery({
     queryKey: ['roadmap', roadmapId],
@@ -71,10 +78,16 @@ export function GuidebookPage() {
     enabled: Boolean(roadmapId),
   })
 
+  const previewTopicId = roadmap.data
+    ? findPreviewTopicId(roadmap.data.stages, roadmap.data.topics)
+    : undefined
+  const isPreviewTopic = Boolean(roadmap.data && previewTopicId === topicId)
+  const canAccess = authStatus === 'authed' || isPreviewTopic
+
   const content = useQuery({
     queryKey: ['topic-content', roadmapId, topicId],
     queryFn: () => getTopicContent(roadmapId, topicId),
-    enabled: Boolean(roadmapId && topicId),
+    enabled: Boolean(roadmapId && topicId && canAccess),
   })
 
   const progress = useQuery({
@@ -117,10 +130,23 @@ export function GuidebookPage() {
   }, [topic])
 
   useEffect(() => {
+    if (authStatus !== 'guest' || !roadmap.data || topicId === previewTopicId) {
+      return
+    }
+    const redirect = `${location.pathname}${location.search}${location.hash}`
+    rememberAuthRedirect(redirect)
+    navigate(`/login?redirect=${encodeURIComponent(redirect)}`, { replace: true })
+  }, [authStatus, location, navigate, previewTopicId, roadmap.data, topicId])
+
+  useEffect(() => {
     if (!content.isSuccess || !progress.isSuccess || !topic) {
       return
     }
     if (status && status !== 'not-started') {
+      return
+    }
+    const pending = readPendingProgress()
+    if (pending?.roadmapId === roadmapId && pending.topicId === topicId) {
       return
     }
     if (autoStarted.current.has(topicId)) {
@@ -128,9 +154,30 @@ export function GuidebookPage() {
     }
     autoStarted.current.add(topicId)
     updateProgress.mutate('in-progress')
-  }, [content.isSuccess, progress.isSuccess, status, topic, topicId, updateProgress])
+  }, [content.isSuccess, progress.isSuccess, status, topic, topicId, updateProgress, roadmapId])
 
-  if (roadmap.isPending) {
+  useEffect(() => {
+    if (authStatus !== 'authed' || !progress.isSuccess || !topic || pendingApplied.current) {
+      return
+    }
+    const pending = readPendingProgress()
+    if (!pending || pending.roadmapId !== roadmapId || pending.topicId !== topicId) {
+      return
+    }
+    if (status === 'done') {
+      clearPendingProgress()
+      return
+    }
+    pendingApplied.current = true
+    updateProgress.mutate('done', {
+      onSuccess: () => {
+        clearPendingProgress()
+        pendingApplied.current = false
+      },
+    })
+  }, [authStatus, progress.isSuccess, status, topic, updateProgress, roadmapId, topicId])
+
+  if (authStatus === 'restoring' || roadmap.isPending) {
     return <FullScreenLoader label="Loading topic…" />
   }
 
@@ -150,10 +197,31 @@ export function GuidebookPage() {
     )
   }
 
+  if (authStatus === 'guest' && !isPreviewTopic) {
+    return <FullScreenLoader label="Sign in to keep reading…" />
+  }
+
   const siblingTopics = roadmap.data?.topics ?? []
   const topicIndex = siblingTopics.findIndex((item) => item.id === topicId)
   const previous = topicIndex > 0 ? siblingTopics[topicIndex - 1] : undefined
   const next = topicIndex >= 0 ? siblingTopics[topicIndex + 1] : undefined
+
+  function openLogin() {
+    const redirect = `${location.pathname}${location.search}${location.hash}`
+    rememberAuthRedirect(redirect)
+    navigate(`/login?redirect=${encodeURIComponent(redirect)}`)
+  }
+
+  function saveProgress(nextStatus: TopicStatus) {
+    if (authStatus !== 'authed') {
+      if (nextStatus === 'done') {
+        rememberPendingProgress({ roadmapId, topicId, status: 'done' })
+      }
+      openLogin()
+      return
+    }
+    updateProgress.mutate(nextStatus)
+  }
 
   return (
     <div className="min-h-screen w-full bg-[var(--bg-page)] text-[var(--text-primary)] pt-20">
@@ -223,15 +291,15 @@ export function GuidebookPage() {
           <button
             type="button"
             disabled={updateProgress.isPending}
-            onClick={() => updateProgress.mutate('done')}
+            onClick={() => saveProgress('done')}
             className="rounded-full bg-[var(--accent)] px-4 py-2 text-[13px] font-semibold text-[var(--on-accent)] transition-opacity hover:opacity-90 disabled:opacity-50 sm:px-5 sm:py-2.5 sm:text-[14px]"
           >
-            {status === 'done' ? 'Completed ✓' : 'Mark as done'}
+            {status === 'done' ? 'Done ✓' : 'Mark as done'}
           </button>
           <button
             type="button"
             disabled={updateProgress.isPending || status === 'in-progress'}
-            onClick={() => updateProgress.mutate('in-progress')}
+            onClick={() => saveProgress('in-progress')}
             className="rounded-full border border-[var(--border-subtle)] px-4 py-2 text-[13px] font-medium text-[var(--text-primary)] transition-colors hover:border-[var(--border-strong)] hover:bg-[var(--bg-hover)] disabled:opacity-50 sm:px-5 sm:py-2.5 sm:text-[14px]"
           >
             {status === 'in-progress' ? 'In progress' : 'Start reading'}

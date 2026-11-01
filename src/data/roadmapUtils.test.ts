@@ -4,6 +4,7 @@ import {
   buildStageViews,
   computeProgress,
   findContinueTopicId,
+  findPreviewTopicId,
   getDifficultyLabel,
   getTopicActionLabel,
   formatTime,
@@ -336,6 +337,37 @@ describe('findContinueTopicId', () => {
     )
 
     expect(findContinueTopicId(stages)).toBe('first')
+  })
+})
+
+describe('findPreviewTopicId', () => {
+  it('returns the first topic of the first stage', () => {
+    const stages = [
+      makeStage({ id: 's2', position: 2 }),
+      makeStage({ id: 's1', position: 1 }),
+    ]
+    const topics = [
+      makeTopic({ id: 'second', stage: 1, position: 2 }),
+      makeTopic({ id: 'later-stage', stage: 2, position: 1 }),
+      makeTopic({ id: 'first', stage: 1, position: 1 }),
+    ]
+
+    expect(findPreviewTopicId(stages, topics)).toBe('first')
+  })
+
+  it('ignores topics that are not attached to a stage', () => {
+    const stages = [makeStage({ id: 's1', position: 1 })]
+    const topics = [
+      makeTopic({ id: 'loose', stage: null, position: 1 }),
+      makeTopic({ id: 'first', stage: 1, position: 2 }),
+    ]
+
+    expect(findPreviewTopicId(stages, topics)).toBe('first')
+  })
+
+  it('returns undefined when the roadmap has no stages or no topics', () => {
+    expect(findPreviewTopicId([], [makeTopic({ stage: 1 })])).toBeUndefined()
+    expect(findPreviewTopicId([makeStage({ position: 1 })], [])).toBeUndefined()
   })
 })
 

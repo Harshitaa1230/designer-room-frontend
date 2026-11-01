@@ -14,8 +14,10 @@ import { FullScreenLoader, Spinner } from '@/components/LoadingState'
 
 export function RoadmapDetailPage() {
   const { id = '' } = useParams()
+  const authStatus = useAuthStore((state) => state.status)
   const userId = useAuthStore((state) => state.user?.id ?? '')
   const [collapsedStages, setCollapsedStages] = useState<Set<string>>(new Set())
+  const progressEnabled = Boolean(id && authStatus === 'authed' && userId)
 
   const roadmap = useQuery({
     queryKey: ['roadmap', id],
@@ -26,7 +28,7 @@ export function RoadmapDetailPage() {
   const progress = useQuery({
     queryKey: ['roadmap', id, 'progress', userId],
     queryFn: () => getRoadmapProgress(id),
-    enabled: Boolean(id && userId),
+    enabled: progressEnabled,
     refetchOnMount: 'always',
   })
 
@@ -60,7 +62,7 @@ export function RoadmapDetailPage() {
     setCollapsedStages(new Set(stageViews.map((stage) => stage.id)))
   }
 
-  if (roadmap.isPending || progress.isPending) {
+  if (authStatus === 'restoring' || roadmap.isPending || (progressEnabled && progress.isPending)) {
     return <FullScreenLoader label="Loading roadmap…" />
   }
 
@@ -81,7 +83,7 @@ export function RoadmapDetailPage() {
     )
   }
 
-  if (progress.isError) {
+  if (progressEnabled && progress.isError) {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center gap-3 px-8 text-center">
         <p className="text-sm text-[var(--accent-text)]">

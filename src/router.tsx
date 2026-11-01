@@ -34,22 +34,8 @@ export const router = createBrowserRouter([
       { path: 'attempts/:id', element: <RequireAuth><AttemptPage /></RequireAuth> },
       { path: 'leaderboard', element: <LeaderboardPage /> },
       { path: 'community', element: <ComingSoonPage kind="community" /> },
-      {
-        path: 'guidebook/:id',
-        element: (
-          <RequireAuth>
-            <RoadmapDetailPage />
-          </RequireAuth>
-        ),
-      },
-      {
-        path: 'guidebook/:roadmapId/:topicId',
-        element: (
-          <RequireAuth>
-            <GuidebookPage />
-          </RequireAuth>
-        ),
-      },
+      { path: 'guidebook/:id', element: <RoadmapDetailPage /> },
+      { path: 'guidebook/:roadmapId/:topicId', element: <GuidebookPage /> },
       {
         path: 'dashboard',
         element: (

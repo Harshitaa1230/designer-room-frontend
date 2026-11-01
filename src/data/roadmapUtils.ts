@@ -196,6 +196,17 @@ export function findContinueTopicId(stages: StageView[]): string | undefined {
   )
 }
 
+export function findPreviewTopicId(stages: Stage[], topics: Topic[]): string | undefined {
+  const firstStage = [...stages].sort((a, b) => a.position - b.position)[0]
+  if (!firstStage) {
+    return undefined
+  }
+
+  return topics
+    .filter((topic) => topic.stage === firstStage.position)
+    .sort((a, b) => a.position - b.position)[0]?.id
+}
+
 /**
  * Returns dot label for difficulty.
  * 'beginner'     → "● Beginner"
