@@ -3,6 +3,7 @@ import * as fc from 'fast-check'
 import {
   buildStageViews,
   computeProgress,
+  findContinueTopicId,
   getDifficultyLabel,
   getTopicActionLabel,
   formatTime,
@@ -304,6 +305,37 @@ describe('buildStageViews', () => {
         },
       ),
     )
+  })
+})
+
+describe('findContinueTopicId', () => {
+  it('prefers an in-progress topic', () => {
+    const stages = buildStageViews(
+      [makeStage()],
+      [makeTopic({ id: 'first' }), makeTopic({ id: 'current' })],
+      [makeProgress('first', 'done'), makeProgress('current', 'in-progress')],
+    )
+
+    expect(findContinueTopicId(stages)).toBe('current')
+  })
+
+  it('opens the first available topic for a new roadmap', () => {
+    const stages = buildStageViews(
+      [makeStage()],
+      [makeTopic({ id: 'first' }), makeTopic({ id: 'second' })],
+    )
+
+    expect(findContinueTopicId(stages)).toBe('first')
+  })
+
+  it('falls back to a completed topic when the roadmap is complete', () => {
+    const stages = buildStageViews(
+      [makeStage()],
+      [makeTopic({ id: 'first' })],
+      [makeProgress('first', 'done')],
+    )
+
+    expect(findContinueTopicId(stages)).toBe('first')
   })
 })
 

@@ -3,6 +3,7 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { KeyRound, ShieldCheck } from 'lucide-react'
 import logo from '@/assets/logo.svg'
 import { completeMfaSession, messageOf, totpChallenge, totpRecover } from '@/lib/api'
+import { consumeAuthRedirect } from '@/lib/authRedirect'
 import { Spinner } from '@/components/LoadingState'
 
 type Mode = 'totp' | 'recovery'
@@ -44,7 +45,7 @@ export function MfaPage() {
           ? await totpChallenge(mfaToken, trimmed)
           : await totpRecover(mfaToken, trimmed)
       const ok = await completeMfaSession(accessToken)
-      if (ok) navigate('/dashboard', { replace: true })
+      if (ok) navigate(consumeAuthRedirect(), { replace: true })
       else setError('Signed in, but loading your profile failed. Please try again.')
     } catch (err) {
       setError(messageOf(err, mode === 'totp' ? 'That code was not accepted.' : 'That recovery code was not accepted.'))

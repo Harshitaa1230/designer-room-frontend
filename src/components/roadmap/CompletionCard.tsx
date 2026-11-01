@@ -15,7 +15,7 @@ export default function CompletionCard({
     <div className="px-5 sm:px-12 md:px-16 pt-[32px] sm:pt-[48px] pb-[48px] sm:pb-[64px]">
       <div className="relative overflow-hidden bg-[var(--bg-card)] border border-[var(--border-subtle)] rounded-[16px] sm:rounded-[24px] p-[24px] sm:p-[40px] lg:p-[64px] flex flex-col gap-[16px] sm:gap-[24px]">
         {/* Label */}
-        <p className="text-[12px] text-[var(--text-muted)]">(The finish line)</p>
+        <p className="text-[12px] text-[var(--text-muted)]">The finish line</p>
 
         {/* Heading */}
         <h2 className="text-[36px] sm:text-[48px] md:text-[56px] lg:text-[64px] font-medium text-[var(--text-primary)] leading-[1.02] tracking-[-1.2px] sm:tracking-[-1.92px] break-words">

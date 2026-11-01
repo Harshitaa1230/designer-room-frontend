@@ -184,6 +184,19 @@ export function computeProgress(stages: StageView[]): ProgressState {
 }
 
 /**
+ * Finds the topic the roadmap CTA should open. Prefer an active topic, then
+ * the first available topic, so the CTA never points back to the roadmap page.
+ */
+export function findContinueTopicId(stages: StageView[]): string | undefined {
+  const topics = stages.flatMap((stage) => stage.topics)
+  return (
+    topics.find((topic) => topic.status === 'in-progress')?.id ??
+    topics.find((topic) => topic.status === 'not-started')?.id ??
+    topics.find((topic) => topic.status === 'done')?.id
+  )
+}
+
+/**
  * Returns dot label for difficulty.
  * 'beginner'     → "● Beginner"
  * 'intermediate' → "●● Intermediate"

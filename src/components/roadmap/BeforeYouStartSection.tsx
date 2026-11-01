@@ -8,7 +8,7 @@ export default function BeforeYouStartSection({ cards }: BeforeYouStartSectionPr
   return (
     <section className="px-5 sm:px-12 md:px-16 py-[32px] sm:py-[48px] flex flex-col gap-[18px] sm:gap-[24px]">
       {/* Section label */}
-      <span className="text-[12px] text-[var(--text-muted)]">(Before you start)</span>
+      <span className="text-[12px] text-[var(--text-muted)]">Before you start</span>
 
       {/* Cards row */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[12px] sm:gap-[16px] items-stretch">

@@ -6,6 +6,7 @@ import remarkGfm from 'remark-gfm'
 import { getRoadmap, getRoadmapProgress, getTopicContent, setTopicProgress } from '@/lib/endpoints'
 import type { ProgressEntry, TopicStatus } from '@/lib/endpoints'
 import { messageOf, statusOf } from '@/lib/api'
+import { useAuthStore } from '@/store/auth'
 import { FullScreenLoader, Spinner } from '@/components/LoadingState'
 import { TopicDetails } from '@/components/roadmap/TopicDetails'
 import { TopicQuiz } from '@/components/roadmap/TopicQuiz'
@@ -60,6 +61,7 @@ const markdownComponents: Components = {
 
 export function GuidebookPage() {
   const { roadmapId = '', topicId = '' } = useParams()
+  const userId = useAuthStore((state) => state.user?.id ?? '')
   const queryClient = useQueryClient()
   const autoStarted = useRef(new Set<string>())
 
@@ -76,19 +78,20 @@ export function GuidebookPage() {
   })
 
   const progress = useQuery({
-    queryKey: ['roadmap', roadmapId, 'progress'],
+    queryKey: ['roadmap', roadmapId, 'progress', userId],
     queryFn: () => getRoadmapProgress(roadmapId),
-    enabled: Boolean(roadmapId),
+    enabled: Boolean(roadmapId && userId),
+    refetchOnMount: 'always',
   })
 
   const updateProgress = useMutation({
     mutationFn: (status: TopicStatus) => setTopicProgress(roadmapId, topicId, status),
     onSuccess: (entry) => {
-      queryClient.setQueryData<ProgressEntry[]>(['roadmap', roadmapId, 'progress'], (current) => [
+      queryClient.setQueryData<ProgressEntry[]>(['roadmap', roadmapId, 'progress', userId], (current) => [
         ...(current ?? []).filter((item) => item.topicId !== entry.topicId),
         entry,
       ])
-      void queryClient.invalidateQueries({ queryKey: ['roadmap', roadmapId, 'progress'] })
+      void queryClient.invalidateQueries({ queryKey: ['roadmap', roadmapId, 'progress', userId] })
     },
   })
 

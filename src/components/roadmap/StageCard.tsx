@@ -1,6 +1,6 @@
 import type { StageView } from '@/data/roadmapUtils'
 import { TopicRow } from './TopicRow'
-import { CheckpointRow } from './CheckpointRow'
+// import { CheckpointRow } from './CheckpointRow'
 
 interface StageCardProps {
   stage: StageView
@@ -82,9 +82,10 @@ export function StageCard({ stage, roadmapId, isOpen, onToggle }: StageCardProps
           {stage.topics.map((topic) => (
             <TopicRow key={topic.id} topic={topic} roadmapId={roadmapId} />
           ))}
-          {stage.checkpoints.map((checkpoint) => (
+          {/* Checkpoints are temporarily hidden from the frontend. */}
+          {/* {stage.checkpoints.map((checkpoint) => (
             <CheckpointRow key={checkpoint.id} checkpoint={checkpoint} />
-          ))}
+          ))} */}
         </div>
       )}
     </div>

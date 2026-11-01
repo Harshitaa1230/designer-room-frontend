@@ -2,6 +2,7 @@ import { useState, type ReactNode } from 'react'
 import { Navigate, useSearchParams } from 'react-router-dom'
 import logo from '@/assets/logo.svg'
 import { startGoogleLogin } from '@/lib/api'
+import { rememberAuthRedirect, safeAuthRedirect } from '@/lib/authRedirect'
 import { useAuthStore } from '@/store/auth'
 import { FullScreenLoader, Spinner } from '@/components/LoadingState'
 
@@ -47,8 +48,9 @@ export function LoginPage() {
   const [searchParams] = useSearchParams()
   const [redirecting, setRedirecting] = useState(false)
   const error = searchParams.get('error')
+  const redirect = safeAuthRedirect(searchParams.get('redirect'))
 
-  if (status === 'authed') return <Navigate to="/dashboard" replace />
+  if (status === 'authed') return <Navigate to={redirect} replace />
   if (status === 'restoring') return <FullScreenLoader label="Checking your session…" />
 
   return (
@@ -84,6 +86,7 @@ export function LoginPage() {
         <button
           type="button"
           onClick={() => {
+            rememberAuthRedirect(redirect)
             setRedirecting(true)
             startGoogleLogin()
           }}

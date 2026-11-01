@@ -118,7 +118,7 @@ export const Navbar = () => {
             to={status === 'authed' ? '/dashboard' : '/login'}
             className="btn-3d btn-3d--nav hidden items-center gap-2 px-5 py-2.5 text-sm sm:inline-flex md:px-4 md:text-[13px] lg:px-5 lg:text-sm"
           >
-            {status === 'authed' ? 'Dashboard' : 'Get Started'}
+            {status === 'authed' ? 'Dashboard' : 'Login'}
             <img src={arrow} alt="" aria-hidden="true" className="invert" />
           </Link>
 
@@ -192,7 +192,7 @@ export const Navbar = () => {
               onClick={() => setMenuOpen(false)}
               className="btn-3d btn-3d--nav flex w-full items-center justify-center gap-2 px-5 py-3 text-sm"
             >
-              {status === 'authed' ? 'Dashboard' : 'Get Started'}
+              {status === 'authed' ? 'Dashboard' : 'Login'}
               <img src={arrow} alt="" aria-hidden="true" className="invert" />
             </Link>
           </div>

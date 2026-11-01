@@ -28,11 +28,6 @@ export default function PageHeader({
       <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-6 lg:gap-8">
         {/* Left block */}
         <div className="flex flex-col gap-[16px] sm:gap-[20px] flex-1 min-w-0">
-          {/* Roadmap label e.g. "(Roadmap 01)" */}
-          <span className="text-[12px]" style={{ color: 'var(--text-muted)' }}>
-            {metadata?.label ?? ''}
-          </span>
-
           {/* Large title */}
           <h1
             className="text-[42px] sm:text-[64px] md:text-[80px] lg:text-[96px] font-medium leading-[1.02] break-words"

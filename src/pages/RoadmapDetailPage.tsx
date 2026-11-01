@@ -3,7 +3,8 @@ import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
 import { getRoadmap, getRoadmapProgress } from '@/lib/endpoints'
 import { messageOf } from '@/lib/api'
-import { buildStageViews, computeProgress } from '@/data/roadmapUtils'
+import { useAuthStore } from '@/store/auth'
+import { buildStageViews, computeProgress, findContinueTopicId } from '@/data/roadmapUtils'
 import PageHeader from '@/components/roadmap/PageHeader'
 import BeforeYouStartSection from '@/components/roadmap/BeforeYouStartSection'
 import ThePathTimeline from '@/components/roadmap/ThePathTimeline'
@@ -13,6 +14,7 @@ import { FullScreenLoader, Spinner } from '@/components/LoadingState'
 
 export function RoadmapDetailPage() {
   const { id = '' } = useParams()
+  const userId = useAuthStore((state) => state.user?.id ?? '')
   const [collapsedStages, setCollapsedStages] = useState<Set<string>>(new Set())
 
   const roadmap = useQuery({
@@ -22,9 +24,10 @@ export function RoadmapDetailPage() {
   })
 
   const progress = useQuery({
-    queryKey: ['roadmap', id, 'progress'],
+    queryKey: ['roadmap', id, 'progress', userId],
     queryFn: () => getRoadmapProgress(id),
-    enabled: Boolean(id),
+    enabled: Boolean(id && userId),
+    refetchOnMount: 'always',
   })
 
   const stageViews = useMemo(
@@ -97,9 +100,7 @@ export function RoadmapDetailPage() {
 
   const data = roadmap.data
   const overview = computeProgress(stageViews)
-  const continueTopicId = stageViews
-    .flatMap((stage) => stage.topics)
-    .find((topic) => topic.status === 'in-progress')?.id
+  const continueTopicId = findContinueTopicId(stageViews)
   const quotes = data.metadata?.quotes ?? []
 
   return (

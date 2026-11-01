@@ -19,7 +19,7 @@ export default function ThePathTimeline({
       <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 sm:gap-0 pb-[20px] sm:pb-[28px]">
         {/* Left block */}
         <div className="flex flex-col gap-[4px]">
-          <span className="text-[12px] text-[var(--text-muted)]">(The path)</span>
+          <span className="text-[12px] text-[var(--text-muted)]">The path</span>
           <span className="text-[24px] font-medium text-[var(--text-primary)] leading-[30px] tracking-[-0.3px] sm:text-[28px] sm:leading-[34px]">
             {pace}
           </span>
