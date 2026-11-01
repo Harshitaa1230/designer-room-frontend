@@ -11,27 +11,20 @@ interface Feature {
 const FEATURES: Feature[] = [
   {
     number: '01',
-    name: 'Roadmaps',
+    name: 'Guidebook',
     status: 'live',
-    tagline: 'Step-by-step paths for every discipline',
-            href: '/guidebook',
+    tagline: 'Roadmaps, chapters, quizzes, zero fluff',
+    href: '/guidebook',
   },
   {
     number: '02',
-    name: 'Theory',
-    status: 'soon',
-    tagline: 'Chapters, quizzes, zero fluff',
-    href: '/theory',
-  },
-  {
-    number: '03',
     name: 'Challenge',
     status: 'soon',
     tagline: 'One theme. Seven days. Every week.',
     href: '/challenge',
   },
   {
-    number: '04',
+    number: '03',
     name: 'Community',
     status: 'soon',
     tagline: 'Blogs, showcase, honest critique',

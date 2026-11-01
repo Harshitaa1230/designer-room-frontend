@@ -35,8 +35,7 @@ describe('HomePage', () => {
   it('renders the features list', () => {
     renderHome()
     expect(screen.getByText(/What's inside/i)).toBeInTheDocument()
-    expect(screen.getByText('Roadmaps')).toBeInTheDocument()
-    expect(screen.getByText('Theory')).toBeInTheDocument()
+    expect(screen.getByText('Guidebook')).toBeInTheDocument()
     expect(screen.getByText('Challenge')).toBeInTheDocument()
     expect(screen.getByText('Community')).toBeInTheDocument()
   })
