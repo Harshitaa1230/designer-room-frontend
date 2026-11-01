@@ -26,9 +26,6 @@ describe('ComingSoonPage', () => {
   it('renders the community placeholder', () => {
     renderPage('community')
     expect(screen.getByRole('heading', { name: /community is almost here/i })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /join the waitlist/i })).toHaveAttribute(
-      'href',
-      '/waitlist',
-    )
+    expect(screen.queryByRole('link', { name: /join the waitlist/i })).not.toBeInTheDocument()
   })
 })

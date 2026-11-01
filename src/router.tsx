@@ -13,7 +13,6 @@ const AdminPage = lazy(() => import('@/pages/AdminPage').then((module) => ({ def
 const LoginPage = lazy(() => import('@/pages/LoginPage').then((module) => ({ default: module.LoginPage })))
 const AuthCallbackPage = lazy(() => import('@/pages/AuthCallbackPage').then((module) => ({ default: module.AuthCallbackPage })))
 const MfaPage = lazy(() => import('@/pages/MfaPage').then((module) => ({ default: module.MfaPage })))
-const WaitlistPage = lazy(() => import('@/pages/WaitlistPage').then((module) => ({ default: module.WaitlistPage })))
 const ComingSoonPage = lazy(() => import('@/pages/ComingSoonPage').then((module) => ({ default: module.ComingSoonPage })))
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage').then((module) => ({ default: module.NotFoundPage })))
 const WeeksPage = lazy(() => import('@/pages/challenges/WeeksPage').then((module) => ({ default: module.WeeksPage })))
@@ -72,6 +71,5 @@ export const router = createBrowserRouter([
   { path: '/login', element: <LoginPage /> },
   { path: '/auth/callback', element: <AuthCallbackPage /> },
   { path: '/auth/mfa', element: <MfaPage /> },
-  { path: '/waitlist', element: <WaitlistPage /> },
   { path: '*', element: <NotFoundPage /> },
 ])

@@ -1,12 +1,3 @@
-import { Link } from 'react-router-dom'
-
-const SOCIALS = [
-  { label: 'Instagram', href: 'https://instagram.com' },
-  { label: 'Threads',   href: 'https://threads.net'   },
-  { label: 'LinkedIn',  href: 'https://linkedin.com'  },
-  { label: 'X',         href: 'https://x.com'         },
-]
-
 export const Footer = () => {
   return (
     <footer className="relative w-full overflow-hidden">
@@ -17,30 +8,6 @@ export const Footer = () => {
       />
 
       <div className="relative z-10 mx-auto w-full max-w-[1440px] px-5 pt-12 sm:px-12 sm:pt-16 md:px-16 md:pt-20">
-        {/* Social row + CTA */}
-        <div className="flex flex-col items-start justify-between gap-5 pb-8 sm:flex-row sm:items-center sm:gap-6 sm:pb-12">
-          <div className="flex flex-wrap gap-x-5 gap-y-3 sm:gap-8">
-            {SOCIALS.map((s) => (
-              <a
-                key={s.label}
-                href={s.href}
-                target="_blank"
-                rel="noreferrer"
-                className="text-[13px] font-normal text-[#827a73] transition-colors hover:text-white light:text-zinc-600 light:hover:text-zinc-900 sm:text-[14px]"
-              >
-                {s.label}
-              </a>
-            ))}
-          </div>
-
-          <Link
-            to="/waitlist"
-            className="rounded-full border border-[#302923] px-5 py-2 text-[13px] font-medium text-white transition-all hover:border-[#504740] hover:bg-white/[0.04] light:border-zinc-300 light:text-zinc-800 light:hover:bg-zinc-100 sm:px-6 sm:py-2.5 sm:text-[14px]"
-          >
-            Join the waitlist
-          </Link>
-        </div>
-
         {/* Brand watermark */}
         <p
           aria-hidden="true"

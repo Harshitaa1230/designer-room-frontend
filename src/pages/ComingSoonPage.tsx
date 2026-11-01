@@ -123,16 +123,6 @@ export function ComingSoonPage({ kind }: ComingSoonPageProps) {
           </Link>
         </div>
 
-        <p className="mt-6 text-[12px] text-[var(--text-muted)]">
-          Want a nudge when it opens?{' '}
-          <Link
-            to="/waitlist"
-            className="text-[var(--accent-text)] underline underline-offset-2 hover:text-[var(--accent-strong)]"
-          >
-            Join the waitlist
-          </Link>
-          .
-        </p>
       </div>
     </section>
   )

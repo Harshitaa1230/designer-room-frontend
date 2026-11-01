@@ -65,13 +65,13 @@ export const FeaturesSection = () => (
               className={[
                 'feature-pill inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[10px] font-medium sm:px-3 sm:py-1 sm:text-[11px]',
                 f.status === 'live'
-                  ? 'border-[var(--border-accent)] text-[var(--accent-text)]'
-                  : 'border-white/20 text-white/50 light:border-zinc-400 light:text-zinc-600',
+                  ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-400 light:text-emerald-700'
+                  : 'border-[var(--border-accent)] bg-[var(--accent-soft)] text-[var(--accent-text)]',
               ].join(' ')}
             >
               {f.status === 'live' && (
                 <span
-                  className="size-1.5 rounded-full bg-[var(--accent)] shadow-[0_0_6px_var(--accent)]"
+                  className="size-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_#34d399] light:bg-emerald-600"
                   aria-hidden="true"
                 />
               )}
